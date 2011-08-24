@@ -32,7 +32,7 @@ switch ($vars->get('data')) {
         break;
 }
 
-$super_driver = $GLOBALS['injector']->getInstance('Superbatch_Driver');
+$super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
 if ($id) { // get history for 1 tank
     $data = $super_driver->getTankHistorybyId($id,$start_time, $end_time);
     $js = "[[";

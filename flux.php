@@ -24,7 +24,7 @@ if ($form->validate($vars)) {
     $end_day = empty($end_array['day']) ? null: $end_array['day'];
     $end_time = (int)strtotime("$end_month/$end_day/$end_year");
     $start_date = $start_year . str_pad($start_month, 2, "0", STR_PAD_LEFT) . str_pad($start_day, 2, "0", STR_PAD_LEFT);
-    $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Driver');
+    $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
 
     if ($id) { //changes for one tank
         $results = $super_driver->getTankFluxbyId($id,$volume,$start_time,$end_time);

@@ -6,8 +6,7 @@ class Superbatch_Form_Chart extends Horde_Form
     {
         parent::__construct($vars, _("Select Chart Options"));
 
-        $driver = $GLOBALS['injector']->getInstance('Superbatch_Driver');
-        $tanks = $driver->listTanks();
+        $tanks = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create()->listTanks();
         $tanks_enum[0] = "All";
         foreach ($tanks as $tank) {
             if ($tank['tanknum']) {

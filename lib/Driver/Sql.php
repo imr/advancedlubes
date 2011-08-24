@@ -6,10 +6,9 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
 
     protected $_db;
 
-    public function __construct($params = array())
+    public function __construct($name, $params = array())
     {
-        parent::__construct($params);
-        $this->_db = $params['db_adapter'];
+	$this->_db = $params['db'];
     }
 
     public function listTanks()

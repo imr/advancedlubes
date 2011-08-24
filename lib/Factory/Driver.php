@@ -11,21 +11,25 @@ class Superbatch_Factory_Driver
         $this->_injector = $injector;
     }
 
-    public function create()
+    public function create($name = '')
     {
-        $driver = $GLOBALS['conf']['storage']['driver'];
-        $signature = serialize(array($driver, $GLOBALS['conf']['storage']['params']['driverconfig']));
-        if (empty($this->_instances[$signature])) {
-            if ($driver == 'sql' && $GLOBALS['conf']['storage']['params']['driverconfig'] == 'horde') {
-                $params = array('db_adapter' => $this->_injector->getInstance('Horde_Db_Adapter'));
-            } else {
-                throw new Horde_Exception('Using non-global db connection not yet supported.');
+        if (!isset($this->_instances[$name])) {
+            $driver = $GLOBALS['conf']['storage']['driver'];
+            $params = Horde::getDriverConfig('storage', $driver);
+            $class = 'Superbatch_Driver_' . ucfirst(basename($driver));
+            if (!class_exists($class)) {
+                throw new Superbatch_Exception(sprintf('Unable to load the definition of %s.', $class));
             }
-            $class = 'Superbatch_Driver_' . Horde_String::ucfirst($driver);
-            $this->_instances[$signature] = new $class($params);
+
+            switch ($class) {
+            case 'Superbatch_Driver_Sql':
+                $params['db'] = $this->_injector->getInstance('Horde_Core_Factory_Db')->create('superbatch', $params);
+                break;
+            }
+            $driver = new $class($name, $params);
+            $this->_instances[$name] = $driver;
         }
 
-        return $this->_instances[$signature];
+        return $this->_instances[$name];
     }
-
 }
