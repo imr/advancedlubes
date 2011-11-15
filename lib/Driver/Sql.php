@@ -73,7 +73,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
                      ' WHERE tankid = ? AND curtimestamp BETWEEN FROM_UNIXTIME(?) and FROM_UNIXTIME(?)) AS t1 INNER JOIN' .
                      ' (SELECT * from tankhistory WHERE tankid = ? AND curtimestamp BETWEEN FROM_UNIXTIME(?) and FROM_UNIXTIME(?))' .
                      ' AS t2 ON t1.tankid = t2.tankid AND t1.curtimestamp < t2.curtimestamp' .
-                     ' INNER JOIN products on t1.productid = products._kp_Products' .
+                     ' LEFT JOIN products on t1.productid = products._kp_Products' .
                      ' WHERE TIMESTAMPDIFF(MINUTE, t1.curtimestamp, t2.curtimestamp) < 6 AND' .
                      ' ABS(t1.volume - t2.volume) > ? ORDER BY t1._kp_tankhistoryid';
         $values = array($id, $start_time, $end_time, $id, $start_time, $end_time, $volume);
@@ -94,7 +94,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
                      ' WHERE DATE(curtimestamp) = ?) AS t1 INNER JOIN' .
                      ' (SELECT * from tankhistory WHERE DATE(curtimestamp) = ?) AS t2' .
                      ' ON t1.tankid = t2.tankid AND t1.curtimestamp < t2.curtimestamp' .
-                     ' INNER JOIN products on t1.productid = products._kp_Products' .
+                     ' LEFT JOIN products on t1.productid = products._kp_Products' .
                      ' INNER JOIN tanks on t1.tankid = tanks._kp_tankid' .
                      ' WHERE TIMESTAMPDIFF(MINUTE, t1.curtimestamp, t2.curtimestamp) < 6 AND' .
                      ' ABS(t1.volume - t2.volume) > ? ORDER BY t1.tankid, t1._kp_tankhistoryid';
