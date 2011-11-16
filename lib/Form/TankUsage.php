@@ -27,6 +27,7 @@ class Superbatch_Form_TankUsage extends Horde_Form
         $v = $this->addVariable(_("Start Week"), 'week_start', 'enum', false, false, '', array($weeks_enum));
         $v->setAction(Horde_Form_Action::factory('reload'));
         $this->addVariable(_("End Week"), 'week_end', 'enum', false, false, '', array($weeks2_enum));
+        $this->addVariable(_("Display All Tanks"), 'display_all', 'boolean');
 
         $this->setButtons(array(_("Display Table")));
     }

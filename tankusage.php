@@ -15,7 +15,11 @@ if ($form->validate($vars)) {
     $week_end = $vars->get('week_end');
     $week_total = $week_end - $week_start + 1;
     $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
-    $results = $super_driver->listTanks('Resource'); // We are only concerned about resource tanks here
+    if ($vars->get('display_all') == true) {
+        $results = $super_driver->listTanks();
+    } else {
+        $results = $super_driver->listTanks('Resource'); // We are only concerned about resource tanks here
+    }
 ?>
 <h3>Tank Usage for <?php echo $week_start ?> to <?php echo $week_end ?></h3>
 <table width="100%" class="sortable" cellspacing=0">
