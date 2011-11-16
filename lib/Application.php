@@ -30,5 +30,8 @@ class Superbatch_Application extends Horde_Registry_Application
 
     public function menu($menu)
     {
+        $menu->add(Horde::url('index.php'), _("_Tank Charts"), 'help_index.png', null, null, null);
+        $menu->add(Horde::url('flux.php'), _("_Fluctuation"), 'calendar.png', null, null, null);
+        $menu->add(Horde::url('tankusage.php'), _("_Tank Usage"), 'info.png', null, null, null);
     }
 }
