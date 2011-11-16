@@ -128,7 +128,8 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
 
     public function getTankUsage($id = 2,$week_start = 201112,$week_end = null) {
 
-        $query = 'SELECT * FROM tankusage WHERE tankid = ? AND weekofyear BETWEEN ? AND YEARWEEK(NOW())';
+        $query = 'SELECT * FROM tankusage WHERE tankid = ? AND weekofyear BETWEEN ? AND YEARWEEK(NOW()) ',
+                     'ORDER BY weekofyear DESC';
         $values = array($id, $week_start);//, $week_end);
 
         try {
