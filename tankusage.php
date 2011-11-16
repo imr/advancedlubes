@@ -21,6 +21,13 @@ if ($form->validate($vars)) {
   <thead>
     <tr class="control leftAlign"> 
       <th class="sortdown">Tank</th>
+<?php
+    for ($i = $week_start; $i<= $week_end; $i++) {
+?>
+      <th><?php echo $i ?></th>
+<?php
+    }
+?>
       <th>Average</th>
     </tr>
   </thead>
