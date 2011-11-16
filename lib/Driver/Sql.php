@@ -25,6 +25,18 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         return $rows;
     }
 
+    public function listWeeks()
+    {
+        $query = 'SELECT DISTINCT weekofyear AS week FROM tankusage';
+
+        /* Execute the query. */
+        try {
+            $rows = $this->_db->selectAll($query);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+    }
+
     public function getTankHistorybyId($id = 2, $start_time = 1, $end_time) {
         if (!$end_time) {
             $end_time = time();
