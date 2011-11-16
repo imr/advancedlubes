@@ -13,6 +13,7 @@ if ($form->validate($vars)) {
        
     $week_start = $vars->get('week_start');
     $week_end = $vars->get('week_end');
+    $week_total = $week_end - $week_start + 1;
     $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
     $results = $super_driver->listTanks('Resource'); // We are only concerned about resource tanks here
 ?>
@@ -22,7 +23,7 @@ if ($form->validate($vars)) {
     <tr class="control leftAlign"> 
       <th class="sortdown">Tank</th>
 <?php
-    for ($i = $week_start; $i<= $week_end; $i++) {
+    for ($i = $week_end; $i>= $week_start; $i--) {
 ?>
       <th><?php echo $i ?></th>
 <?php
@@ -51,6 +52,10 @@ if ($form->validate($vars)) {
                 $increase_total += $row_data['increase'];
                 $decrease_total += $row_data['decrease'];
                 $count_week++;
+            }
+            for ($j = $count_week; $j < $week_total; $j++) {
+                $top_row .= '<td></td>';
+                $bottom_row .= '<td></td>';
             }
             echo $top_row . '<td>' . $increase_total / $count_week . '</td>';
 ?>
