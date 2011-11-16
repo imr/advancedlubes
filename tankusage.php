@@ -15,17 +15,17 @@ if ($form->validate($vars)) {
     $week_end = $vars->get('week_end');
     $week_total = $week_end - $week_start + 1;
     $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
-    if ($vars->get('display_all') == true) {
-        $results = $super_driver->listTanks();
-    } else {
-        $results = $super_driver->listTanks('Resource'); // We are only concerned about resource tanks here
+    if ($vars->get('display_all') == false) { // Only want resource tanks
+        $tankstoget = 'Resource';
     }
+    $results = $super_driver->listTanks($tankstoget);
 ?>
 <h3>Tank Usage for <?php echo $week_start ?> to <?php echo $week_end ?></h3>
 <table width="100%" class="sortable" cellspacing=0">
   <thead>
     <tr class="control leftAlign"> 
       <th class="sortdown">Tank</th>
+      <th>Average</th>
 <?php
     for ($i = $week_end; $i>= $week_start; $i--) {
 ?>
@@ -33,7 +33,6 @@ if ($form->validate($vars)) {
 <?php
     }
 ?>
-      <th>Average</th>
     </tr>
   </thead>
   <tbody>
@@ -61,12 +60,12 @@ if ($form->validate($vars)) {
                 $top_row .= '<td></td>';
                 $bottom_row .= '<td></td>';
             }
-            echo $top_row . '<td>' . $increase_total / $count_week . '</td>';
+            echo '<td>' . (int) ($increase_total / $count_week) . '</td>' . $top_row;
 ?>
     </tr>
     <tr>
 <?php
-            echo $bottom_row . '<td>' . $decrease_total / $count_week . '</td>';
+            echo '<td>' . (int) ($decrease_total / $count_week) . '</td>' . $bottom_row;
 ?>
     </tr>
 <?php
