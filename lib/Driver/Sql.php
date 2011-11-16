@@ -151,7 +151,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
     }
 
     public function insertTankUsage($id, $yearweek) {
-        $query = 'INSERT INTO tankusage(weekofyear,tankid,increase,decrease) (SELECT ?, temp.tankid, '.
+        $query = 'INSERT INTO tankusage(weekofyear,tankid,increase,decrease) (SELECT ?, ?, '.
                  'SUM(IF(temp.diff > 0, temp.diff, 0)) AS increase, SUM(IF(temp.diff < 0, temp.diff, 0)) '.
                  'AS decrease FROM (SELECT t1.tankid, t2.volume - t1.volume AS diff FROM '.
                  '(SELECT * FROM tankhistory WHERE tankid = ? AND YEARWEEK(curtimestamp) '.
@@ -160,7 +160,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
                  '= ?) '.
                  'AS t2 ON TIMESTAMPDIFF(MINUTE, t1.curtimestamp, t2.curtimestamp) = 5 '.
                  'WHERE ABS(t1.volume - t2.volume) > 83.3) AS temp)';
-        $values = array($yearweek,$id,$yearweek,$id,$yearweek);
+        $values = array($yearweek,$id,$id,$yearweek,$id,$yearweek);
 
         try {
             $this->_db->execute($query, $values);
