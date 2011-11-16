@@ -10,7 +10,7 @@ abstract class Superbatch_Driver
         $this->_params = $params;
     }
 
-    abstract public function listTanks();
+    abstract public function listTanks($type);
 
     abstract public function listWeeks();
 
@@ -22,7 +22,11 @@ abstract class Superbatch_Driver
 
     abstract public function getFluxbyDay($start_time = 1, $volume = 16);
 
+    abstract public function getTankUsage($id = 2, $week_start = 201112, $week_end = null);
+
     abstract public function getTankNamefromId($id);
+
+    abstract public function insertTankUsage($id, $yearweek);
 
     function &factory($driver = null, $params = null)
     {

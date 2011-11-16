@@ -11,9 +11,13 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
 	$this->_db = $params['db'];
     }
 
-    public function listTanks()
+    public function listTanks($type)
     {
-        $query = 'SELECT _kp_tankid, tanknum FROM tanks';
+        if (empty($type)) {
+            $query = 'SELECT _kp_tankid, tanknum FROM tanks';
+        } else {
+            $query = "SELECT _kp_tankid, tanknum FROM tanks WHERE tanktype = '" . $type . "'";
+        }
 
         /* Execute the query. */
         try {
@@ -35,6 +39,8 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         } catch (Horde_Db_Exception $e) {
             throw new Superbatch_Exception($e);
         }
+
+        return $rows;
     }
 
     public function getTankHistorybyId($id = 2, $start_time = 1, $end_time) {
@@ -120,6 +126,19 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         return $rows;
     }
 
+    public function getTankUsage($id = 2,$week_start = 201112,$week_end = null) {
+
+        $query = 'SELECT * FROM tankusage WHERE tankid = ? AND weekofyear BETWEEN ? AND YEARWEEK(NOW())';
+        $values = array($id, $week_start);//, $week_end);
+
+        try {
+            $rows = $this->_db->selectAll($query, $values);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+        return $rows;
+    }
+
     public function getTankNamefromId($id) {
         $query = 'SELECT tanknum FROM tanks WHERE _kp_tankid = ?';
 	$values = array($id);
@@ -131,4 +150,22 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         return $name;
     }
 
+    public function insertTankUsage($id, $yearweek) {
+        $query = 'INSERT INTO tankusage(weekofyear,tankid,increase,decrease) (SELECT ?, temp.tankid, '.
+                 'SUM(IF(temp.diff > 0, temp.diff, 0)) AS increase, SUM(IF(temp.diff < 0, temp.diff, 0)) '.
+                 'AS decrease FROM (SELECT t1.tankid, t2.volume - t1.volume AS diff FROM '.
+                 '(SELECT * FROM tankhistory WHERE tankid = ? AND YEARWEEK(curtimestamp) '.
+                 '= ?) AS t1 INNER JOIN '.
+                 '(SELECT * FROM tankhistory WHERE tankid = ? AND YEARWEEK(curtimestamp) '.
+                 '= ?) '.
+                 'AS t2 ON TIMESTAMPDIFF(MINUTE, t1.curtimestamp, t2.curtimestamp) = 5 '.
+                 'WHERE ABS(t1.volume - t2.volume) > 83.3) AS temp)';
+        $values = array($yearweek,$id,$yearweek,$id,$yearweek);
+
+        try {
+            $this->_db->execute($query, $values);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+    }
 }
