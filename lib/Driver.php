@@ -26,6 +26,8 @@ abstract class Superbatch_Driver
 
     abstract public function getTankNamefromId($id);
 
+    abstract public function getCurrentWeekYear();
+
     abstract public function insertTankUsage($id, $yearweek);
 
     function &factory($driver = null, $params = null)

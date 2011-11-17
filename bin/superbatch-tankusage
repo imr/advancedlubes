@@ -1,4 +1,12 @@
 #!/usr/bin/env php
 <?php
+require_once dirname(__FILE__) . '/../lib/Application.php';
+Horde_Registry::appInit('superbatch', array('authentication' => 'none'));
 
+$super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
+$yearweek = $super_driver->getCurrentYearWeek();
+
+for($j=2; $j<111; $j++) { //tanks that are desired
+    $super_driver->insertTankUsage($j,$yearweek);
+}
 

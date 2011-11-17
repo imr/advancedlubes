@@ -150,6 +150,16 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         return $name;
     }
 
+    public function getCurrentWeekYear() {
+        $query = 'SELECT WEEKYEAR(NOW())';
+        try {
+            $row = $this->_db->selectValue($query);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+        return $row;
+    }
+
     public function insertTankUsage($id, $yearweek) {
         $query = 'INSERT INTO tankusage(weekofyear,tankid,increase,decrease) (SELECT ?, ?, '.
                  'SUM(IF(temp.diff > 0, temp.diff, 0)) AS increase, SUM(IF(temp.diff < 0, temp.diff, 0)) '.
