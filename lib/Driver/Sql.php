@@ -13,7 +13,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
 
     public function listTanks($type)
     {
-        $query = 'SELECT _kp_tankid, tanknum FROM tanks WHERE tanknum IS NOT NULL';
+        $query = 'SELECT _kp_tankid, tanknum, description, compatibility, currentvolume AS volume FROM tanks WHERE tanknum IS NOT NULL';
         if (!empty($type)) {
             $query .= " AND tanktype = '" . $type . "'";
         }

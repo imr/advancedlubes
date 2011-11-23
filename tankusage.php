@@ -25,6 +25,8 @@ if ($form->validate($vars)) {
   <thead>
     <tr class="control leftAlign"> 
       <th class="sortdown">Tank</th>
+      <th>Description</th>
+      <th>Volume</th>
       <th>Average</th>
 <?php
     for ($i = $week_end; $i>= $week_start; $i--) {
@@ -48,6 +50,8 @@ if ($form->validate($vars)) {
 ?>
     <tr class="">
       <td rowspan=2><?php echo $result['tanknum'] ?></td>
+      <td><?php echo $result['description'] ?></td>
+      <td rowspan=2><?php echo $result['volume'] ?></td>
 <?php
             foreach ($row_results as $row_data) {
                 $top_row .= '<td>' . $row_data['increase'] . '</td>';
@@ -65,7 +69,7 @@ if ($form->validate($vars)) {
     </tr>
     <tr>
 <?php
-            echo '<td>' . (int) ($decrease_total / $count_week) . '</td>' . $bottom_row;
+            echo '<td>' . $result['compatibility'] . '</td><td>' . (int) ($decrease_total / $count_week) . '</td>' . $bottom_row;
 ?>
     </tr>
 <?php
