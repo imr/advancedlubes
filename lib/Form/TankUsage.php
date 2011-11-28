@@ -4,7 +4,7 @@ class Superbatch_Form_TankUsage extends Horde_Form
 {
     public function __construct($vars)
     {
-        parent::__construct($vars, _("Select Tank Ussage Data"));
+        parent::__construct($vars, _("Select Tank Usage Data"));
 
         $weeks = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create()->listWeeks();
         foreach ($weeks as $week) {
