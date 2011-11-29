@@ -158,17 +158,16 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         return $row;
     }
 
-    public function insertTankUsage($id, $yearweek) {
-        $query = 'INSERT INTO tankusage(weekofyear,tankid,increase,decrease) (SELECT ?, ?, '.
+    public function insertTankUsage($date) {
+        $query = 'INSERT INTO tankusage2(date,tankid,increase,decrease) (SELECT ?, temp.tankid, '.
                  'SUM(IF(temp.diff > 0, temp.diff, 0)) AS increase, SUM(IF(temp.diff < 0, temp.diff, 0)) '.
                  'AS decrease FROM (SELECT t1.tankid, t2.volume - t1.volume AS diff FROM '.
-                 '(SELECT * FROM tankhistory WHERE tankid = ? AND YEARWEEK(curtimestamp) '.
-                 '= ?) AS t1 INNER JOIN '.
-                 '(SELECT * FROM tankhistory WHERE tankid = ? AND YEARWEEK(curtimestamp) '.
-                 '= ?) '.
-                 'AS t2 ON TIMESTAMPDIFF(MINUTE, t1.curtimestamp, t2.curtimestamp) = 5 '.
-                 'WHERE ABS(t1.volume - t2.volume) > 83.3) AS temp)';
-        $values = array($yearweek,$id,$id,$yearweek,$id,$yearweek);
+                 '(SELECT * FROM tankhistory WHERE DATE(curtimestamp) = ?) AS t1 '.
+                 'INNER JOIN '.
+                 '(SELECT * FROM tankhistory WHERE DATE(curtimestamp) = ?) AS t2 '.
+                 'ON t1.tankid = t2.tankid AND TIMESTAMPDIFF(MINUTE, t1.curtimestamp, t2.curtimestamp) = 5 '.
+                 'WHERE ABS(t1.volume - t2.volume) > 83.3) AS temp GROUP BY temp.tankid)';
+        $values = array($date,$date,$date);
 
         try {
             $this->_db->execute($query, $values);

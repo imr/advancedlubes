@@ -4,10 +4,10 @@ require_once dirname(__FILE__) . '/../lib/Application.php';
 Horde_Registry::appInit('superbatch', array('authentication' => 'none'));
 
 $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
+$date = '20110320';
 
-for ($i=201112, $i<201146,$i++) { //Yearweeks that are desired
-    for($j=2, $j<111,$j++) { //tanks that are desired
-        $super_driver->insertTankUsage($j,$i);
-    }
+while ($date <> date("Ymd")) {
+    $super_driver->insertTankUsage($date);
+    $date = strtotime(date("Ymd", strtotime($date)) . " +1 day");
 }
 
