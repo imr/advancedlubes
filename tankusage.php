@@ -68,6 +68,7 @@ if ($form->validate($vars)) {
                 $bottom_row .= '<td class="rightAlign">' . (int) $row_data['decrease'] . '</td>';
                 $increase_total += $row_data['increase'];
                 $decrease_total += $row_data['decrease'];
+                $count_week++;
                 $wa++;
             }
             for ($j = $wa; $j < $week_total; $j++) {
