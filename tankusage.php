@@ -19,12 +19,13 @@ if ($form->validate($vars)) {
         $tankstoget = 'Resource';
     }
     $results = $super_driver->listTanks($tankstoget);
+    $row_odd = false; // use this for table striping
 ?>
 <h3>Tank Usage for <?php echo $week_start ?> to <?php echo $week_end ?></h3>
-<table width="100%" class="sortable" cellspacing=0">
+<table width="100%" cellspacing=0">
   <thead>
-    <tr class="control leftAlign"> 
-      <th class="sortdown">Tank</th>
+    <tr> 
+      <th>Tank</th>
       <th>Description</th>
       <th>Volume</th>
       <th>Average</th>
@@ -48,14 +49,14 @@ if ($form->validate($vars)) {
             $increase_total = 0;
             $decrease_total = 0;
 ?>
-    <tr class="">
+    <tr class="<?php echo $row_odd ? 'rowOdd' : 'rowEven' ?>">
       <td rowspan=2><?php echo $result['tanknum'] ?></td>
       <td><?php echo $result['description'] ?></td>
-      <td rowspan=2><?php echo $result['volume'] ?></td>
+      <td rowspan=2 class="rightAlign"><?php echo $result['volume'] ?></td>
 <?php
             foreach ($row_results as $row_data) {
-                $top_row .= '<td>' . (int) $row_data['increase'] . '</td>';
-                $bottom_row .= '<td>' . (int) $row_data['decrease'] . '</td>';
+                $top_row .= '<td class="rightAlign">' . (int) $row_data['increase'] . '</td>';
+                $bottom_row .= '<td class="rightAlign">' . (int) $row_data['decrease'] . '</td>';
                 $increase_total += $row_data['increase'];
                 $decrease_total += $row_data['decrease'];
                 $count_week++;
@@ -64,15 +65,16 @@ if ($form->validate($vars)) {
                 $top_row .= '<td></td>';
                 $bottom_row .= '<td></td>';
             }
-            echo '<td>' . (int) ($increase_total / $count_week) . '</td>' . $top_row;
+            echo '<td class="rightAlign">' . (int) ($increase_total / $count_week) . '</td>' . $top_row;
 ?>
     </tr>
-    <tr>
+    <tr class="<?php echo $row_odd ? 'rowOdd' : 'rowEven' ?>">
 <?php
-            echo '<td>' . $result['compatibility'] . '</td><td>' . (int) ($decrease_total / $count_week) . '</td>' . $bottom_row;
+            echo '<td>' . $result['compatibility'] . '</td><td class="rightAlign">' . (int) ($decrease_total / $count_week) . '</td>' . $bottom_row;
 ?>
     </tr>
 <?php
+            $row_odd = !$row_odd;
         }
 }
 ?>
