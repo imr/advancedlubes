@@ -7,6 +7,7 @@ $vars = Horde_Variables::getDefaultVariables();
 $form = new Superbatch_Form_TankUsage($vars);
 
 Horde::addScriptFile('tables.js', 'horde');
+Horde::addScriptFile('tooltips.js', 'horde');
 require $registry->get('templates', 'horde') . '/common-header.inc';
 echo Horde::menu();
 if ($form->validate($vars)) {
@@ -14,6 +15,7 @@ if ($form->validate($vars)) {
     $week_start = $vars->get('week_start');
     $week_end = $vars->get('week_end');
     $week_total = $week_end - $week_start + 1;
+    $week_array = range($week_end, $week_start);
     $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
     if ($vars->get('display_all') == false) { // Only want resource tanks
         $tankstoget = 'Resource';
@@ -54,16 +56,23 @@ if ($form->validate($vars)) {
       <td><?php echo $result['description'] ?></td>
       <td rowspan=2 class="rightAlign"><?php echo $result['volume'] ?></td>
 <?php
+            $wa = 0;
             foreach ($row_results as $row_data) {
-                $top_row .= '<td class="rightAlign">' . (int) $row_data['increase'] . '</td>';
+                while ($week_array[$wa] > $row_data['week']) {
+                    $top_row .= '<td class="rightAlign">0</td>';
+                    $bottom_row .= '<td class="rightAlign">0</td>';
+                    $wa++;
+                }
+                    
+                $top_row .= '<td class="rightAlign tooltip" title="stuff to tooltip">' . (int) $row_data['increase'] . '</td>';
                 $bottom_row .= '<td class="rightAlign">' . (int) $row_data['decrease'] . '</td>';
                 $increase_total += $row_data['increase'];
                 $decrease_total += $row_data['decrease'];
-                $count_week++;
+                $wa++;
             }
-            for ($j = $count_week; $j < $week_total; $j++) {
-                $top_row .= '<td></td>';
-                $bottom_row .= '<td></td>';
+            for ($j = $wa; $j < $week_total; $j++) {
+                $top_row .= '<td>&nbsp;</td>';
+                $bottom_row .= '<td>&nbsp;</td>';
             }
             echo '<td class="rightAlign">' . (int) ($increase_total / $count_week) . '</td>' . $top_row;
 ?>
