@@ -58,14 +58,20 @@ if ($form->validate($vars)) {
 <?php
             $wa = 0;
             foreach ($row_results as $row_data) {
-                while ($week_array[$wa] > $row_data['week']) {
+                $this_week = $row_data['week'];
+                while ($week_array[$wa] > $this_week) {
                     $top_row .= '<td class="rightAlign">0</td>';
                     $bottom_row .= '<td class="rightAlign">0</td>';
                     $wa++;
                 }
-                    
-                $top_row .= '<td class="rightAlign tooltip" title="stuff to tooltip">' . (int) $row_data['increase'] . '</td>';
-                $bottom_row .= '<td class="rightAlign">' . (int) $row_data['decrease'] . '</td>';
+ 
+                $tool_data = $super_driver->getTankUsageforWeek($result['_kp_tankid'], $this_week);
+                $tooltip = '';
+                foreach ($tool_data as $tool_row) {
+                    $tooltip .= $tool_row['date'] . ' ' . $tool_row['increase'] . ' ' . $tool_row['decrease'] . '<br>';
+                }
+                $top_row .= '<td class="rightAlign tooltip" title="' . htmlspecialchars($tooltip) . '">' . (int) $row_data['increase'] . '</td>';
+                $bottom_row .= '<td class="rightAlign tooltip" title="' . $tooltip .'">' . (int) $row_data['decrease'] . '</td>';
                 $increase_total += $row_data['increase'];
                 $decrease_total += $row_data['decrease'];
                 $count_week++;

@@ -139,6 +139,20 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         return $rows;
     }
 
+    public function getTankUsageforWeek($id = 2,$week = 201112) {
+
+        $query = 'SELECT * FROM tankusage WHERE tankid = ? ' .
+                     'AND YEARWEEK(date) = ? ORDER BY date';
+        $values = array($id, $week);
+
+        try {
+            $rows = $this->_db->selectAll($query, $values);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+        return $rows;
+    }
+
     public function getTankNamefromId($id) {
         $query = 'SELECT tanknum FROM tanks WHERE _kp_tankid = ?';
 	$values = array($id);

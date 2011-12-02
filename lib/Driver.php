@@ -24,6 +24,8 @@ abstract class Superbatch_Driver
 
     abstract public function getTankUsagebyWeek($id = 2, $week_start = 201112, $week_end = null);
 
+    abstract public function getTankUsageforWeek($id = 2, $week = 201112);
+
     abstract public function getTankNamefromId($id);
 
     abstract public function getCurrentWeekYear();
