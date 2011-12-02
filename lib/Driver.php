@@ -22,7 +22,7 @@ abstract class Superbatch_Driver
 
     abstract public function getFluxbyDay($start_time = 1, $volume = 16);
 
-    abstract public function getTankUsage($id = 2, $week_start = 201112, $week_end = null);
+    abstract public function getTankUsagebyWeek($id = 2, $week_start = 201112, $week_end = null);
 
     abstract public function getTankNamefromId($id);
 

@@ -41,7 +41,7 @@ if ($form->validate($vars)) {
 <?php
 
         foreach ($results as $result) {
-            $row_results = $super_driver->getTankUsage($result['_kp_tankid'],$week_start,$week_end);
+            $row_results = $super_driver->getTankUsagebyWeek($result['_kp_tankid'],$week_start,$week_end);
             $count_week = 0;
 	    $top_row = '';
             $bottom_row = '';
@@ -54,8 +54,8 @@ if ($form->validate($vars)) {
       <td rowspan=2><?php echo $result['volume'] ?></td>
 <?php
             foreach ($row_results as $row_data) {
-                $top_row .= '<td>' . $row_data['increase'] . '</td>';
-                $bottom_row .= '<td>' . $row_data['decrease'] . '</td>';
+                $top_row .= '<td>' . (int) $row_data['increase'] . '</td>';
+                $bottom_row .= '<td>' . (int) $row_data['decrease'] . '</td>';
                 $increase_total += $row_data['increase'];
                 $decrease_total += $row_data['decrease'];
                 $count_week++;

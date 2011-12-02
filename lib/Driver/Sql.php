@@ -30,7 +30,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
 
     public function listWeeks()
     {
-        $query = 'SELECT DISTINCT weekofyear AS week FROM tankusage';
+        $query = 'SELECT DISTINCT YEARWEEK(date) AS week FROM tankusage';
 
         /* Execute the query. */
         try {
@@ -123,10 +123,12 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         return $rows;
     }
 
-    public function getTankUsage($id = 2,$week_start = 201112,$week_end = null) {
+    public function getTankUsagebyWeek($id = 2,$week_start = 201112,$week_end = null) {
 
-        $query = 'SELECT * FROM tankusage WHERE tankid = ? AND weekofyear BETWEEN ? AND YEARWEEK(NOW()) ' .
-                     'ORDER BY weekofyear DESC';
+        $query = 'SELECT YEARWEEK(date) as week, SUM(increase) AS increase, SUM(decrease) AS decrease ' .
+                     'FROM tankusage WHERE tankid = ? ' .
+                     'AND YEARWEEK(date) BETWEEN ? AND YEARWEEK(NOW()) ' .
+                     'GROUP BY YEARWEEK(date) ORDER BY YEARWEEK(date) DESC';
         $values = array($id, $week_start);//, $week_end);
 
         try {
@@ -159,7 +161,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
     }
 
     public function insertTankUsage($date) {
-        $query = 'INSERT INTO tankusage2(date,tankid,increase,decrease) (SELECT ?, temp.tankid, '.
+        $query = 'INSERT INTO tankusage(date,tankid,increase,decrease) (SELECT ?, temp.tankid, '.
                  'SUM(IF(temp.diff > 0, temp.diff, 0)) AS increase, SUM(IF(temp.diff < 0, temp.diff, 0)) '.
                  'AS decrease FROM (SELECT t1.tankid, t2.volume - t1.volume AS diff FROM '.
                  '(SELECT * FROM tankhistory WHERE DATE(curtimestamp) = ?) AS t1 '.
