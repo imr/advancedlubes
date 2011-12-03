@@ -12,7 +12,9 @@ abstract class Superbatch_Driver
 
     abstract public function listTanks($type);
 
-    abstract public function listWeeks();
+    abstract public function listMaterialWeeks();
+
+    abstract public function listTankWeeks();
 
     abstract public function getTankHistorybyId($id = 2, $start_time = 1, $end_time);
 

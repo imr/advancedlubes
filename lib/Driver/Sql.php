@@ -28,7 +28,21 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         return $rows;
     }
 
-    public function listWeeks()
+    public function listMaterialWeeks()
+    {
+        $query = 'SELECT DISTINCT YEARWEEK(date) AS week FROM materialusage';
+
+        /* Execute the query. */
+        try {
+            $rows = $this->_db->selectAll($query);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+
+        return $rows;
+    }
+
+    public function listTankWeeks()
     {
         $query = 'SELECT DISTINCT YEARWEEK(date) AS week FROM tankusage';
 

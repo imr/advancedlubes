@@ -1,12 +1,12 @@
 <?php
 
-class Superbatch_Form_TankUsage extends Horde_Form
+class Superbatch_Form_MaterialUsage extends Horde_Form
 {
     public function __construct($vars)
     {
-        parent::__construct($vars, _("Select Tank Usage Data"));
+        parent::__construct($vars, _("Select Material Usage Data"));
 
-        $weeks = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create()->listTankWeeks();
+        $weeks = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create()->listMaterialWeeks();
         foreach ($weeks as $week) {
             $weeks_enum[$week['week']] = $week['week'];
             $counter++;
@@ -27,8 +27,6 @@ class Superbatch_Form_TankUsage extends Horde_Form
         $v = $this->addVariable(_("Start Week"), 'week_start', 'enum', false, false, '', array($weeks_enum));
         $v->setAction(Horde_Form_Action::factory('reload'));
         $this->addVariable(_("End Week"), 'week_end', 'enum', false, false, '', array($weeks2_enum));
-        $this->addVariable(_("Display All Tanks"), 'display_all', 'boolean');
-
         $this->setButtons(array(_("Display Table")));
     }
 }
