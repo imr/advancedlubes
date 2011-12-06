@@ -68,7 +68,7 @@ if ($form->validate($vars)) {
                 $tool_data = $super_driver->getTankUsageforWeek($result['_kp_tankid'], $this_week);
                 $tooltip = '';
                 foreach ($tool_data as $tool_row) {
-                    $tooltip .= $tool_row['date'] . ' ' . $tool_row['increase'] . ' ' . $tool_row['decrease'] . '<br>';
+                    $tooltip .= $tool_row['date'] . "\t" . $tool_row['increase'] . "\t" . $tool_row['decrease'] . "\n";
                 }
                 $top_row .= '<td class="rightAlign tooltip" title="' . htmlspecialchars($tooltip) . '">' . (int) $row_data['increase'] . '</td>';
                 $bottom_row .= '<td class="rightAlign tooltip" title="' . $tooltip .'">' . (int) $row_data['decrease'] . '</td>';
