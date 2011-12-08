@@ -139,11 +139,19 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
 
     public function getTankUsagebyWeek($id = 2,$week_start = 201112,$week_end = null) {
 
-        $query = 'SELECT YEARWEEK(date) as week, SUM(increase) AS increase, SUM(decrease) AS decrease ' .
-                     'FROM tankusage WHERE tankid = ? ' .
-                     'AND YEARWEEK(date) BETWEEN ? AND YEARWEEK(NOW()) ' .
-                     'GROUP BY YEARWEEK(date) ORDER BY YEARWEEK(date) DESC';
-        $values = array($id, $week_start);//, $week_end);
+        if (empty($week_end)) {
+            $query = 'SELECT YEARWEEK(date) as week, SUM(increase) AS increase, SUM(decrease) AS decrease ' .
+                         'FROM tankusage WHERE tankid = ? ' .
+                         'AND YEARWEEK(date) BETWEEN ? AND YEARWEEK(NOW()) ' .
+                         'GROUP BY YEARWEEK(date) ORDER BY YEARWEEK(date) DESC';
+            $values = array($id, $week_start);
+        } else {
+            $query = 'SELECT YEARWEEK(date) as week, SUM(increase) AS increase, SUM(decrease) AS decrease ' .
+                         'FROM tankusage WHERE tankid = ? ' .
+                         'AND YEARWEEK(date) BETWEEN ? AND ? ' .
+                         'GROUP BY YEARWEEK(date) ORDER BY YEARWEEK(date) DESC';
+            $values = array($id, $week_start, $week_end);
+        }
 
         try {
             $rows = $this->_db->selectAll($query, $values);
