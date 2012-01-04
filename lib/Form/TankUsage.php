@@ -9,17 +9,16 @@ class Superbatch_Form_TankUsage extends Horde_Form
         $weeks = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create()->listTankWeeks();
         foreach ($weeks as $week) {
             $weeks_enum[$week['week']] = $week['week'];
-            $counter++;
         }
 
         $start = $vars->get('week_start');
         if (empty($start)) {
             $weeks2_enum = $weeks_enum;
         } else {
-            $counter = $start;
-            while (!empty($weeks_enum[$counter])) {
-                $weeks2_enum[$counter] = $counter;
-                $counter++;
+            foreach ($weeks as $week) {
+                if ($week['week'] >= $start) {
+                    $weeks2_enum[$week['week']] = $week['week'];
+                }
             }
         }
 

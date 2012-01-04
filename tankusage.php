@@ -14,9 +14,15 @@ if ($form->validate($vars)) {
        
     $week_start = $vars->get('week_start');
     $week_end = $vars->get('week_end');
-    $week_total = $week_end - $week_start + 1;
-    $week_array = range($week_end, $week_start);
     $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
+    $weeks = $super_driver->listTankWeeks($week_start, $week_end);
+    $week_array = array();
+    $week_total = 0;
+    foreach ($weeks as $week) {
+        $week_array[$week_total] = $week['week'];
+        $week_total++;
+    }
+    $week_array_top = $week_total -1;
     if ($vars->get('display_all') == false) { // Only want resource tanks
         $tankstoget = 'Resource';
     }
@@ -32,9 +38,9 @@ if ($form->validate($vars)) {
       <th>Volume</th>
       <th>Average</th>
 <?php
-    for ($i = $week_end; $i>= $week_start; $i--) {
+    for ($i = $week_array_top; $i> -1; $i--) {
 ?>
-      <th><?php echo $i ?></th>
+      <th><?php echo $week_array[$i] ?></th>
 <?php
     }
 ?>
@@ -43,7 +49,7 @@ if ($form->validate($vars)) {
   <tbody>
 <?php
 
-        foreach ($results as $result) {
+        foreach ($results as $result) { // Layout each tank row of two rows
             $row_results = $super_driver->getTankUsagebyWeek($result['_kp_tankid'],$week_start,$week_end);
             $count_week = 0;
 	    $top_row = '';
@@ -59,7 +65,7 @@ if ($form->validate($vars)) {
             $wa = 0;
             foreach ($row_results as $row_data) {
                 $this_week = $row_data['week'];
-                while ($week_array[$wa] > $this_week) {
+                while ($week_array[$week_array_top - $wa] > $this_week) {
                     $top_row .= '<td class="rightAlign">0</td>';
                     $bottom_row .= '<td class="rightAlign">0</td>';
                     $wa++;

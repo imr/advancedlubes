@@ -42,13 +42,14 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         return $rows;
     }
 
-    public function listTankWeeks()
+    public function listTankWeeks($week_start = 201101, $week_end = 999952)
     {
-        $query = 'SELECT DISTINCT YEARWEEK(date) AS week FROM tankusage';
+        $query = 'SELECT DISTINCT YEARWEEK(date) AS week FROM tankusage WHERE YEARWEEK(date) BETWEEN ? AND ?';
+        $values = array($week_start, $week_end);
 
         /* Execute the query. */
         try {
-            $rows = $this->_db->selectAll($query);
+            $rows = $this->_db->selectAll($query, $values);
         } catch (Horde_Db_Exception $e) {
             throw new Superbatch_Exception($e);
         }
