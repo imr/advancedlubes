@@ -7,27 +7,27 @@ class Superbatch_Form_Chart extends Horde_Form
         parent::__construct($vars, _("Select Chart Options"));
 
         $tanks = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create()->listTanks();
-        $tanks_enum[0] = "All";
         foreach ($tanks as $tank) {
             if ($tank['tanknum']) {
                 $tanks_enum[$tank['_kp_tankid']] = $tank['tanknum'];
             }
         }
-        if ($vars->get('tank') > 0) {
+        if ($vars->get('tankall') == true) {
             $data_enum = array(
-                'both' => 'Temp and Volume',
                 'temp' => 'Temperature',
                 'vol' => 'Volume'
             );
         } else {
             $data_enum = array(
+                'both' => 'Temp and Volume',
                 'temp' => 'Temperature',
                 'vol' => 'Volume'
             );
         }
-        $v = $this->addVariable(_("Tank Selection"), 'tank', 'enum', false, false, '', array($tanks_enum));
+        $this->addVariable(_("Tank Selection"), 'tank', 'multienum', false, false, '', array($tanks_enum));
+        $v = $this->addVariable(_("Select All"), 'tankall', 'boolean', false, false, '');
         $v->setAction(Horde_Form_Action::factory('reload'));
-        $v = $this->addVariable(_("Data to graph"), 'data', 'enum', false, false, '',array($data_enum));
+        $this->addVariable(_("Data to graph"), 'data', 'enum', false, false, '',array($data_enum));
         $this->addVariable(_("Start Date"), 'time_start', 'monthdayyear', false);
         $this->addVariable(_("End Date"), 'time_end', 'monthdayyear', false);
 

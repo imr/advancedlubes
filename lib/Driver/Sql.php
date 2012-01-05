@@ -66,8 +66,34 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
             'th.volume as volume, th.temperature as temperature from tankhistory th ' .
             'LEFT JOIN products p ON th.productid = p._kp_Products ' .
             'WHERE th.tankid = ? AND th.curtimestamp BETWEEN FROM_UNIXTIME(?) ' .
-            'AND FROM_UNIXTIME(?)';
+            'AND FROM_UNIXTIME(?) ORDER BY th.curtimestamp';
         $values = array($id, $start_time, $end_time);
+        try {
+            $rows = $this->_db->selectAll($query, $values);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+        return $rows;
+    }
+
+    public function getTankHistorybyIds($id = array(), $start_time = 1, $end_time) {
+        if (!$end_time) {
+            $end_time = time();
+        } 
+
+        $query = 'SELECT t.tanknum, th.curtimestamp as timeunix, p.productCode as productcode, ' .
+            'th.volume as volume, th.temperature as temperature from tankhistory th ' .
+            'INNER JOIN tanks t ON th.tankid = t._kp_tankid ' .
+            'LEFT JOIN products p ON th.productid = p._kp_Products ' .
+            'WHERE th.tankid IN (?';
+        for ($i = 0;count($id) - 1 > $i; $i++) {
+            $query .= ',?';
+        }
+        $query .= ') AND th.curtimestamp BETWEEN FROM_UNIXTIME(?) ' .
+            'AND FROM_UNIXTIME(?) ORDER BY th.tankid, th.curtimestamp';
+        $values = $id;
+        $values[] = $start_time;
+        $values[] = $end_time;
         try {
             $rows = $this->_db->selectAll($query, $values);
         } catch (Horde_Db_Exception $e) {
@@ -80,7 +106,6 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         if (!$end_time) {
             $end_time = time();
         }
-        $query = 'CALL GetTanksHistory(?,?)';
         $query = 'SELECT t.tanknum as tanknum, th.curtimestamp as timeunix, p.productCode as productcode, ' .
             'th.volume as volume, th.temperature as temperature FROM tankhistory th INNER JOIN tanks t ' .
             'ON th.tankid = t._kp_tankid LEFT JOIN products p ON th.productid = p._kp_Products ' .

@@ -4,6 +4,7 @@ require_once dirname(__FILE__) . '/lib/Application.php';
 Horde_Registry::appInit('superbatch');
 
 $id = $vars->get('tank');
+$all = $vars->get('tankall');
 $start_array = $vars->get('time_start');
 $end_array = $vars->get('time_end');
 $start_year = empty($start_array['year']) ? null : $start_array['year'];
@@ -33,8 +34,10 @@ switch ($vars->get('data')) {
 }
 
 $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
-if ($id) { // get history for 1 tank
-    $data = $super_driver->getTankHistorybyId($id,$start_time, $end_time);
+if (count($id) == 1 && !$all) { // get history for 1 tank
+    $single = true;
+    $data = $super_driver->getTankHistorybyId($id[0],$start_time, $end_time);
+    $charttitle .= ' tank ' . $name;
     $js = "[[";
     if ($both) {
         foreach ($data as $point) {
@@ -42,7 +45,7 @@ if ($id) { // get history for 1 tank
             $jssecond .= '["' . $point['timeunix'] . '",' . $point['volume'] . '],';
         }
         $js = substr($js, 0, strlen($js) -1) . '],[';
-        $js .= substr($jssecond, 0, strlen($jssecond));
+        $js .= $jssecond;
         $labels = "['Temperature','Volume']";
     } else {
         foreach ($data as $point) {
@@ -51,28 +54,53 @@ if ($id) { // get history for 1 tank
     }
     $js = substr($js, 0, strlen($js) -1);
     $js .= "]];";
-    $name = $super_driver->getTankNamefromId($id);
+    $name = $super_driver->getTankNamefromId($id[0]);
     $charttitle .= ' tank ' . $name;
 } else { // Get history for all tanks
-    $data = $super_driver->getTanksHistory($start_time, $end_time);
+    if ($all) {
+        $data = $super_driver->getTanksHistory($start_time, $end_time);
+        $charttitle .= ' all tanks';
+    } else {
+        $data = $super_driver->getTankHistorybyIds($id, $start_time, $end_time);
+        foreach ($id as $name) {
+            $names .= $super_driver->getTankNamefromId($name) . ', ';
+        }
+        $charttitle .= ' tanks ' . substr($names, 0, strlen($names) - 2);
+    }
     $prevtank = $data[0]['tanknum'];
     $js = '[[';
-    $labels = "['" . $data[0]['tanknum'] . "',";
-    foreach ($data as $point) {
-        if ($point['tanknum'] <> $prevtank) {
-            $js = substr($js, 0, strlen($js) -1);
-            $js .= '],[';
-            $labels .= "'" . $point['tanknum'] . "',";
+    if ($both) {
+        $labels = "['" . $data[0]['tanknum'] . " Temperature','" . $data[0]['tanknum'] . " Volume',";
+        foreach ($data as $point) {
+            if ($point['tanknum'] <> $prevtank) {
+                $js = substr($js, 0, strlen($js) -1) . '],[';
+                $js .= substr($jssecond, 0, strlen($jssecond) -1) . '],[';
+                $jssecond = '';
+                $labels .= "'" . $point['tanknum'] . " Temperature','" . $point['tanknum'] . " Volume',";
+            }
+            $js .= '["' . $point['timeunix'] . '",' . $point['temperature'] . '],';
+            $jssecond .= '["' . $point['timeunix'] . '",' . $point['volume'] . '],';
+            $prevtank = $point['tanknum'];
         }
-        $js .= '["' . $point['timeunix'] . '",' . $point["$datacolumn"] . '],';
-        $prevtank = $point['tanknum'];
+        $js = substr($js, 0, strlen($js) -1) . '],[';
+        $js .= $jssecond;
+    }  else {
+        $labels = "['" . $data[0]['tanknum'] . "',";
+        foreach ($data as $point) {
+            if ($point['tanknum'] <> $prevtank) {
+                $js = substr($js, 0, strlen($js) -1) . '],[';
+                $labels .= "'" . $point['tanknum'] . "',";
+            }
+            $js .= '["' . $point['timeunix'] . '",' . $point["$datacolumn"] . '],';
+            $prevtank = $point['tanknum'];
+        }
     }
     $js = substr($js, 0, strlen($js) -1);
     $js .= "]];";
     $labels = substr($labels, 0, strlen($labels) - 1);
     $labels .= "];";
-    $charttitle .= ' all tanks';
 }
+
 if (4 > strlen($js)) {
     $notify = "No data for chart";
 }
@@ -110,11 +138,11 @@ if (4 > strlen($js)) {
       $.jqplot.config.enablePlugins = true;
 <?php echo 'var chartdata = ' . $js ?>
 
-<?php echo ($id && !$both) ? '' : 'var legendLabels = ' . $labels; ?>
+<?php echo ($single && !$both) ? '' : 'var legendLabels = ' . $labels; ?>
 
   plot = $.jqplot('chart', chartdata, {
      title: '<?php echo $charttitle ?>',
-<?php echo ($id && !$both) ? '' : "    legend:{show:true, labels: legendLabels, rendererOptions:{placement: 'outside'}},";
+<?php echo ($single && !$both) ? '' : "    legend:{show:true, labels: legendLabels, rendererOptions:{placement: 'outside'}},";
       echo ($both) ? "    series:[{}, {yaxis:'y2axis'}],axesDefaults:{useSeriesColor: true}," : '';?>
 
      axes: {
