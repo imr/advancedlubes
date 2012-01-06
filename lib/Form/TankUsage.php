@@ -30,6 +30,7 @@ class Superbatch_Form_TankUsage extends Horde_Form
             }
         }
         $x = $this->addVariable(_("Tank Display"), 'display_type', 'radio', false, false, false, array($display_enum));
+        $x->setDefault(0);
         $x->setAction(Horde_Form_Action::factory('reload'));
         if ($vars->get('display_type') == 3) {
             $this->addVariable(_("Tanks"), 'tanks', 'multienum', false, false, false, array($tanks_enum));
