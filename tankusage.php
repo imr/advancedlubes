@@ -23,10 +23,20 @@ if ($form->validate($vars)) {
         $week_total++;
     }
     $week_array_top = $week_total -1;
-    if ($vars->get('display_all') == false) { // Only want resource tanks
-        $tankstoget = 'Resource';
+    switch ($vars->get('display_type')) {
+        case 0: // All tanks
+            break;
+        case 1: // Resource
+            $typetoget = 'Resource';
+            break;
+        case 2: // Finish
+            $typetoget = 'Finish';
+            break;
+        case 3: // Selection
+            $tankstoget = $vars->get('tanks');
+            break;
     }
-    $results = $super_driver->listTanks($tankstoget);
+    $results = $super_driver->listTanks($typetoget, $tankstoget);
     $row_odd = false; // use this for table striping
 ?>
 <h3>Tank Usage for <?php echo $week_start ?> to <?php echo $week_end ?></h3>

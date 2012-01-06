@@ -11,13 +11,20 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
 	$this->_db = $params['db'];
     }
 
-    public function listTanks($type)
+    public function listTanks($type, $tanks = array())
     {
         $query = 'SELECT _kp_tankid, tanknum, description, compatibility, currentvolume AS volume FROM tanks WHERE tanknum IS NOT NULL';
         if (!empty($type)) {
             $query .= " AND tanktype = '" . $type . "'";
         }
 
+        if (!empty($tanks)) {
+            $query .= " AND _kp_tankid IN (";
+            for($i = 0; $i < count($tanks); $i++) {
+                $query .= "$tanks[$i],";
+            }
+            $query = substr($query, 0, strlen($query) -1) . ')';
+        }
         /* Execute the query. */
         try {
             $rows = $this->_db->selectAll($query);
