@@ -47,6 +47,7 @@ if ($form->validate($vars)) {
       <th>Description</th>
       <th>Volume</th>
       <th>Average</th>
+      <th>Total</th>
 <?php
     for ($i = $week_array_top; $i> -1; $i--) {
 ?>
@@ -97,12 +98,12 @@ if ($form->validate($vars)) {
                 $top_row .= '<td>&nbsp;</td>';
                 $bottom_row .= '<td>&nbsp;</td>';
             }
-            echo '<td class="rightAlign">' . (int) ($increase_total / $count_week) . '</td>' . $top_row;
+            echo '<td class="rightAlign">' . (int) ($increase_total / $count_week) . '</td><td class="rightAlign">' . (int) $increase_total . '</td>' . $top_row;
 ?>
     </tr>
     <tr class="<?php echo $row_odd ? 'rowOdd' : 'rowEven' ?>">
 <?php
-            echo '<td>' . $result['compatibility'] . '</td><td class="rightAlign">' . (int) ($decrease_total / $count_week) . '</td>' . $bottom_row;
+            echo '<td>' . $result['compatibility'] . '</td><td class="rightAlign">' . (int) ($decrease_total / $count_week) . '</td><td class="rightAlign">' . (int) $decrease_total . '</td>' . $bottom_row;
 ?>
     </tr>
 <?php
