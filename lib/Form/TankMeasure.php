@@ -10,7 +10,8 @@ class Superbatch_Form_TankMeasure extends Horde_Form
         $tanks = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create()->listTanks();
 
         foreach ($tanks as $tank) {
-            $this->addVariable(_($tank['tanknum']), $tank['_kp_tankid'], 'number', false, false, false, array($tank['measured_inches']));
+            $z = $this->addVariable(_($tank['tanknum']), $tank['_kp_tankid'], 'number', false);
+            $z->setDefault($tank['measured_inches']);
         }
 
         $this->setButtons(array(_("Complete Inventory")));
