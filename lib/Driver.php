@@ -36,6 +36,10 @@ abstract class Superbatch_Driver
 
     abstract public function insertTankUsage($date);
 
+    abstract public function updateTankMeasure($id, $measurement);
+
+    abstract public function insertTankHistoryMeasure($id);
+
     function &factory($driver = null, $params = null)
     {
         if(is_null($driver))

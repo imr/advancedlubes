@@ -6,12 +6,17 @@ Horde_Registry::appInit('superbatch');
 $vars = Horde_Variables::getDefaultVariables();
 $form = new Superbatch_Form_TankMeasure($vars);
 
-Horde::addScriptFile('tables.js', 'horde');
-Horde::addScriptFile('tooltips.js', 'horde');
+if ($form->validate($vars)) {
+    try {
+        $form->execute();
+        $notification->push("The tank inventory has been sucessfully updated.");
+    } catch (Exception $e) {
+        $notification->push($e, 'horde.error');
+    }
+}
+ 
 require $registry->get('templates', 'horde') . '/common-header.inc';
 echo Horde::menu();
-if ($form->validate($vars)) {
-
-}      
+$notification->notify(array('listeners' => 'status'));     
 $form->renderActive();
 require $registry->get('templates', 'horde') . '/common-footer.inc';

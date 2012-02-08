@@ -16,4 +16,17 @@ class Superbatch_Form_TankMeasure extends Horde_Form
 
         $this->setButtons(array(_("Complete Inventory")));
     }
+
+    public function execute()
+    {
+        $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
+        $id = 2;
+        $data = $this->_vars->get($id);
+        while($data <> NULL) {
+            $super_driver->updateTankMeasure($id,$data);
+            $id++;
+            $data = $this->_vars->get($id);
+        }
+        $super_driver->insertTankHistoryMeasure($GLOBALS['registry']->getAuth());
+    }
 }

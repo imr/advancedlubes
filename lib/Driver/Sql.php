@@ -13,7 +13,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
 
     public function listTanks($type, $tanks = array())
     {
-        $query = 'SELECT _kp_tankid, tanknum, description, compatibility, capacity, currentvolume AS volume, measured_inches FROM tanks WHERE tanknum IS NOT NULL ORDER BY TankOrderInventory';
+        $query = 'SELECT _kp_tankid, tanknum, description, compatibility, capacity, currentvolume AS volume, Conversion, measured_inches FROM tanks WHERE tanknum IS NOT NULL ORDER BY TankOrderInventory';
         if (!empty($type)) {
             $query .= " AND tanktype = '" . $type . "'";
         }
@@ -239,6 +239,31 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
                  'ON t1.tankid = t2.tankid AND TIMESTAMPDIFF(MINUTE, t1.curtimestamp, t2.curtimestamp) = 5 '.
                  'WHERE ABS(t1.volume - t2.volume) > 83.3) AS temp GROUP BY temp.tankid)';
         $values = array($date,$date,$date);
+
+        try {
+            $this->_db->execute($query, $values);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+    }
+
+    public function updateTankMeasure($id, $measurement) {
+        $query = 'UPDATE tanks SET measured_inches = ? WHERE _kp_tankid = ?';
+        $values = array($id, $measurement);
+
+        try {
+            $this->_db->update($query, $values);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+    }
+
+    public function insertTankHistoryMeasure($id) {
+        $query = 'INSERT INTO tankhistorymeasure(time,user_id,tank_id,measured_inches,volume) ' .
+                 'SELECT ?,?,_kp_tankid,measured_inches,measured_inches * Conversion FROM tanks ' .
+                 'WHERE measured_inches > 0';
+        $date = round(time() / (15 * 60)) * (15 * 60);
+        $values = array(date('Y-m-d H:i', $date),$id);
 
         try {
             $this->_db->execute($query, $values);
