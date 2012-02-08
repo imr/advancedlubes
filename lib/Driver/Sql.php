@@ -249,7 +249,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
 
     public function updateTankMeasure($id, $measurement) {
         $query = 'UPDATE tanks SET measured_inches = ? WHERE _kp_tankid = ?';
-        $values = array($id, $measurement);
+        $values = array($measurement, $id);
 
         try {
             $this->_db->update($query, $values);
