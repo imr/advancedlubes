@@ -10,6 +10,7 @@ if ($form->validate($vars)) {
     try {
         $form->execute();
         $notification->push("The tank inventory has been sucessfully updated.");
+        Horde::url('tanksheet.php', true)->redirect();
     } catch (Exception $e) {
         $notification->push($e, 'horde.error');
     }

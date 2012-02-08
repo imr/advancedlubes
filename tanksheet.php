@@ -7,13 +7,14 @@ Horde::addScriptFile('tables.js', 'horde');
 Horde::addScriptFile('tooltips.js', 'horde');
 require $registry->get('templates', 'horde') . '/common-header.inc';
 echo Horde::menu();
+$notification->notify(array('listeners' => 'status'));     
 
 $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
 $tanks = $super_driver->listTanks();
 $rowOdd = false;
 
-echo Horde::link(Horde::url('tanksheet.php?view=pdf'), _("View PDF")) . 'View PDF</a>';
-echo Horde::link(Horde::url('tankmeasure.php'), _("Update Inventory")) . 'Update Inventory</a>';
+echo Horde::link(Horde::url('tanksheet.php?view=pdf'), _("View PDF")) . 'View PDF</a><BR><BR>';
+echo Horde::link(Horde::url('tankmeasure.php'), _("Update Inventory")) . 'Update Inventory</a><BR>';
 ?>
 <table width="100%" cellspacing=0">
   <thead>
