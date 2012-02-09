@@ -11,18 +11,7 @@ $tanks = $super_driver->listTanks();
 
 $vars = Horde_Variables::getDefaultVariables();
 $view = $vars->get('view');
-/*
-if ($view == 'pdf') {
-    try {
-        $wkhtmltopdf = new Wkhtmltopdf(array('path' => './uploads'));
-        $wkhtmltopdf->setTitle("Tank Inventory Sheet");
-        $wkhtmltopdf->setHTML(file_get_contents("http://example.com"));
-        $wkhtmltopdf->output(Wkhtmltopdf::MODE_DOWNLOAD, "tanks.pdf");
-        exit;
-    } catch (Exception $e) {
-        $notification->push($e->getMessage());
-    }
-} */
+
 $html = '<table border="1px solid" width="100%" cellspacing=0 class="striped sortable"><thead><tr><th>Tank</th><th colspan=2>Description</th>' .
         '<th align=right>Max Vol</th><th align=right>Conv</th>' .
         '<th align=right>Tap Min</th><th align=right>Prev Vol</th>' .
