@@ -8,7 +8,6 @@ Horde::addScriptFile('tables.js', 'horde');
 
 $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
 $tanks = $super_driver->listTanks();
-$rowOdd = 'rowEven';
 
 $vars = Horde_Variables::getDefaultVariables();
 $view = $vars->get('view');
@@ -24,24 +23,20 @@ if ($view == 'pdf') {
         $notification->push($e->getMessage());
     }
 } */
-$html = '<table width="100%" cellspacing=0><thead><tr><th>Tank</th><th>Description</th>' .
-        '<th align=right>Max Capacity</th><th align=right>Previous Volume</th>' .
-        '<th align=right>Previous Measurement</th><th align=right>New Value</th></tr></thead><tbody>';
+$html = '<table border="1px solid" width="100%" cellspacing=0 class="striped sortable"><thead><tr><th>Tank</th><th colspan=2>Description</th>' .
+        '<th align=right>Max Vol</th><th align=right>Conv</th>' .
+        '<th align=right>Tap Min</th><th align=right>Prev Vol</th>' .
+        '<th align=right>Prev Inches</th><th align=right>New Value</th></tr></thead><tbody>';
 foreach ($tanks as $tank) {
-    $html .= "<tr class='$rowOdd'>" .
-             "<td rowspan=2 align=center>$tank[tanknum]</td>" .
-             "<td>$tank[description]</td>" .
-             "<td rowspan=2 class='rightAlign'>$tank[capacity]</td>" .
-             "<td rowspan=2 class='rightAlign'>" . $tank['Conversion'] * $tank['measured_inches'] . "</td>" .
-             "<td rowspan=2 class='rightAlign'>$tank[measured_inches]</td>" .
-             "<td rowspan=2 style='border-bottom:solid'>&nbsp;</td></tr>" .
-             "<tr class='$rowOdd'>" .
-             "<td>$tank[compatibility]</td></tr>";
-    if ($rowOdd == 'rowOdd') {
-        $rowOdd = 'rowEven';
-    } else {
-        $rowOdd = 'rowOdd';
-    }
+    $html .= "<tr>" .
+             "<td width='3%'class='leftAlign'>$tank[tanknum]</td>" .
+             "<td width='32%'>$tank[description]</td><td width='32%'>$tank[compatibility]</td>" .
+             "<td width='4%' class='rightAlign'>$tank[capacity]</td>" .
+             "<td width='4%' class='rightAlign'>$tank[Conversion]</td>" .
+             "<td width='4%' class='rightAlign'>" . (int) $tank['tap_volume'] .
+             "<td width='5%' class='rightAlign'>" . $tank['Conversion'] * $tank['measured_inches'] . "</td>" .
+             "<td width='5%' class='rightAlign'>$tank[measured_inches]</td>" .
+             "<td width='11%' style='border-bottom:solid'>&nbsp;</td></tr>";
 }
 $html .= '</tbody></table>';
 if ($view == 'pdf') {
@@ -57,7 +52,8 @@ if ($view == 'pdf') {
         require $registry->get('templates', 'horde') . '/common-header.inc';
         echo Horde::menu();
         $notification->notify(array('listeners' => 'status'));     
-        echo Horde::link(Horde::url('tanksheet.php?view=pdf'), _("View PDF")) . 'View PDF</a><BR><BR>';
+        echo Horde::link(Horde::url('tanksheet.php?view=simple'), _("View Print Sheet")) . 'View Print Sheet</a> ';
+        echo Horde::link(Horde::url('tanksheet.php?view=pdf'), _("View PDF")) . 'View PDF</a> ';
         echo Horde::link(Horde::url('tankmeasure.php'), _("Update Inventory")) . 'Update Inventory</a><BR>';
         echo $html;
         require $registry->get('templates', 'horde') . '/common-footer.inc';
