@@ -17,10 +17,8 @@ if ($form->validate($vars)) {
     $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
     $weeks = $super_driver->listTankWeeks($week_start, $week_end);
     $week_array = array();
-    $week_total = 0;
-    foreach ($weeks as $week) {
+    foreach ($weeks as $week_total => $week) {
         $week_array[$week_total] = $week['week'];
-        $week_total++;
     }
     $week_array_top = $week_total -1;
     switch ($vars->get('display_type')) {
