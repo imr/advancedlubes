@@ -20,6 +20,7 @@ if ($form->validate($vars)) {
     foreach ($weeks as $week_total => $week) {
         $week_array[$week_total] = $week['week'];
     }
+    $week_total++; // Turn last array index into total week count
     $week_array_top = $week_total -1;
     switch ($vars->get('display_type')) {
         case 0: // All tanks
