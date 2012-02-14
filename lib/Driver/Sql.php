@@ -261,7 +261,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
     public function insertTankHistoryMeasure($id) {
         $query = 'INSERT INTO tankhistorymeasure(time,user_id,tank_id,measured_inches,volume) ' .
                  'SELECT ?,?,_kp_tankid,measured_inches,measured_inches * Conversion FROM tanks ' .
-                 'WHERE measured_inches > 0';
+                 'WHERE _kp_tankid BETWEEN 2 AND 117';
         $date = round(time() / (15 * 60)) * (15 * 60);
         $values = array(date('Y-m-d H:i', $date),$id);
 
