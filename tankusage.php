@@ -20,8 +20,7 @@ if ($form->validate($vars)) {
     foreach ($weeks as $week_total => $week) {
         $week_array[$week_total] = $week['week'];
     }
-    $week_total++; // Turn last array index into total week count
-    $week_array_top = $week_total -1;
+    $week_array_top = $week_total; // Week count is actoually last array index, so -1 of real total
     switch ($vars->get('display_type')) {
         case 0: // All tanks
             break;
@@ -93,7 +92,7 @@ if ($form->validate($vars)) {
                 $count_week++;
                 $wa++;
             }
-            for ($j = $wa; $j < $week_total; $j++) {
+            for ($j = $wa; $j <= $week_total; $j++) {
                 $top_row .= '<td>&nbsp;</td>';
                 $bottom_row .= '<td>&nbsp;</td>';
             }
