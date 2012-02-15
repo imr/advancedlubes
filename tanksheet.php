@@ -17,13 +17,14 @@ $html = '<table border="1px solid" width="100%" cellspacing=0 class="striped sor
         '<th align=right>Tap Min</th><th align=right>Prev Vol</th>' .
         '<th align=right>Prev Inches</th><th align=right>New Value</th></tr></thead><tbody>';
 foreach ($tanks as $tank) {
+    $prev_volume = round($tank['Conversion'] * $tank['measured_inches']);
     $html .= "<tr>" .
              "<td width='3%'class='leftAlign'>$tank[tanknum]</td>" .
              "<td width='32%'>$tank[description]</td><td width='32%'>$tank[compatibility]</td>" .
              "<td width='4%' class='rightAlign'>$tank[capacity]</td>" .
              "<td width='4%' class='rightAlign'>$tank[Conversion]</td>" .
              "<td width='4%' class='rightAlign'>" . (int) $tank['tap_volume'] .
-             "<td width='5%' class='rightAlign'>" . $tank['Conversion'] * $tank['measured_inches'] . "</td>" .
+             "<td width='5%' class='rightAlign'>" . $prev_volume . "</td>" .
              "<td width='5%' class='rightAlign'>$tank[measured_inches]</td>" .
              "<td width='11%' style='border-bottom:solid'>&nbsp;</td></tr>";
 }
