@@ -64,6 +64,20 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         return $rows;
     }
 
+    public function listInventories()
+    {
+        $query = 'SELECT DISTINCT time,user_id FROM tankhistorymeasure';
+                 'GROUP BY time, user_id';
+
+        /* Execute the query. */
+        try {
+            $rows = $this->_db->selectAll($query);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+        return $rows;
+    }
+
     public function getTankHistorybyId($id = 2, $start_time = 1, $end_time) {
         if (!$end_time) {
             $end_time = time();
