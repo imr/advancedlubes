@@ -78,66 +78,6 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         return $rows;
     }
 
-    public function getTankHistorybyId($id = 2, $start_time = 1, $end_time) {
-        if (!$end_time) {
-            $end_time = time();
-        } 
-
-        $query = 'SELECT th.curtimestamp as timeunix, p.productCode as productcode, ' .
-            'th.volume as volume, th.temperature as temperature from tankhistory th ' .
-            'LEFT JOIN products p ON th.productid = p._kp_Products ' .
-            'WHERE th.tankid = ? AND th.curtimestamp BETWEEN FROM_UNIXTIME(?) ' .
-            'AND FROM_UNIXTIME(?) ORDER BY th.curtimestamp';
-        $values = array($id, $start_time, $end_time);
-        try {
-            $rows = $this->_db->selectAll($query, $values);
-        } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
-        }
-        return $rows;
-    }
-
-    public function getTankHistoryMeasurebyId($id = 2, $start_time = 1, $end_time) {
-        if (!$end_time) {
-            $end_time = time();
-        }
-
-        $query = 'SELECT thm.time as timeunix, p.productCode as productcode, ' .
-                 'thm.volume as volume FROM tankhistorymeasure thm ' .
-                 'LEFT JOIN products p ON thm.product_id = p._kp_Products ' .
-                 'WHERE thm.tank_id = ? AND thm.time BETWEEN FROM_UNIXTIME(?) ' .
-                 'AND FROM_UNIXTIME(?) ORDER BY thm.time';
-
-        $values = array($id, $start_time, $end_time);
-        try {
-            $rows = $this->_db->selectAll($query, $values);
-        } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
-        }
-        return $rows;
-    }
-
-    public function getTankHistoriesbyId($id = 2, $start_time = 1, $end_time) {
-        if (!$end_time) {
-            $end_time = time();
-        }
-
-        $query = 'SELECT th.curtimestamp as timeunix, p.productCode as productcode, ' .
-                 'thm.volume as measured, th.volume as sensor, th.temperature as temperature ' .
-                 'FROM tankhistory th LEFT JOIN tankhistorymeasure thm ON thm.tank_id = th.tankid ' .
-                 'AND thm.time = th.curtimestamp LEFT JOIN products p ON th.productid = p._kp_Products ' .
-                 'WHERE th.tankid = ? AND th.curtimestamp BETWEEN FROM_UNIXTIME(?) ' .
-                 'AND FROM_UNIXTIME(?) ORDER BY th.curtimestamp';
-
-        $values = array($id, $start_time, $end_time);
-        try {
-            $rows = $this->_db->selectAll($query, $values);
-        } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
-        }
-        return $rows;
-    }
-
     public function getTanksHistorybyIds($id = array(), $start_time = 1, $end_time) {
         if (!$end_time) {
             $end_time = time();

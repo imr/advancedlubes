@@ -46,88 +46,55 @@ switch ($vars->get('data')) {
 }
 
 $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
-if (count($id) == 1 && !$all) { // get history for 1 tank
-    $single = true;
-    if ($measure) {
-        $data = $super_driver->getTankHistoryMeasurebyId($id[0], $start_time, $end_time);
-    } elseif ($twovolume) {
-        $data = $super_driver->getTankHistoriesbyId($id[0], $start_time, $end_time);
-    } else {
-        $data = $super_driver->getTankHistorybyId($id[0],$start_time, $end_time);
+if ($all) {
+    $id = array();
+    $charttitle .= ' all tanks';
+} else {
+    foreach ($id as $name) {
+        $names .= $super_driver->getTankNamefromId($name) . ', ';
     }
-    $js = "[[";
-    if ($both || $twovolume) {
-        foreach ($data as $point) {
-            $js .= '["' . $point['timeunix'] . '",' . $point[$datacolumn] . '],';
-            $jssecond .= '["' . $point['timeunix'] . '",' . $point[$datacolumn2] . '],';
-        }
-        $js = substr($js, 0, strlen($js) -1) . '],[';
-        $js .= $jssecond;
-        if ($both) {
-            $labels = "['Temperature','Volume']";
-        } else {
-            $labels = "['Measured Volume','Sensor Volume']";
-        }
-    } else {
-        foreach ($data as $point) {
-            $js .= '["' . $point['timeunix'] . '",' . $point["$datacolumn"] . '],';
-        }
-    }
-    $js = substr($js, 0, strlen($js) -1);
-    $js .= "]];";
-    $name = $super_driver->getTankNamefromId($id[0]);
-    $charttitle .= ' tank ' . $name;
-} else { // Get history for all tanks
-    if ($all) {
-        $id = array();
-        $charttitle .= ' all tanks';
-    } else {
-        foreach ($id as $name) {
-            $names .= $super_driver->getTankNamefromId($name) . ', ';
-        }
-        $charttitle .= ' tanks ' . substr($names, 0, strlen($names) - 2);
-    }
- 
-    if ($measure) {
-        $data = $super_driver->getTanksHistoryMeasurebyIds($id, $start_time, $end_time); 
-    } elseif ($twovolume) {
-        $data = $super_driver->getTanksHistoriesbyIds($id, $start_time, $end_time);
-    } else {
-        $data = $super_driver->getTanksHistorybyIds($id, $start_time, $end_time);
-    }
-    $prevtank = $data[0]['tanknum'];
-    $js = '[[';
-    if ($both || $twovolume) {
-        $labels = "['" . $data[0]['tanknum'] . " $datacolumn','" . $data[0]['tanknum'] . " $datacolumn2',";
-        foreach ($data as $point) {
-            if ($point['tanknum'] <> $prevtank) {
-                $js = substr($js, 0, strlen($js) -1) . '],[';
-                $js .= substr($jssecond, 0, strlen($jssecond) -1) . '],[';
-                $jssecond = '';
-                $labels .= "'" . $point['tanknum'] . " $datacolumn','" . $point['tanknum'] . " $datacolumn2',";
-            }
-            $js .= '["' . $point['timeunix'] . '",' . $point[$datacolumn] . '],';
-            $jssecond .= '["' . $point['timeunix'] . '",' . $point[$datacolumn2] . '],';
-            $prevtank = $point['tanknum'];
-        }
-        $js = substr($js, 0, strlen($js) -1) . '],[';
-        $js .= $jssecond;
-    } else {
-        $labels = "['" . $data[0]['tanknum'] . "',";
-        foreach ($data as $point) {
-            if ($point['tanknum'] <> $prevtank) {
-                $js = substr($js, 0, strlen($js) -1) . '],[';
-                $labels .= "'" . $point['tanknum'] . "',";
-            }
-            $js .= '["' . $point['timeunix'] . '",' . $point["$datacolumn"] . '],';
-            $prevtank = $point['tanknum'];
-        }
-    }
-    $js = substr($js, 0, strlen($js) -1);
-    $js .= "]];";
-    $labels = substr($labels, 0, strlen($labels) - 1);
-    $labels .= "];";
+    $charttitle .= ' tanks ' . substr($names, 0, strlen($names) - 2);
 }
+ 
+if ($measure) {
+    $data = $super_driver->getTanksHistoryMeasurebyIds($id, $start_time, $end_time); 
+} elseif ($twovolume) {
+    $data = $super_driver->getTanksHistoriesbyIds($id, $start_time, $end_time);
+} else {
+    $data = $super_driver->getTanksHistorybyIds($id, $start_time, $end_time);
+}
+$prevtank = $data[0]['tanknum'];
+$js = '[[';
+if ($both || $twovolume) {
+    $labels = "['" . $data[0]['tanknum'] . " $datacolumn','" . $data[0]['tanknum'] . " $datacolumn2',";
+    foreach ($data as $point) {
+        if ($point['tanknum'] <> $prevtank) {
+            $js = substr($js, 0, strlen($js) -1) . '],[';
+            $js .= substr($jssecond, 0, strlen($jssecond) -1) . '],[';
+            $jssecond = '';
+            $labels .= "'" . $point['tanknum'] . " $datacolumn','" . $point['tanknum'] . " $datacolumn2',";
+        }
+        $js .= '["' . $point['timeunix'] . '",' . $point[$datacolumn] . '],';
+        $jssecond .= '["' . $point['timeunix'] . '",' . $point[$datacolumn2] . '],';
+        $prevtank = $point['tanknum'];
+    }
+    $js = substr($js, 0, strlen($js) -1) . '],[';
+    $js .= $jssecond;
+} else {
+    $labels = "['" . $data[0]['tanknum'] . "',";
+    foreach ($data as $point) {
+        if ($point['tanknum'] <> $prevtank) {
+            $js = substr($js, 0, strlen($js) -1) . '],[';
+            $labels .= "'" . $point['tanknum'] . "',";
+        }
+        $js .= '["' . $point['timeunix'] . '",' . $point["$datacolumn"] . '],';
+        $prevtank = $point['tanknum'];
+    }
+}
+$js = substr($js, 0, strlen($js) -1);
+$js .= "]];";
+$labels = substr($labels, 0, strlen($labels) - 1);
+$labels .= "];";
 
 if (4 > strlen($js)) {
     $notify = "No data for chart";
