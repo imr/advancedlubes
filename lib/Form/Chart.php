@@ -12,21 +12,15 @@ class Superbatch_Form_Chart extends Horde_Form
                 $tanks_enum[$tank['_kp_tankid']] = $tank['tanknum'];
             }
         }
-        if ($vars->get('tankall') == true) {
-            $data_enum = array(
-                'temp' => 'Temperature',
-                'vol' => 'Volume'
-            );
-        } else {
-            $data_enum = array(
-                'both' => 'Temp and Volume',
-                'temp' => 'Temperature',
-                'vol' => 'Volume'
-            );
-        }
+        $data_enum = array(
+            'both' => 'Temp and Volume',
+            'temp' => 'Temperature',
+            'vol' => 'Volume',
+            'meas' => 'Measured Volume',
+            'twovol' => 'Measured and Sensor Volume'
+        );
         $this->addVariable(_("Tank Selection"), 'tank', 'multienum', false, false, '', array($tanks_enum));
-        $v = $this->addVariable(_("Select All"), 'tankall', 'boolean', false, false, '');
-        $v->setAction(Horde_Form_Action::factory('reload'));
+        $this->addVariable(_("Select All"), 'tankall', 'boolean', false, false, '');
         $this->addVariable(_("Data to graph"), 'data', 'enum', false, false, '',array($data_enum));
         $this->addVariable(_("Start Date"), 'time_start', 'monthdayyear', false);
         $this->addVariable(_("End Date"), 'time_end', 'monthdayyear', false);

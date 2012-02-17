@@ -97,22 +97,69 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         return $rows;
     }
 
-    public function getTankHistorybyIds($id = array(), $start_time = 1, $end_time) {
+    public function getTankHistoryMeasurebyId($id = 2, $start_time = 1, $end_time) {
+        if (!$end_time) {
+            $end_time = time();
+        }
+
+        $query = 'SELECT thm.time as timeunix, p.productCode as productcode, ' .
+                 'thm.volume as volume FROM tankhistorymeasure thm ' .
+                 'LEFT JOIN products p ON thm.product_id = p._kp_Products ' .
+                 'WHERE thm.tank_id = ? AND thm.time BETWEEN FROM_UNIXTIME(?) ' .
+                 'AND FROM_UNIXTIME(?) ORDER BY thm.time';
+
+        $values = array($id, $start_time, $end_time);
+        try {
+            $rows = $this->_db->selectAll($query, $values);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+        return $rows;
+    }
+
+    public function getTankHistoriesbyId($id = 2, $start_time = 1, $end_time) {
+        if (!$end_time) {
+            $end_time = time();
+        }
+
+        $query = 'SELECT th.curtimestamp as timeunix, p.productCode as productcode, ' .
+                 'thm.volume as measured, th.volume as sensor, th.temperature as temperature ' .
+                 'FROM tankhistory th LEFT JOIN tankhistorymeasure thm ON thm.tank_id = th.tankid ' .
+                 'AND thm.time = th.curtimestamp LEFT JOIN products p ON th.productid = p._kp_Products ' .
+                 'WHERE th.tankid = ? AND th.curtimestamp BETWEEN FROM_UNIXTIME(?) ' .
+                 'AND FROM_UNIXTIME(?) ORDER BY th.curtimestamp';
+
+        $values = array($id, $start_time, $end_time);
+        try {
+            $rows = $this->_db->selectAll($query, $values);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+        return $rows;
+    }
+
+    public function getTanksHistorybyIds($id = array(), $start_time = 1, $end_time) {
         if (!$end_time) {
             $end_time = time();
         } 
+        $values = array();
 
         $query = 'SELECT t.tanknum, th.curtimestamp as timeunix, p.productCode as productcode, ' .
             'th.volume as volume, th.temperature as temperature from tankhistory th ' .
             'INNER JOIN tanks t ON th.tankid = t._kp_tankid ' .
-            'LEFT JOIN products p ON th.productid = p._kp_Products ' .
-            'WHERE th.tankid IN (?';
-        for ($i = 0;count($id) - 1 > $i; $i++) {
-            $query .= ',?';
+            'LEFT JOIN products p ON th.productid = p._kp_Products ';
+        if (!empty($id)) {
+            $query .= 'WHERE th.tankid IN (?';
+            for ($i = 0;count($id) - 1 > $i; $i++) {
+                $query .= ',?';
+            }
+            $values = $id;
+            $query .= ') AND ';
+        } else {
+            $query .= 'WHERE ';
         }
-        $query .= ') AND th.curtimestamp BETWEEN FROM_UNIXTIME(?) ' .
+        $query .= 'th.curtimestamp BETWEEN FROM_UNIXTIME(?) ' .
             'AND FROM_UNIXTIME(?) ORDER BY th.tankid, th.curtimestamp';
-        $values = $id;
         $values[] = $start_time;
         $values[] = $end_time;
         try {
@@ -123,23 +170,70 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         return $rows;
     }
 
-    public function getTanksHistory($start_time = 1, $end_time) {
+    public function getTanksHistoryMeasurebyIds($id = array(), $start_time = 1, $end_time) {
         if (!$end_time) {
             $end_time = time();
-        }
-        $query = 'SELECT t.tanknum as tanknum, th.curtimestamp as timeunix, p.productCode as productcode, ' .
-            'th.volume as volume, th.temperature as temperature FROM tankhistory th INNER JOIN tanks t ' .
-            'ON th.tankid = t._kp_tankid LEFT JOIN products p ON th.productid = p._kp_Products ' .
-            'WHERE th.curtimestamp BETWEEN FROM_UNIXTIME(?) AND FROM_UNIXTIME(?) ' .
-            'ORDER BY th.tankid';
-        $values = array($start_time, $end_time);
+        } 
 
+        $query = 'SELECT t.tanknum, thm.time as timeunix, p.productCode as productcode, ' .
+                 'thm.volume as volume FROM tankhistorymeasure thm ' .
+                 'INNER JOIN tanks t ON thm.tank_id = t._kp_tankid ' .
+                 'LEFT JOIN products p ON thm.product_id = p._kp_Products ';
+        if (!empty($id)) {
+            $query .= 'WHERE thm.tank_id IN (?';
+            for ($i = 0;count($id) - 1 > $i; $i++) {
+                $query .= ',?';
+            }
+            $values = $id;
+            $query .= ') AND ';
+        } else {
+            $query .= 'WHERE ';
+            $values = array();
+        }
+        $query .= 'thm.time BETWEEN FROM_UNIXTIME(?) ' .
+            'AND FROM_UNIXTIME(?) ORDER BY thm.tank_id, thm.time';
+        $values[] = $start_time;
+        $values[] = $end_time;
         try {
             $rows = $this->_db->selectAll($query, $values);
         } catch (Horde_Db_Exception $e) {
             throw new Superbatch_Exception($e);
         }
         return $rows;
+    }
+
+    public function getTanksHistoriesbyIds($id = array(), $start_time = 1, $end_time) {
+        if (!$end_time) {
+            $end_time = time();
+        }
+        $values = array();
+
+        $query = 'SELECT t.tanknum, th.curtimestamp as timeunix, p.productCode as productcode, ' .
+                 'thm.volume as measured, th.volume as sensor, th.temperature as temperature ' .
+                 'FROM tankhistory th INNER JOIN tanks t ON th.tankid = t._kp_tankid ' .
+                 'LEFT OUTER JOIN tankhistorymeasure thm ON thm.tank_id = th.tankid ' .
+                 'AND thm.time = th.curtimestamp LEFT JOIN products p ON th.productid = p._kp_Products ';
+        if (!empty($id)) {
+            $query .= 'WHERE th.tankid IN (?';
+            for ($i = 0;count($id) - 1 > $i; $i++) {
+                $query .= ',?';
+            }
+            $values = $id;
+            $query .= ') AND ';
+        } else {
+            $query .= 'WHERE ';
+        }
+        $query .= 'th.curtimestamp BETWEEN FROM_UNIXTIME(?) ' .
+                  'AND FROM_UNIXTIME(?) ORDER BY th.tankid, th.curtimestamp';
+        $values[] = $start_time;
+        $values[] = $end_time;
+        try {
+            $rows = $this->_db->selectAll($query, $values);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+        return $rows;
+
     }
 
     public function getTankFluxbyId($id = 2, $volume = 16, $start_time = 1, $end_time) { //volume is gallons per 5 or 6 minute interval
@@ -273,8 +367,9 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
     }
 
     public function insertTankHistoryMeasure($id) {
-        $query = 'INSERT INTO tankhistorymeasure(time,user_id,tank_id,measured_inches,volume) ' .
-                 'SELECT ?,?,_kp_tankid,measured_inches,measured_inches * Conversion + Cone FROM tanks ' .
+        $query = 'INSERT INTO tankhistorymeasure(time,user_id,tank_id,product_id, measured_inches,volume) ' .
+                 'SELECT ?,?,_kp_tankid,_kp_Products,measured_inches,measured_inches * Conversion + Cone ' .
+                 'FROM tanks LEFT OUTER JOIN products on currentcontents = productcode ' .
                  'WHERE _kp_tankid BETWEEN 2 AND 117';
         $date = round(time() / (15 * 60)) * (15 * 60);
         $values = array(date('Y-m-d H:i', $date),$id);
