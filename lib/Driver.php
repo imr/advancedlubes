@@ -38,7 +38,7 @@ abstract class Superbatch_Driver
 
     abstract public function insertTankUsage($date);
 
-    abstract public function updateTankMeasure($id, $measurement);
+    abstract public function updateTankMeasure($data);
 
     abstract public function insertTankHistoryMeasure($id);
 

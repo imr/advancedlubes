@@ -295,10 +295,24 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         }
     }
 
-    public function updateTankMeasure($id, $measurement) {
-        $query = 'UPDATE tanks SET measured_inches = ? WHERE _kp_tankid = ?';
-        $values = array($measurement, $id);
-
+    public function updateTankMeasure($data) {
+        $total = count($data);
+        for($i = 0; $i < $total; $i++) {
+            $when .= 'WHEN ? THEN ? ';
+            $in .= '?,';
+        }
+        $in = substr($in, 0, -1);
+        foreach ($data as $id => $value) {
+            $description[] = $id;
+            $description[] = $value[0];
+            $measurement[] = $id;
+            $measurement[] = $value[1];
+        }
+        $query = "UPDATE tanks SET description = CASE _kp_tankid $when" . 
+                 "END, measured_inches = CASE _kp_tankid $when " .
+                 "END WHERE _kp_tankid IN ($in)";
+        
+        $values = array_merge($description, $measurement, array_keys($data));
         try {
             $this->_db->update($query, $values);
         } catch (Horde_Db_Exception $e) {
