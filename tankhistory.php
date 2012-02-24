@@ -111,7 +111,7 @@ if (4 > strlen($js)) {
  <link rel="stylesheet" type="text/css" href="jquery.jqplot.css" />
 
  <!-- BEGIN: load jquery -->
- <script language="javascript" type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+ <script language="javascript" type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
  <!-- END: load jquery -->
 
  <!-- BEGIN: load jqplot -->

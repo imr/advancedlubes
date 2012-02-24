@@ -34,7 +34,7 @@ if (!$GLOBALS['browser']->isMobile()) {
     Horde::includeFavicon();
     //Horde::includeStylesheetFiles();
     //Horde::includeScriptFiles();
-    Horde::addScriptFile('jquery-1.4.2.min.js');
+    Horde::addScriptFile('jquery-1.7.1.min.js');
     Horde::addScriptFile('jquery.jqplot.js');
     Horde::addScriptFile('plugins/jqplot.dateAxisRenderer.js');
     Horde::addScriptFile('plugins/jqplot.highlighter.js');
