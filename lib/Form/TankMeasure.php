@@ -25,7 +25,7 @@ class Superbatch_Form_TankMeasure extends Horde_Form
         $compdata = $this->_vars->get("comp$id");
         $measdata = $this->_vars->get("meas$id");
         while($measdata <> NULL) {
-            $data[$id] = array($descdata,$measdata);
+            $data[$id] = array($descdata,$compdata,$measdata);
             $id++;
             $descdata = $this->_vars->get("desc$id");
             $compdata = $this->_vars->get("comp$id");

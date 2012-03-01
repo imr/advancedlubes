@@ -305,14 +305,17 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         foreach ($data as $id => $value) {
             $description[] = $id;
             $description[] = $value[0];
+            $compatibility[] = $id;
+            $compatibility[] = $value[1];
             $measurement[] = $id;
-            $measurement[] = $value[1];
+            $measurement[] = $value[2];
         }
         $query = "UPDATE tanks SET description = CASE _kp_tankid $when" . 
+                 "END, compatibility = CASE _kp_tankid $when" .
                  "END, measured_inches = CASE _kp_tankid $when " .
                  "END WHERE _kp_tankid IN ($in)";
         
-        $values = array_merge($description, $measurement, array_keys($data));
+        $values = array_merge($description, $compatibility, $measurement, array_keys($data));
         try {
             $this->_db->update($query, $values);
         } catch (Horde_Db_Exception $e) {
