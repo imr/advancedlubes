@@ -11,7 +11,7 @@ class Superbatch_Form_TankMeasure extends Horde_Form
 
         foreach ($tanks as $tank) {
             $z = $this->addVariable(_($tank['tanknum']), $tank['_kp_tankid'], 'Superbatch:TankInventory', false);
-            $z->setDefault(array($tank['description'], $tank['measured_inches']));
+            $z->setDefault(array($tank['description'], $tank['compatibility'], $tank['measured_inches']));
         }
 
         $this->setButtons(array(_("Complete Inventory")));
@@ -22,11 +22,13 @@ class Superbatch_Form_TankMeasure extends Horde_Form
         $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
         $id = 2;
         $descdata = $this->_vars->get("desc$id");
+        $compdata = $this->_vars->get("comp$id");
         $measdata = $this->_vars->get("meas$id");
         while($measdata <> NULL) {
             $data[$id] = array($descdata,$measdata);
             $id++;
             $descdata = $this->_vars->get("desc$id");
+            $compdata = $this->_vars->get("comp$id");
             $measdata = $this->_vars->get("meas$id");
         }
         $super_driver->updateTankMeasure($data);

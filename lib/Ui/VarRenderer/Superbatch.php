@@ -13,10 +13,16 @@ class Horde_Core_Ui_VarRenderer_Superbatch extends Horde_Core_Ui_VarRenderer_Htm
                $varvalue[0],
                $this->_getActionScripts($form, $var)
         );
-        printf('<input type="text" name="meas%s" id="%s" size="7" tabindex="1" value="%s" %s />',
+        printf('<input type="text" name="comp%s" id="%s" size="50" value="%s" %s />',
                $varname,
                $this->_genID($var->getVarName(), false),
                $varvalue[1],
+               $this->_getActionScripts($form, $var)
+        );
+        printf('<input type="text" name="meas%s" id="%s" size="7" tabindex="1" value="%s" %s />',
+               $varname,
+               $this->_genID($var->getVarName(), false),
+               $varvalue[2],
                $this->_getActionScripts($form, $var)
         );
 
