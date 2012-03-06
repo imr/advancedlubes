@@ -9,6 +9,7 @@ class Superbatch_Form_TankMeasure extends Horde_Form
 
         $tanks = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create()->listTanks();
 
+        $this->addVariable(_('Record History'), 'history', 'boolean', true, false, false);
         foreach ($tanks as $tank) {
             $z = $this->addVariable(_($tank['tanknum']), $tank['_kp_tankid'], 'Superbatch:TankInventory', false);
             $z->setDefault(array($tank['description'], $tank['compatibility'], $tank['measured_inches']));
@@ -32,7 +33,9 @@ class Superbatch_Form_TankMeasure extends Horde_Form
             $measdata = $this->_vars->get("meas$id");
         }
         $super_driver->updateTankMeasure($data);
-        $super_driver->insertTankHistoryMeasure($GLOBALS['registry']->getAuth());
+        if ($this->_vars->get('history') == true) {
+            $super_driver->insertTankHistoryMeasure($GLOBALS['registry']->getAuth());
+        }
     }
 
     public function renderActive()
