@@ -15,7 +15,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
     {
         $query = 'SELECT _kp_tankid, tanknum, description, compatibility, note, userproduct, ' .
                  'capacity, currentvolume AS volume, Conversion, measured_inches, tap_inches, tap_volume ' .
-                 'FROM tanks WHERE tanknum IS NOT NULL ORDER BY TankOrderInventory';
+                 'FROM tanks WHERE tanknum IS NOT NULL';
         if (!empty($type)) {
             $query .= " AND tanktype = '" . $type . "'";
         }
@@ -27,6 +27,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
             }
             $query = substr($query, 0, strlen($query) -1) . ')';
         }
+        $query .= ' ORDER BY TankOrderInventory';
         /* Execute the query. */
         try {
             $rows = $this->_db->selectAll($query);
