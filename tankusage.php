@@ -65,11 +65,13 @@ if ($form->validate($vars)) {
             $bottom_row = '';
             $increase_total = 0;
             $decrease_total = 0;
+            $row_volume = $result['volume'];
+            $bottom_volume += $row_volume;
 ?>
     <tr class="<?php echo $row_odd ? 'rowOdd' : 'rowEven' ?>">
       <td rowspan=2><?php echo $result['tanknum'] ?></td>
       <td><?php echo $result['description'] ?></td>
-      <td rowspan=2 class="rightAlign"><?php echo $result['volume'] ?></td>
+      <td rowspan=2 class="rightAlign"><?php echo (int) $row_volume ?></td>
 <?php
             $wa = 0;
             foreach ($row_results as $row_data) {
@@ -96,6 +98,8 @@ if ($form->validate($vars)) {
                 $top_row .= '<td>&nbsp;</td>';
                 $bottom_row .= '<td>&nbsp;</td>';
             }
+            $bottom_increase += $increase_total;
+            $bottom_decrease += $decrease_total;
             echo '<td class="rightAlign">' . (int) ($increase_total / $count_week) . '</td><td class="rightAlign">' . (int) $increase_total . '</td>' . $top_row;
 ?>
     </tr>
@@ -106,12 +110,40 @@ if ($form->validate($vars)) {
     </tr>
 <?php
             $row_odd = !$row_odd;
+            $row_count++;  
         }
-}
+        $bottom_in_average = $bottom_increase / $count_week;
+        $bottom_de_average = $bottom_decrease / $count_week;
 ?>
   </tbody>
+  <thead>
+    <tr>
+      <th rowspan=2>Total</th>
+      <th rowspan=2></th>
+      <th class="rightAlign" rowspan=2><?php echo (int) $bottom_volume ?></th>
+      <th class="rightAlign"><?php echo (int) $bottom_in_average ?></th>
+      <th class="rightAlign"><?php echo (int) $bottom_increase ?></th>
+    </tr>
+    <tr>
+      <th class="rightAlign"><?php echo (int) $bottom_de_average ?></th>
+      <th class="rightAlign"><?php echo (int) $bottom_decrease ?></th>
+    </tr>
+    <tr>
+      <th rowspan=2>Average</th>
+      <th rowspan=2></th>
+      <th class="rightAlign" rowspan=2><?php echo (int) ($bottom_volume / $row_count) ?></th>
+      <th class="rightAlign"><?php echo (int) ($bottom_in_average / $row_count) ?></th>
+      <th class="rightAlign"><?php echo (int) ($bottom_increase / $row_count) ?></th>
+    </tr>
+    <tr>
+      <th class="rightAlign"><?php echo (int) ($bottom_de_average / $row_count) ?></th>
+      <th class="rightAlign"><?php echo (int) ($bottom_decrease / $row_count) ?></th>
+    </tr>
+  </thead>
 </table>
+
 </br>
 <?php
+}
 $form->renderActive();
 require $registry->get('templates', 'horde') . '/common-footer.inc';
