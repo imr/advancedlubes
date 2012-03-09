@@ -12,7 +12,8 @@ $tanks = $super_driver->listTanks();
 $vars = Horde_Variables::getDefaultVariables();
 $view = $vars->get('view');
 
-$html = '<table border="1px solid" width="100%" cellspacing=0 class="striped sortable"><thead><tr><th>Tank</th><th colspan=2>Description</th>' .
+$html = '<table border="1px solid" width="100%" cellspacing=0 class="striped sortable"><thead><tr><th>Tank</th>' .
+        '<th>Product</th><th colspan=3>Description</th>' .
         '<th align=right>Max Vol</th><th align=right>Conv</th>' .
         '<th align=right>Tap Min</th><th align=right>Prev Vol</th>' .
         '<th align=right>Prev Inches</th><th align=right>New Value</th></tr></thead><tbody>';
@@ -20,7 +21,10 @@ foreach ($tanks as $tank) {
     $prev_volume = round($tank['Conversion'] * $tank['measured_inches']);
     $html .= "<tr>" .
              "<td width='3%'class='leftAlign'>$tank[tanknum]</td>" .
-             "<td width='32%'>$tank[description]</td><td width='32%'>$tank[compatibility]</td>" .
+             "<td width='4%'>$tank[userproduct]</td>" .
+             "<td width='25%'>$tank[description]</td>" .
+             "<td width='18%'>$tank[compatibility]</td>" .
+             "<td width='18%'>$tank[note]</td>" .
              "<td width='4%' class='rightAlign'>$tank[capacity]</td>" .
              "<td width='4%' class='rightAlign'>$tank[Conversion]</td>" .
              "<td width='4%' class='rightAlign'>" . (int) $tank['tap_volume'] .

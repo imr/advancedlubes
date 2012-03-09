@@ -13,7 +13,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
 
     public function listTanks($type, $tanks = array())
     {
-        $query = 'SELECT _kp_tankid, tanknum, description, compatibility, capacity, currentvolume AS volume, Conversion, measured_inches, tap_inches, tap_volume FROM tanks WHERE tanknum IS NOT NULL ORDER BY TankOrderInventory';
+        $query = 'SELECT _kp_tankid, tanknum, description, compatibility, note, capacity, currentvolume AS volume, Conversion, measured_inches, tap_inches, tap_volume FROM tanks WHERE tanknum IS NOT NULL ORDER BY TankOrderInventory';
         if (!empty($type)) {
             $query .= " AND tanktype = '" . $type . "'";
         }
@@ -307,15 +307,18 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
             $description[] = $value[0];
             $compatibility[] = $id;
             $compatibility[] = $value[1];
+            $note[] = $id;
+            $note[] = $value[2];
             $measurement[] = $id;
-            $measurement[] = $value[2];
+            $measurement[] = $value[3];
         }
         $query = "UPDATE tanks SET description = CASE _kp_tankid $when" . 
                  "END, compatibility = CASE _kp_tankid $when" .
+                 "END, note = CASE _kp_tankid $when" .
                  "END, measured_inches = CASE _kp_tankid $when " .
                  "END WHERE _kp_tankid IN ($in)";
         
-        $values = array_merge($description, $compatibility, $measurement, array_keys($data));
+        $values = array_merge($description, $compatibility, $note, $measurement, array_keys($data));
         try {
             $this->_db->update($query, $values);
         } catch (Horde_Db_Exception $e) {
