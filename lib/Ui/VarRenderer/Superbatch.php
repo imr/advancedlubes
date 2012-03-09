@@ -7,6 +7,12 @@ class Horde_Core_Ui_VarRenderer_Superbatch extends Horde_Core_Ui_VarRenderer_Htm
         $varname = @htmlspecialchars($var->getVarName(), ENT_QUOTES, $this->_charset);
         $varvalue = $var->getValue($vars);
 
+        printf('<input type="text" name="prod%s" id="%s" size="10" value="%s" %s />',
+               $varname,
+               $this->_genID($var->getVarName(), false),
+               $varvalue[4],
+               $this->_getActionScripts($form, $var)
+        );
         printf('<input type="text" name="desc%s" id="%s" size="50" value="%s" %s />',
                $varname,
                $this->_genID($var->getVarName(), false),

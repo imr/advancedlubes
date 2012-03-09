@@ -13,7 +13,7 @@ $vars = Horde_Variables::getDefaultVariables();
 $view = $vars->get('view');
 
 $html = '<table border="1px solid" width="100%" cellspacing=0 class="striped sortable"><thead><tr><th>Tank</th>' .
-        '<th>Product</th><th colspan=3>Description</th>' .
+        '<th>Product</th><th colspan=2>Description</th><th>Note</th>' .
         '<th align=right>Max Vol</th><th align=right>Conv</th>' .
         '<th align=right>Tap Min</th><th align=right>Prev Vol</th>' .
         '<th align=right>Prev Inches</th><th align=right>New Value</th></tr></thead><tbody>';
