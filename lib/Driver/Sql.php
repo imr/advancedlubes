@@ -179,21 +179,50 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
 
     }
 
-    public function getTankFluxbyId($id = 2, $volume = 16, $start_time = 1, $end_time) { //volume is gallons per 5 or 6 minute interval
+    public function getTankFluxbyIds($id = array(), $volume = 16, $start_time = 1, $end_time) { //volume is gallons per 5 or 6 minute interval
         if (!$end_time)
             $end_time = time();
         
+        if (!empty($id)) {
+            $where = 'WHERE tankid IN (?';
+            for ($i = 0;count($id) - 1 > $i; $i++) {
+                $where .= ',?';
+            }
+            $values = array_merge($id, array($start_time, $end_time), $id, array($start_time, $end_time, $volume));
+            $where .= ') AND ';
+        } else {
+            $values = array($start_time, $end_time, $start_time, $end_time, $volume);
+            $where = 'WHERE ';
+        }
+        $where .= 'curtimestamp BETWEEN FROM_UNIXTIME(?) AND FROM_UNIXTIME(?)';
         $query = 'SELECT t1._kp_tankhistoryid AS startid, t2._kp_tankhistoryid AS endid, t1.volume AS startvolume, t2.volume AS endvolume,' .
                      ' t1.curtimestamp AS starttime, t2.curtimestamp as endtime, productcode FROM (SELECT * from tankhistory' .
-                     ' WHERE tankid = ? AND curtimestamp BETWEEN FROM_UNIXTIME(?) and FROM_UNIXTIME(?)) AS t1 INNER JOIN' .
-                     ' (SELECT * from tankhistory WHERE tankid = ? AND curtimestamp BETWEEN FROM_UNIXTIME(?) and FROM_UNIXTIME(?))' .
-                     ' AS t2 ON TIMESTAMPDIFF(MINUTE, t1.curtimestamp, t2.curtimestamp) = 5' .
+                     " $where) AS t1 INNER JOIN" .
+                     " (SELECT * from tankhistory $where)" .
+                     ' AS t2 ON t1.tankid = t2.tankid AND TIMESTAMPDIFF(MINUTE, t1.curtimestamp, t2.curtimestamp) = 5' .
                      ' LEFT JOIN products on t1.productid = products._kp_Products' .
                      ' WHERE ABS(t1.volume - t2.volume) > ? ORDER BY t1._kp_tankhistoryid';
-        $values = array($id, $start_time, $end_time, $id, $start_time, $end_time, $volume);
-
         try {
             $rows = $this->_db->selectAll($query, $values);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+        return $rows;
+    }
+
+    public function getTankFluxRecent($volume) {
+        $query = 'SELECT tanknum, t1._kp_tankhistoryid AS startid, t2._kp_tankhistoryid AS endid, ' .
+                 't1.volume AS startvolume, t2.volume AS endvolume, ' .
+                 't1.curtimestamp AS starttime, t2.curtimestamp as endtime, productcode FROM (SELECT * from tankhistory ' .
+                 'WHERE TIMESTAMPDIFF(MINUTE, curtimestamp, NOW()) < 15) AS t1 INNER JOIN ' .
+                 '(SELECT * from tankhistory WHERE TIMESTAMPDIFF(MINUTE, curtimestamp, NOW()) < 15) AS t2 ' .
+                 'ON t1.tankid = t2.tankid AND TIMESTAMPDIFF(MINUTE, t1.curtimestamp, t2.curtimestamp) = 5 ' .
+                 'LEFT JOIN products on t1.productid = products._kp_Products ' .
+                 'INNER JOIN tanks on t1.tankid = tanks._kp_tankid ' .
+                 'WHERE ABS(t1.volume - t2.volume) > ? ORDER BY t1.tankid, t1._kp_tankhistoryid ';
+
+        try {
+            $rows = $this->_db->selectAll($query, array($volume));
         } catch (Horde_Db_Exception $e) {
             throw new Superbatch_Exception($e);
         }

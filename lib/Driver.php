@@ -24,7 +24,9 @@ abstract class Superbatch_Driver
 
     abstract public function getTanksHistoriesbyIds($id = array(), $start_time = 1, $end_time);
 
-    abstract public function getTankFluxbyId($id = 2, $volume, $start_time, $end_time);
+    abstract public function getTankFluxbyIds($id = array(), $volume, $start_time, $end_time);
+
+    abstract public function getTankFluxRecent($volume);
 
     abstract public function getFluxbyDay($start_time = 1, $volume = 16);
 

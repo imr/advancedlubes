@@ -11,7 +11,7 @@ require $registry->get('templates', 'horde') . '/common-header.inc';
 echo Horde::menu();
 if ($form->validate($vars)) {
        
-    $id = $vars->get('tank');
+    $id = $vars->get('tanks');
     $volume = $vars->get('volume') / 12; //change gallon per hour to gallon per 5 minute increment
     $start_array = $vars->get('time_start');
     $end_array = $vars->get('time_end');
@@ -25,9 +25,33 @@ if ($form->validate($vars)) {
     $end_time = (int)strtotime("$end_month/$end_day/$end_year");
     $start_date = $start_year . str_pad($start_month, 2, "0", STR_PAD_LEFT) . str_pad($start_day, 2, "0", STR_PAD_LEFT);
     $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
+    switch ($vars->get('display_type')) {
+        case 0: // Recently Changed
+            $recent = true;
+            break;
+        case 0: // All tanks
+            $all = true;
+            break;
+        case 1: // Resource
+            $typetoget = 'Resource';
+            break;
+        case 2: // Finish
+            $typetoget = 'Finish';
+            break;
+        case 3: // Selection
+            $tankstoget = $vars->get('tanks');
+            break;
+    }
 
-    if ($id) { //changes for one tank
-        $results = $super_driver->getTankFluxbyId($id,$volume,$start_time,$end_time);
+    if ($recent) {
+        $results = $super_driver->getTankFluxRecent($volume);
+    } elseif ($all) {
+        $results = $super_driver->getFluxbyDay($start_day, $volume);
+echo "GETTING ALL";
+    } else {
+        $results = $super_driver->getTankFluxbyIds($id,$volume,$start_time,$end_time);
+    }
+    if (count($id) == 1) { //changes for one tank
         $tank = $super_driver->getTankNamefromId($id);
 ?>
 <h3>Volume Changes for tank <?php echo $tank ?></h3>
@@ -72,7 +96,6 @@ if ($form->validate($vars)) {
                  "<td class='rightAlign'>$endvolume<td class='rightAlign'>$totalvolume</td><td class='rightAlign'>$rateofchange</td></tr>";
         }
     } else { // volume changes for one day
-        $results = $super_driver->getFluxbyDay($start_date,$volume);
 ?>
 <h3>Volume Changes for <?php echo $start_date ?></h3>
 <table width="100%" class="sortable" cellspacing=0">
