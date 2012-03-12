@@ -34,7 +34,11 @@ if ($form->validate($vars)) {
 <table width="100%" class="sortable" cellspacing=0>
   <thead>
     <tr class="control leftAlign">
-      <th class="sortdown">Start Time</th><th>End Time</th><th>Start Volume</th><th>End Volume</th><th>Volume Change</th><th>Product</th>
+      <th class="sortdown">Start Time</th><th>End Time</th><th>Product</th>
+      <th class="rightAlign">Start Volume</th>
+      <th class="rightAlign">End Volume</th>
+      <th class="rightAlign">Volume Change</th>
+      <th class="rightAlign">Rate of Change (gal/hour)</th>
     </tr>
   </thead>
   <tbody>
@@ -43,24 +47,29 @@ if ($form->validate($vars)) {
             if ($result['startid'] == $oldend) { // same set
                 $endts = $result['endtime'];
                 $endvolume = $result['endvolume'];
+                $counter++;
             } else { // new slope set
-                $totalvolume = $endvolume - $startvolume;
+                $totalvolume = (int) ($endvolume - $startvolume);
+                $rateofchange = (int) ($totalvolume * (12 / $counter));
                 if ($endts && (abs($totalvolume) > $volume)) { //output latest row
-                    echo '<tr><td>' . $startts . '</td><td>' . $endts . '</td><td>' . $startvolume . '</td><td>' . $endvolume .
-                        '</td><td>' . $totalvolume . '</td><td>' . $product . '</td></tr>';
+                    echo "<tr><td>$startts</td><td>$endts</td><td>$product</td>" .
+                         "<td class='rightAlign'>$startvolume</td><td class='rightAlign'>$endvolume</td>" .
+                         "<td class='rightAlign'>$totalvolume</td><td class='rightAlign'>$rateofchange</td></tr>";
                 }
                 $startts = $result['starttime'];
                 $endts = $result['endtime'];
                 $startvolume = $result['startvolume'];
                 $endvolume = $result['endvolume'];
                 $product = $result['productcode'];
+                $counter = 1;
             }
             $oldend = $result['endid'];
         }
-        $totalvolume = $endvolume - $startvolume;
+        $totalvolume = (int) ($endvolume - $startvolume);
+        $rateofchange = (int) ($totalvolume * (12 / $counter));
         if ($startts && (abs($totalvolume) > $volume)) { //output last row, if there is one
-            echo '<tr><td>' . $startts . '</td><td>' . $endts . '</td><td>' . $startvolume . '</td><td>' . $endvolume .
-                '</td><td>' . $totalvolume . '</td><td>' . $product . '</td></tr>';
+            echo "<tr><td>$startts</td><td>$endts</td><td>$product</td><td class='rightAlign'>$startvolume</td>" .
+                 "<td class='rightAlign'>$endvolume<td class='rightAlign'>$totalvolume</td><td class='rightAlign'>$rateofchange</td></tr>";
         }
     } else { // volume changes for one day
         $results = $super_driver->getFluxbyDay($start_date,$volume);
@@ -69,7 +78,11 @@ if ($form->validate($vars)) {
 <table width="100%" class="sortable" cellspacing=0">
   <thead>
     <tr class="control leftAlign"> 
-      <th class="sortdown">Tank</th><th>Start Time</th><th>End Time</th><th>Start Volume</th><th>End Volume</th><th>Volume Change</th><th>Product</th>
+      <th class="sortdown">Tank</th><th>Start Time</th><th>End Time</th><th>Product</th>
+      <th class="rightAlign">Start Volume</th>
+      <th class="rightAlign">End Volume</th>
+      <th class="rightAlign">Volume Change</th>
+      <th class="rightAlign">Rate of Change (gal/hour)</th>
     </tr>
   </thead>
   <tbody>
@@ -78,11 +91,13 @@ if ($form->validate($vars)) {
             if (($result['startid'] == $oldend) && ($result['tanknum'] == $tankid)) { // same set
                 $endts = $result['endtime'];
                 $endvolume = $result['endvolume'];
+                $counter++;
             } else { // new slope set
-                $totalvolume = $endvolume - $startvolume;
+                $totalvolume = (int) ($endvolume - $startvolume);
+                $rateofchange = (int) ($totalvolume * (12 / $counter));
                 if ($endts && (abs($totalvolume) > $volume)) { //output latest row
-                    echo '      <tr><td>' . $tankid . '</td><td>' . $startts . '</td><td>' . $endts . '</td><td>' . $startvolume . '</td><td>' . $endvolume .
-                        '</td><td>' . $totalvolume . '</td><td>' . $product . '</td></tr>';
+                    echo "      <tr><td>$tankid</td><td>$startts</td><td>$endts</td><td>$product</td><td class='rightAlign'>$startvolume</td>".
+                        "<td class='rightAlign'>$endvolume</td><td class='rightAlign'>$totalvolume</td><td class='rightAlign'>$rateofchange</td></tr>";
                 }
                 $tankid = $result['tanknum'];
                 $startts = $result['starttime'];
@@ -90,13 +105,16 @@ if ($form->validate($vars)) {
                 $startvolume = $result['startvolume'];
                 $endvolume = $result['endvolume'];
                 $product = $result['productcode'];
+                $counter = 1;
             }
             $oldend = $result['endid'];
         }
-        $totalvolume = $endvolume - $startvolume;
+        $totalvolume = (int) ($endvolume - $startvolume);
+        $rateofchange = (int) ($totalvolume * (12 / $counter));
         if ($startts && (abs($totalvolume) > $volume)) { //output last row, if there is one
-            echo '      <tr><td>' . $tankid . '</td><td>' . $startts . '</td><td>' . $endts . '</td><td>' . $startvolume . '</td><td>' . $endvolume .
-                '</td><td>' . $totalvolume . '</td><td>' . $product . '</td></tr>';
+            echo "      <tr><td>$tankid</td><td>$startts</td><td>$endts</td><td>$product</td>" .
+                 "<td class='rightAlign'>$startvolume</td><td class='rightAlign'>$endvolume</td>".
+                 "<td class='rightAlign'>$totalvolume</td><td class='rightAlign'>$rateofchange</td></tr>";
         }
     }
 }

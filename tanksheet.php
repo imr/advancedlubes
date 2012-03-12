@@ -21,8 +21,8 @@ foreach ($tanks as $tank) {
     $prev_volume = round($tank['Conversion'] * $tank['measured_inches']);
     $html .= "<tr>" .
              "<td width='3%'class='leftAlign'>$tank[tanknum]</td>" .
-             "<td width='4%'>$tank[userproduct]</td>" .
-             "<td width='25%'>$tank[description]</td>" .
+             "<td width='6%'>$tank[userproduct]</td>" .
+             "<td width='23%'>$tank[description]</td>" .
              "<td width='18%'>$tank[compatibility]</td>" .
              "<td width='18%'>$tank[note]</td>" .
              "<td width='4%' class='rightAlign'>$tank[capacity]</td>" .
