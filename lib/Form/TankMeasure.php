@@ -16,7 +16,8 @@ class Superbatch_Form_TankMeasure extends Horde_Form
             $z = $this->addVariable(_($tank['tanknum']), $tank['_kp_tankid'], 'Superbatch:TankInventory', false);
             $z->setDefault(array($tank['description'], $tank['compatibility'], $tank['note'], $tank['measured_inches'], $tank['userproduct']));
         }
-        $this->addVariable(_('Tank Sheet Notes'), 'tanknote', 'text', false, false, false, array($tanknotes));
+        $x = $this->addVariable(_('Tank Sheet Notes'), 'tanknote', 'longtext', false, false, false, array(4, 60));
+        $x->setDefault($tanknotes['note']);
 
         $this->setButtons(array(_("Complete Inventory")));
     }
