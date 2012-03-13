@@ -29,16 +29,16 @@ if ($form->validate($vars)) {
         case 0: // Recently Changed
             $recent = true;
             break;
-        case 0: // All tanks
+        case 1: // All tanks
             $all = true;
             break;
-        case 1: // Resource
+        case 2: // Resource
             $typetoget = 'Resource';
             break;
-        case 2: // Finish
+        case 3: // Finish
             $typetoget = 'Finish';
             break;
-        case 3: // Selection
+        case 4: // Selection
             $tankstoget = $vars->get('tanks');
             break;
     }
@@ -46,8 +46,7 @@ if ($form->validate($vars)) {
     if ($recent) {
         $results = $super_driver->getTankFluxRecent($volume);
     } elseif ($all) {
-        $results = $super_driver->getFluxbyDay($start_day, $volume);
-echo "GETTING ALL";
+        $results = $super_driver->getFluxbyDay($start_date, $volume);
     } else {
         $results = $super_driver->getTankFluxbyIds($id,$volume,$start_time,$end_time);
     }
