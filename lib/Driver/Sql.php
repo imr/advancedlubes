@@ -219,12 +219,13 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
             $where = 'WHERE ';
         }
         $where .= 'curtimestamp BETWEEN FROM_UNIXTIME(?) AND FROM_UNIXTIME(?)';
-        $query = 'SELECT t1._kp_tankhistoryid AS startid, t2._kp_tankhistoryid AS endid, t1.volume AS startvolume, t2.volume AS endvolume,' .
+        $query = 'SELECT tanknum, t1._kp_tankhistoryid AS startid, t2._kp_tankhistoryid AS endid, t1.volume AS startvolume, t2.volume AS endvolume,' .
                      ' t1.curtimestamp AS starttime, t2.curtimestamp as endtime, productcode FROM (SELECT * from tankhistory' .
                      " $where) AS t1 INNER JOIN" .
                      " (SELECT * from tankhistory $where)" .
                      ' AS t2 ON t1.tankid = t2.tankid AND TIMESTAMPDIFF(MINUTE, t1.curtimestamp, t2.curtimestamp) = 5' .
                      ' LEFT JOIN products on t1.productid = products._kp_Products' .
+                     ' INNER JOIN tanks ON t1.tankid = tanks._kp_tankid' .
                      ' WHERE ABS(t1.volume - t2.volume) > ? ORDER BY t1._kp_tankhistoryid';
         try {
             $rows = $this->_db->selectAll($query, $values);
