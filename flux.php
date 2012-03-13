@@ -97,7 +97,7 @@ echo "GETTING ALL";
         }
     } else { // volume changes for one day
 ?>
-<h3>Volume Changes for <?php echo $start_date ?></h3>
+<h3>Volume Changes for <?php echo ($start_date == '0000') ? date('d/m/Y H:i:s') : $start_date?></h3>
 <table width="100%" class="sortable" cellspacing=0">
   <thead>
     <tr class="control leftAlign"> 
