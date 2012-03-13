@@ -38,6 +38,30 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         return $rows;
     }
 
+    public function getNote()
+    {
+        $query = 'SELECT date, user_id, note FROM tanknote ORDER BY date DESC';
+
+        try {
+            $row = $this->_db->selectOne($query);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+        return $row;
+    }
+
+    public function insertNote($user, $note)
+    {
+        $query = 'INSERT INTO tanknote(user_id, note) VALUES (?,?)';
+        $values = array($user, $note);
+
+        try {
+            $rows = $this->_db->execute($query, $values);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+    }
+
     public function listMaterialWeeks()
     {
         $query = 'SELECT DISTINCT YEARWEEK(date) AS week FROM materialusage';

@@ -7,13 +7,16 @@ class Superbatch_Form_TankMeasure extends Horde_Form
         parent::__construct($vars, _("Measured Inventory"));
         $display_enum = array('All', 'Resource', 'Finish', 'Selection');
 
-        $tanks = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create()->listTanks();
+        $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
+        $tanks = $super_driver->listTanks();
+        $tanknotes = $super_driver->getNote();
 
         $this->addVariable(_('Record History'), 'history', 'boolean', true, false, false);
         foreach ($tanks as $tank) {
             $z = $this->addVariable(_($tank['tanknum']), $tank['_kp_tankid'], 'Superbatch:TankInventory', false);
             $z->setDefault(array($tank['description'], $tank['compatibility'], $tank['note'], $tank['measured_inches'], $tank['userproduct']));
         }
+        $this->addVariable(_('Tank Sheet Notes'), 'tanknote', 'text', false, false, false, array($tanknotes));
 
         $this->setButtons(array(_("Complete Inventory")));
     }
@@ -37,6 +40,7 @@ class Superbatch_Form_TankMeasure extends Horde_Form
             $measdata = $this->_vars->get("meas$id");
         }
         $super_driver->updateTankMeasure($data);
+        $super_driver->insertNote($GLOBALS['registry']->getAuth(), $this->_vars->get('tanknote'));
         if ($this->_vars->get('history') == true) {
             $super_driver->insertTankHistoryMeasure($GLOBALS['registry']->getAuth());
         }

@@ -8,6 +8,8 @@ Horde::addScriptFile('tables.js', 'horde');
 
 $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
 $tanks = $super_driver->listTanks();
+$tanknotes = $super_driver->getNote();
+$tanknote = $tanknotes['note'];
 
 $vars = Horde_Variables::getDefaultVariables();
 $view = $vars->get('view');
@@ -32,16 +34,15 @@ foreach ($tanks as $tank) {
              "<td width='5%' class='rightAlign'>$tank[measured_inches]</td>" .
              "<td width='11%' style='border-bottom:solid'>&nbsp;</td></tr>";
 }
-$html .= '</tbody></table>';
 if ($view == 'pdf') {
     $dompdf = new DOMPDF();
     $dompdf->load_html($html);
     $dompdf->render();
     $dompdf->stream("tanks.pdf");
-        echo '<html><body>' . $html;
+        echo "<html><body>$html<tr><td>Notes:</td><td colspan=10>$tanknote</td></tr></tbody></table></body></html>";
 } elseif ($view == 'simple') {
         require $registry->get('templates', 'horde') . '/common-header.inc';
-        echo $html . '</body></html>';
+        echo $html . '<tr><td>Notes:</td><tdcolspan=10>&nbsp;</td></tr></tbody></table></body></html>';
 } else {
         require $registry->get('templates', 'horde') . '/common-header.inc';
         echo Horde::menu();
@@ -49,6 +50,6 @@ if ($view == 'pdf') {
         echo Horde::link(Horde::url('tanksheet.php?view=simple'), _("View Print Sheet")) . 'View Print Sheet</a> ';
         echo Horde::link(Horde::url('tanksheet.php?view=pdf'), _("View PDF")) . 'View PDF</a> ';
         echo Horde::link(Horde::url('tankmeasure.php'), _("Update Inventory")) . 'Update Inventory</a><BR>';
-        echo $html;
+        echo "$html<tr><td>Notes:</td><td colspan=10>$tanknote</td></tr></tbody></table></body></html";
         require $registry->get('templates', 'horde') . '/common-footer.inc';
 }

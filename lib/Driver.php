@@ -12,6 +12,10 @@ abstract class Superbatch_Driver
 
     abstract public function listTanks($type, $tanks = array());
 
+    abstract public function getNote();
+
+    abstract public function insertNote($user, $note);
+
     abstract public function listMaterialWeeks();
 
     abstract public function listTankWeeks($week_start = 201101, $week_end = 999952);
