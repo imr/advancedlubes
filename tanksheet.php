@@ -33,15 +33,16 @@ foreach ($tanks as $tank) {
              "<td width='5%' class='rightAlign'>$tank[measured_inches]</td>" .
              "<td width='29%'>$tank[note]</td></tr>";
 }
+$html .= "<tr><td>Notes:</td><td colspan=10>$tanknote</td></tr></tbody></table>";
 if ($view == 'pdf') {
     $dompdf = new DOMPDF();
     $dompdf->load_html($html);
     $dompdf->render();
     $dompdf->stream("tanks.pdf");
-        echo "<html><body>$html<tr><td>Notes:</td><td colspan=10>$tanknote</td></tr></tbody></table></body></html>";
+        echo "<html><body>$html</body></html>";
 } elseif ($view == 'simple') {
         require $registry->get('templates', 'superbatch') . '/print-header.inc';
-        echo $html . '<tr><td>Notes:</td><tdcolspan=10>&nbsp;</td></tr></tbody></table></body></html>';
+        echo "$html</body></html>";
 } else {
         require $registry->get('templates', 'horde') . '/common-header.inc';
         echo Horde::menu();
@@ -49,6 +50,6 @@ if ($view == 'pdf') {
         echo Horde::link(Horde::url('tanksheet.php?view=simple'), _("Printer Friendly Sheet")) . 'Printer Friendly Sheet</a> ';
         echo Horde::link(Horde::url('tanksheet.php?view=pdf'), _("View PDF")) . 'View PDF</a> ';
         echo Horde::link(Horde::url('tankmeasure.php'), _("Update Inventory")) . 'Update Inventory</a><BR>';
-        echo "$html<tr><td>Notes:</td><td colspan=10>$tanknote</td></tr></tbody></table></body></html";
+        echo $html;
         require $registry->get('templates', 'horde') . '/common-footer.inc';
 }
