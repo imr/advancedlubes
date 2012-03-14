@@ -112,8 +112,8 @@ if ($form->validate($vars)) {
             $row_odd = !$row_odd;
             $row_count++;  
         }
-        $bottom_in_average = $bottom_increase / $count_week;
-        $bottom_de_average = $bottom_decrease / $count_week;
+        $bottom_in_average = $bottom_increase / ($week_total + 1);
+        $bottom_de_average = $bottom_decrease / ($week_total + 1);
 ?>
   </tbody>
   <thead>
