@@ -29,16 +29,11 @@ if (!empty($title)) {
 <?php
 
 Horde::outputMetaTags();
-
-if (!$GLOBALS['browser']->isMobile()) {
+$appOb = $GLOBALS['registry']->getApiInstance($GLOBALS['registry']->getApp(), 'application');
+if ((strpos($GLOBALS['session']->get('horde', 'mode'), 'mobile') === false) || empty($appOb->mobileView)) {
     Horde::includeFavicon();
-    //Horde::includeStylesheetFiles();
-    //Horde::includeScriptFiles();
-    Horde::addScriptFile('jquery-1.7.1.min.js');
-    Horde::addScriptFile('jquery.jqplot.js');
-    Horde::addScriptFile('plugins/jqplot.dateAxisRenderer.js');
-    Horde::addScriptFile('plugins/jqplot.highlighter.js');
-    Horde::addScriptFile('plugins/jqplot.cursor.js');
+    Horde::includeStylesheetFiles();
+    Horde::includeScriptFiles();
     echo implode("\n", Horde_Util::nonInputVar('linkTags', array()));
     Horde::outputInlineScript();
 }
