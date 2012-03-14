@@ -17,8 +17,8 @@ $view = $vars->get('view');
 $html = '<table border="1px solid" width="100%" cellspacing=0 class="striped sortable"><thead><tr><th>Tank</th>' .
         '<th>Product</th><th colspan=2>Description</th><th>Note</th>' .
         '<th align=right>Max Vol</th><th align=right>Conv</th>' .
-        '<th align=right>Tap Min</th><th align=right>Prev Vol</th>' .
-        '<th align=right>Prev Inches</th><th align=right>New Value</th></tr></thead><tbody>';
+        '<th align=right>Tap Min</th><th align=right>Volume</th>' .
+        '<th align=right>Inches</th><th align=right>New Value</th></tr></thead><tbody>';
 foreach ($tanks as $tank) {
     $prev_volume = round($tank['Conversion'] * $tank['measured_inches']);
     $html .= "<tr>" .
@@ -41,7 +41,7 @@ if ($view == 'pdf') {
     $dompdf->stream("tanks.pdf");
         echo "<html><body>$html<tr><td>Notes:</td><td colspan=10>$tanknote</td></tr></tbody></table></body></html>";
 } elseif ($view == 'simple') {
-        require $registry->get('templates', 'horde') . '/common-header.inc';
+        require $registry->get('templates', 'superbatch') . '/print-header.inc';
         echo $html . '<tr><td>Notes:</td><tdcolspan=10>&nbsp;</td></tr></tbody></table></body></html>';
 } else {
         require $registry->get('templates', 'horde') . '/common-header.inc';
