@@ -32,7 +32,7 @@ foreach ($tanks as $tank) {
              "<td width='5%' class='rightAlign'>" . $prev_volume . "</td>" .
              "<td width='29%'>$tank[note]</td></tr>";
 }
-$html .= "<tr><td>Notes:</td><td colspan=8>$tanknotes[note]</td><td>Revised $tanknotes[date] by $tanknotes[user_id]</tr></tbody></table>";
+$html .= "<tr><td>Notes:</td><td colspan=8>$tanknotes[note]</td><td>Revised $tanknotes[date] by $tanknotes[user_id]</td></tr></tbody></table>";
 if ($view == 'pdf') {
     $dompdf = new DOMPDF();
     $dompdf->load_html($html);
