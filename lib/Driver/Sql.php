@@ -38,6 +38,17 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         return $rows;
     }
 
+    public function listNotes()
+    {
+        $query = 'SELECT date, user_id, note FROM tanknote ORDER BY date DESC';
+
+        try {
+            $rows = $this->_db->selectAll($query);
+        } catch (Horde_Db_Exception $e) {
+            throw new Superbatch_Exception($e);
+        }
+        return $rows;
+    }
     public function getNote()
     {
         $query = 'SELECT date, user_id, note FROM tanknote ORDER BY date DESC';

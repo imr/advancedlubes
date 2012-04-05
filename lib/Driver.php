@@ -12,6 +12,8 @@ abstract class Superbatch_Driver
 
     abstract public function listTanks($type, $tanks = array());
 
+    abstract public function listNotes();
+
     abstract public function getNote();
 
     abstract public function insertNote($user, $note);
