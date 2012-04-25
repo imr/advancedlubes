@@ -11,7 +11,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
 	$this->_db = $params['db'];
     }
 
-    public function listTanks($type, $tanks = array())
+    public function listTanks($type = NULL, $tanks = array())
     {
         $query = 'SELECT _kp_tankid, tanknum, description, compatibility, note, userproduct, ' .
                  'capacity, currentvolume AS volume, Conversion, measured_inches, tap_inches, tap_volume ' .
@@ -365,6 +365,9 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
 
     public function updateTankMeasure($data) {
         $total = count($data);
+        $when = NULL;
+        $in = NULL;
+        
         for($i = 0; $i < $total; $i++) {
             $when .= 'WHEN ? THEN ? ';
             $in .= '?,';
