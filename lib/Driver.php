@@ -10,7 +10,7 @@ abstract class Superbatch_Driver
         $this->_params = $params;
     }
 
-    abstract public function listTanks($type, $tanks = array());
+    abstract public function listTanks($type = NULL, $tanks = array());
 
     abstract public function listNotes();
 
