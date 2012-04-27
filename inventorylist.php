@@ -1,7 +1,6 @@
 <?php
 
 require_once dirname(__FILE__) . '/lib/Application.php';
-require_once dirname(__FILE__) . '/dompdf/dompdf_config.inc.php';
 Horde_Registry::appInit('superbatch');
 
 Horde::addScriptFile('tables.js', 'horde');
