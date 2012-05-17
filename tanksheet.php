@@ -1,7 +1,6 @@
 <?php
 
 require_once dirname(__FILE__) . '/lib/Application.php';
-require_once dirname(__FILE__) . '/dompdf/dompdf_config.inc.php';
 Horde_Registry::appInit('superbatch');
 
 Horde::addScriptFile('tables.js', 'horde');
@@ -48,7 +47,9 @@ if ($view == 'pdf') {
         $notification->notify(array('listeners' => 'status'));     
         echo Horde::link(Horde::url('tanksheet.php?view=simple'), _("Printer Friendly Sheet")) . 'Printer Friendly Sheet</a> | ';
         echo Horde::link(Horde::url('tanksheet.php?view=pdf'), _("View PDF")) . 'View PDF</a> | ';
-        echo Horde::link(Horde::url('tankmeasure.php'), _("Update Inventory")) . 'Update Inventory</a> | ';
+        if ($GLOBALS['superbatch_perms']->hasPermission('superbatch:tank sheet', $GLOBALS['registry']->getAuth(), Horde_Perms::EDIT)) {
+            echo Horde::link(Horde::url('tankmeasure.php'), _("Update Inventory")) . 'Update Inventory</a> | ';
+        }
         echo Horde::link(Horde::url('inventorylist.php'), _("Inventory List")) . 'Inventory List</a><BR>';
         echo $html;
         require $registry->get('templates', 'horde') . '/common-footer.inc';

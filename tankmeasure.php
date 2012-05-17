@@ -18,6 +18,10 @@ if ($form->validate($vars)) {
  
 require $registry->get('templates', 'horde') . '/common-header.inc';
 echo Horde::menu();
-$notification->notify(array('listeners' => 'status'));     
-$form->renderActive();
+$notification->notify(array('listeners' => 'status'));
+if ($GLOBALS['superbatch_perms']->hasPermission('superbatch:tank sheet', $GLOBALS['registry']->getAuth(), Horde_Perms::EDIT)) {
+    $form->renderActive();
+} else {
+    echo "Not authorized";
+}
 require $registry->get('templates', 'horde') . '/common-footer.inc';

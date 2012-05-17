@@ -25,7 +25,19 @@ class Superbatch_Application extends Horde_Registry_Application
 
     protected function _init()
     {
+        $GLOBALS['superbatch_perms'] = $GLOBALS['injector']->getInstance('Horde_Perms');
         $GLOBALS['injector']->bindFactory('Superbatch_Driver', 'Superbatch_Factory_Driver', 'create');
+    }
+
+    public function perms()
+    {
+        $perms = array(
+            'tank sheet' => array(
+                'title' => _('Tank Sheet')
+            )
+        );
+
+        return $perms;
     }
 
     public function menu($menu)
