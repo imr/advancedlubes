@@ -1,10 +1,10 @@
 <?php
 
 require_once dirname(__FILE__) . '/lib/Application.php';
-Horde_Registry::appInit('superbatch');
-Horde::addScriptFile('jquery-1.4.2-min.js', 'superbatch');
-Horde::addScriptFile('jquery-gqplot.js', 'superbatch');
-Horde::addScriptFile('jquery-gqplot-min.js', 'superbatch');
+Horde_Registry::appInit('production');
+Horde::addScriptFile('jquery-1.4.2-min.js', 'production');
+Horde::addScriptFile('jquery-gqplot.js', 'production');
+Horde::addScriptFile('jquery-gqplot-min.js', 'production');
 
 require $registry->get('templates', 'horde') . '/common-header.inc';
 echo Horde::menu();

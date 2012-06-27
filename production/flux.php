@@ -1,10 +1,10 @@
 <?php
 
 require_once dirname(__FILE__) . '/lib/Application.php';
-Horde_Registry::appInit('superbatch');
+Horde_Registry::appInit('production');
 
 $vars = Horde_Variables::getDefaultVariables();
-$form = new Superbatch_Form_Fluctuation($vars);
+$form = new Production_Form_Fluctuation($vars);
 
 Horde::addScriptFile('tables.js', 'horde');
 require $registry->get('templates', 'horde') . '/common-header.inc';
@@ -24,7 +24,7 @@ if ($form->validate($vars)) {
     $end_day = empty($end_array['day']) ? null: $end_array['day'];
     $end_time = (int)strtotime("$end_month/$end_day/$end_year");
     $start_date = $start_year . str_pad($start_month, 2, "0", STR_PAD_LEFT) . str_pad($start_day, 2, "0", STR_PAD_LEFT);
-    $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
+    $super_driver = $GLOBALS['injector']->getInstance('Production_Factory_Driver')->create();
     switch ($vars->get('display_type')) {
         case 0: // Recently Changed
             $recent = true;

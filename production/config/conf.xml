@@ -8,7 +8,7 @@
     <configsection name="params">
      <configsql switchname="driverconfig">
       <configstring name="table" desc="The name of the database
-      table.">superbatch_foos</configstring>
+      table.">production_foos</configstring>
      </configsql>
     </configsection>
    </case>
@@ -18,7 +18,7 @@
  <configsection name="menu">
   <configheader>Menu Settings</configheader>
   <configmultienum name="apps" desc="Select any applications that should be
-  linked in Superbatch's menu">
+  linked in Production's menu">
    <values>
     <configspecial application="horde" name="apps" />
    </values>

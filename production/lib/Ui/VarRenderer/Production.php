@@ -1,6 +1,6 @@
 <?php
 
-class Horde_Core_Ui_VarRenderer_Superbatch extends Horde_Core_Ui_VarRenderer_Html
+class Horde_Core_Ui_VarRenderer_Production extends Horde_Core_Ui_VarRenderer_Html
 {
     protected function _renderVarInput_TankInventory($form, $var, $vars)
     {

@@ -1,10 +1,10 @@
 <?php
 
 require_once dirname(__FILE__) . '/lib/Application.php';
-Horde_Registry::appInit('superbatch');
+Horde_Registry::appInit('production');
 
 $vars = Horde_Variables::getDefaultVariables();
-$form = new Superbatch_Form_TankMeasure($vars);
+$form = new Production_Form_TankMeasure($vars);
 
 if ($form->validate($vars)) {
     try {
@@ -19,7 +19,7 @@ if ($form->validate($vars)) {
 require $registry->get('templates', 'horde') . '/common-header.inc';
 echo Horde::menu();
 $notification->notify(array('listeners' => 'status'));
-if ($GLOBALS['superbatch_perms']->hasPermission('superbatch:tank sheet', $GLOBALS['registry']->getAuth(), Horde_Perms::EDIT)) {
+if ($GLOBALS['production_perms']->hasPermission('production:tank sheet', $GLOBALS['registry']->getAuth(), Horde_Perms::EDIT)) {
     $form->renderActive();
 } else {
     echo "Not authorized";

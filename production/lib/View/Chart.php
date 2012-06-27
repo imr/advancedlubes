@@ -1,6 +1,6 @@
 <?php
 
-class Superbatch_View_Chart
+class Production_View_Chart
 {
 
 

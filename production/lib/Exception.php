@@ -1,6 +1,6 @@
 <?php
 /**
- * Base exception class for Superbatch.
+ * Base exception class for Production.
  *
  * Copyright 2010-2011 The Horde Project (http://www.horde.org/)
  *
@@ -10,8 +10,8 @@
  * @author   Your name <you@example.com>
  * @category Horde
  * @license  http://www.fsf.org/copyleft/gpl.html GPL
- * @package  Superbatch
+ * @package  Production
  */
-class Superbatch_Exception extends Horde_Exception_Wrapped
+class Production_Exception extends Horde_Exception_Wrapped
 {
 }

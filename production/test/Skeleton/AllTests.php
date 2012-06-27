@@ -1,11 +1,11 @@
 <?php
 /**
- * Superbatch test suite.
+ * Production test suite.
  *
  * @author     Your Name <you@example.com>
  * @license    http://www.fsf.org/copyleft/gpl.html GPL
  * @category   Horde
- * @package    Superbatch
+ * @package    Production
  * @subpackage UnitTests
  */
 
@@ -13,7 +13,7 @@
  * Define the main method
  */
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Superbatch_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Production_AllTests::main');
 }
 
 /**
@@ -22,15 +22,15 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'Horde/Test/AllTests.php';
 
 /**
- * @package    Superbatch
+ * @package    Production
  * @subpackage UnitTests
  */
-class Superbatch_AllTests extends Horde_Test_AllTests
+class Production_AllTests extends Horde_Test_AllTests
 {
 }
 
-Superbatch_AllTests::init('Superbatch', __FILE__);
+Production_AllTests::init('Production', __FILE__);
 
-if (PHPUnit_MAIN_METHOD == 'Superbatch_AllTests::main') {
-    Superbatch_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'Production_AllTests::main') {
+    Production_AllTests::main();
 }

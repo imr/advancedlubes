@@ -1,10 +1,10 @@
 <?php
 
 require_once dirname(__FILE__) . '/lib/Application.php';
-Horde_Registry::appInit('superbatch');
+Horde_Registry::appInit('production');
 
 $vars = Horde_Variables::getDefaultVariables();
-$form = new Superbatch_Form_Chart($vars);
+$form = new Production_Form_Chart($vars);
 
 if ($form->validate($vars)) {
     require 'tankhistory.php';

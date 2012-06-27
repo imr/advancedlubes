@@ -1,10 +1,10 @@
 <?php
 
 require_once dirname(__FILE__) . '/lib/Application.php';
-Horde_Registry::appInit('superbatch');
+Horde_Registry::appInit('production');
 
 $vars = Horde_Variables::getDefaultVariables();
-$form = new Superbatch_Form_TankUsage($vars);
+$form = new Production_Form_TankUsage($vars);
 
 Horde::addScriptFile('tables.js', 'horde');
 Horde::addScriptFile('tooltips.js', 'horde');
@@ -14,7 +14,7 @@ if ($form->validate($vars)) {
        
     $week_start = $vars->get('week_start');
     $week_end = $vars->get('week_end');
-    $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
+    $super_driver = $GLOBALS['injector']->getInstance('Production_Factory_Driver')->create();
     $weeks = $super_driver->listTankWeeks($week_start, $week_end);
     $week_array = array();
     foreach ($weeks as $week_total => $week) {

@@ -1,6 +1,6 @@
 <?php
 
-class Superbatch_Driver_Sql extends Superbatch_Driver
+class Production_Driver_Sql extends Production_Driver
 {
     protected $_params = array();
 
@@ -32,7 +32,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $rows = $this->_db->selectAll($query);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
 
         return $rows;
@@ -45,7 +45,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $rows = $this->_db->selectAll($query);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
         return $rows;
     }
@@ -56,7 +56,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $row = $this->_db->selectOne($query);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
         return $row;
     }
@@ -69,7 +69,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $rows = $this->_db->execute($query, $values);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
     }
 
@@ -81,7 +81,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $rows = $this->_db->selectAll($query);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
 
         return $rows;
@@ -96,7 +96,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $rows = $this->_db->selectAll($query, $values);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
 
         return $rows;
@@ -111,7 +111,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $rows = $this->_db->selectAll($query);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
         return $rows;
     }
@@ -143,7 +143,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $rows = $this->_db->selectAll($query, $values);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
         return $rows;
     }
@@ -175,7 +175,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $rows = $this->_db->selectAll($query, $values);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
         return $rows;
     }
@@ -208,7 +208,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $rows = $this->_db->selectAll($query, $values);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
         return $rows;
 
@@ -241,7 +241,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $rows = $this->_db->selectAll($query, $values);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
         return $rows;
     }
@@ -260,7 +260,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $rows = $this->_db->selectAll($query, array($volume));
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
         return $rows;
     }
@@ -281,7 +281,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $rows = $this->_db->selectAll($query, $values);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
         return $rows;
     }
@@ -305,7 +305,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $rows = $this->_db->selectAll($query, $values);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
         return $rows;
     }
@@ -319,7 +319,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $rows = $this->_db->selectAll($query, $values);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
         return $rows;
     }
@@ -330,7 +330,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $name = $this->_db->selectValue($query, $values);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
         return $name;
     }
@@ -340,7 +340,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $row = $this->_db->selectValue($query);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
         return $row;
     }
@@ -359,7 +359,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $this->_db->execute($query, $values);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
     }
 
@@ -396,7 +396,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $this->_db->update($query, $values);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
     }
 
@@ -412,7 +412,7 @@ class Superbatch_Driver_Sql extends Superbatch_Driver
         try {
             $this->_db->execute($query, $values);
         } catch (Horde_Db_Exception $e) {
-            throw new Superbatch_Exception($e);
+            throw new Production_Exception($e);
         }
     }
 }

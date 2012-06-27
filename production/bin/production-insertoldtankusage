@@ -1,9 +1,9 @@
 #!/usr/bin/env php
 <?php
 require_once dirname(__FILE__) . '/../lib/Application.php';
-Horde_Registry::appInit('superbatch', array('authentication' => 'none'));
+Horde_Registry::appInit('production', array('authentication' => 'none'));
 
-$super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
+$super_driver = $GLOBALS['injector']->getInstance('Production_Factory_Driver')->create();
 $date = '20110320';
 
 while ($date <> date("Ymd")) {

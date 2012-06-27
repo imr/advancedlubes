@@ -1,13 +1,13 @@
 <?php
 
-class Superbatch_Form_TankUsage extends Horde_Form
+class Production_Form_TankUsage extends Horde_Form
 {
     public function __construct($vars)
     {
         parent::__construct($vars, _("Select Tank Usage Data"));
         $display_enum = array('All', 'Resource', 'Finish', 'Selection');
 
-        $weeks = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create()->listTankWeeks();
+        $weeks = $GLOBALS['injector']->getInstance('Production_Factory_Driver')->create()->listTankWeeks();
         foreach ($weeks as $week) {
             $weeks_enum[$week['week']] = $week['week'];
         }
@@ -23,7 +23,7 @@ class Superbatch_Form_TankUsage extends Horde_Form
             }
         }
 
-        $tanks = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create()->listTanks();
+        $tanks = $GLOBALS['injector']->getInstance('Production_Factory_Driver')->create()->listTanks();
         foreach ($tanks as $tank) {
             if ($tank['tanknum']) {
                 $tanks_enum[$tank['_kp_tankid']] = $tank['tanknum'];

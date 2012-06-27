@@ -3,11 +3,11 @@
  * @author     Your Name <you@example.com>
  * @license    http://www.fsf.org/copyleft/gpl.html GPL
  * @category   Horde
- * @package    Superbatch
+ * @package    Production
  * @subpackage UnitTests
  */
 
-class Superbatch_ExampleTest extends PHPUnit_Framework_TestCase
+class Production_ExampleTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {

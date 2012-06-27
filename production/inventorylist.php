@@ -1,11 +1,11 @@
 <?php
 
 require_once dirname(__FILE__) . '/lib/Application.php';
-Horde_Registry::appInit('superbatch');
+Horde_Registry::appInit('production');
 
 Horde::addScriptFile('tables.js', 'horde');
 
-$super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
+$super_driver = $GLOBALS['injector']->getInstance('Production_Factory_Driver')->create();
 $inventories = $super_driver->listNotes();
 
 $html = '<table width="50%" cellspacing=0 class="striped sortable"><thead><tr><th>Time</th><th>User</th>' .

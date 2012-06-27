@@ -1,19 +1,19 @@
 <?php
 
-class Superbatch_Form_TankMeasure extends Horde_Form
+class Production_Form_TankMeasure extends Horde_Form
 {
     public function __construct($vars)
     {
         parent::__construct($vars, _("Measured Inventory"));
         $display_enum = array('All', 'Resource', 'Finish', 'Selection');
 
-        $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
+        $super_driver = $GLOBALS['injector']->getInstance('Production_Factory_Driver')->create();
         $tanks = $super_driver->listTanks();
         $tanknotes = $super_driver->getNote();
 
         $this->addVariable(_('Record History'), 'history', 'boolean', true, false, false);
         foreach ($tanks as $tank) {
-            $z = $this->addVariable(_($tank['tanknum']), $tank['_kp_tankid'], 'Superbatch:TankInventory', false);
+            $z = $this->addVariable(_($tank['tanknum']), $tank['_kp_tankid'], 'Production:TankInventory', false);
             $z->setDefault(array($tank['description'], $tank['compatibility'], $tank['note'], $tank['measured_inches'], $tank['userproduct']));
         }
         $x = $this->addVariable(_('Tank Sheet Notes'), 'tanknote', 'longtext', false, false, false, array(4, 60));
@@ -24,7 +24,7 @@ class Superbatch_Form_TankMeasure extends Horde_Form
 
     public function execute()
     {
-        $super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
+        $super_driver = $GLOBALS['injector']->getInstance('Production_Factory_Driver')->create();
         $id = 2;
         $descdata = $this->_vars->get("desc$id");
         $compdata = $this->_vars->get("comp$id");
@@ -49,6 +49,6 @@ class Superbatch_Form_TankMeasure extends Horde_Form
 
     public function renderActive()
     {
-        return parent::renderActive(new Horde_Form_Renderer(array('varrenderer_driver' => array('superbatch', 'superbatch'))), $this->_vars, Horde::url('tankmeasure.php'), 'post');
+        return parent::renderActive(new Horde_Form_Renderer(array('varrenderer_driver' => array('production', 'production'))), $this->_vars, Horde::url('tankmeasure.php'), 'post');
     }
 }

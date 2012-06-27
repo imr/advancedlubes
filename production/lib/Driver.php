@@ -1,6 +1,6 @@
 <?php
 
-abstract class Superbatch_Driver
+abstract class Production_Driver
 {
     protected $_tanks = array();
     protected $_params;
@@ -60,11 +60,11 @@ abstract class Superbatch_Driver
         if (is_null($params))
             $params = Horde::getDriverConfig('storage', $driver);
 
-        $class = 'Superbatch_Driver_' . $driver;
+        $class = 'Production_Driver_' . $driver;
         if (class_exists($class)) {
-            $superbatch = new $class($params);
+            $production = new $class($params);
         } else {
-            $superbatch = false;
+            $production = false;
         }
 
     }

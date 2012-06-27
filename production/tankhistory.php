@@ -1,7 +1,7 @@
 <?php
 
 require_once dirname(__FILE__) . '/lib/Application.php';
-Horde_Registry::appInit('superbatch');
+Horde_Registry::appInit('production');
 
 $id = $vars->get('tank');
 $all = $vars->get('tankall');
@@ -45,7 +45,7 @@ switch ($vars->get('data')) {
         break;
 }
 
-$super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
+$super_driver = $GLOBALS['injector']->getInstance('Production_Factory_Driver')->create();
 if ($all) {
     $id = array();
     $charttitle .= ' all tanks';

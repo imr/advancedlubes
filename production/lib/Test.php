@@ -7,7 +7,7 @@
  * See the enclosed file COPYING for license information (GPL). If you
  * did not receive this file, see http://www.fsf.org/copyleft/gpl.html.
  */
-class Superbatch_Test extends Horde_Test
+class Production_Test extends Horde_Test
 {
     /**
      * The module list

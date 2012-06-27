@@ -1,18 +1,18 @@
 <?php
 
 require_once dirname(__FILE__) . '/lib/Application.php';
-Horde_Registry::appInit('superbatch');
+Horde_Registry::appInit('production');
 
 Horde::addScriptFile('tables.js', 'horde');
 
-$super_driver = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create();
+$super_driver = $GLOBALS['injector']->getInstance('Production_Factory_Driver')->create();
 $tanks = $super_driver->listTanks();
 $tanknotes = $super_driver->getNote();
 
 $vars = Horde_Variables::getDefaultVariables();
 $view = $vars->get('view');
 
-if ($GLOBALS['superbatch_perms']->hasPermission('superbatch:tank sheet', $GLOBALS['registry']->getAuth(), Horde_Perms::READ)) {
+if ($GLOBALS['production_perms']->hasPermission('production:tank sheet', $GLOBALS['registry']->getAuth(), Horde_Perms::READ)) {
     $html = '<table border="1px solid" width="100%" cellspacing=0 class="striped sortable"><thead><tr><th>Tank</th>' .
             '<th>Product</th><th colspan=2>Description</th>' .
             '<th align=right>Max Vol</th><th align=right>Conv</th>' .
@@ -44,7 +44,7 @@ if ($view == 'pdf') {
     $dompdf->stream("tanks.pdf");
         echo "<html><body>$html</body></html>";
 } elseif ($view == 'simple') {
-        require $registry->get('templates', 'superbatch') . '/print-header.inc';
+        require $registry->get('templates', 'production') . '/print-header.inc';
         echo "$html</body></html>";
 } else {
         require $registry->get('templates', 'horde') . '/common-header.inc';
@@ -52,7 +52,7 @@ if ($view == 'pdf') {
         $notification->notify(array('listeners' => 'status'));     
         echo Horde::link(Horde::url('tanksheet.php?view=simple'), _("Printer Friendly Sheet")) . 'Printer Friendly Sheet</a> | ';
         echo Horde::link(Horde::url('tanksheet.php?view=pdf'), _("View PDF")) . 'View PDF</a> | ';
-        if ($GLOBALS['superbatch_perms']->hasPermission('superbatch:tank sheet', $GLOBALS['registry']->getAuth(), Horde_Perms::EDIT)) {
+        if ($GLOBALS['production_perms']->hasPermission('production:tank sheet', $GLOBALS['registry']->getAuth(), Horde_Perms::EDIT)) {
             echo Horde::link(Horde::url('tankmeasure.php'), _("Update Inventory")) . 'Update Inventory</a> | ';
         }
         echo Horde::link(Horde::url('inventorylist.php'), _("Inventory List")) . 'Inventory List</a><BR>';

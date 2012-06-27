@@ -1,12 +1,12 @@
 <?php
 
-class Superbatch_Form_Chart extends Horde_Form
+class Production_Form_Chart extends Horde_Form
 {
     public function __construct($vars)
     {
         parent::__construct($vars, _("Select Chart Options"));
 
-        $tanks = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create()->listTanks();
+        $tanks = $GLOBALS['injector']->getInstance('Production_Factory_Driver')->create()->listTanks();
         foreach ($tanks as $tank) {
             if ($tank['tanknum']) {
                 $tanks_enum[$tank['_kp_tankid']] = $tank['tanknum'];

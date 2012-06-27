@@ -1,6 +1,6 @@
 <?php
 
-class Superbatch_Form_Type_TankInventory extends Horde_Form_Type
+class Production_Form_Type_TankInventory extends Horde_Form_Type
 {
     public function getInfo(&$vars, &$var, &$info)
     {

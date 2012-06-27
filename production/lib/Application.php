@@ -19,14 +19,14 @@ if (!defined('HORDE_BASE')) {
  * Horde_Registry_Application::). */
 require_once HORDE_BASE . '/lib/core.php';
 
-class Superbatch_Application extends Horde_Registry_Application
+class Production_Application extends Horde_Registry_Application
 {
     public $version = '0.1';
 
     protected function _init()
     {
-        $GLOBALS['superbatch_perms'] = $GLOBALS['injector']->getInstance('Horde_Perms');
-        $GLOBALS['injector']->bindFactory('Superbatch_Driver', 'Superbatch_Factory_Driver', 'create');
+        $GLOBALS['production_perms'] = $GLOBALS['injector']->getInstance('Horde_Perms');
+        $GLOBALS['injector']->bindFactory('Production_Driver', 'Production_Factory_Driver', 'create');
     }
 
     public function perms()

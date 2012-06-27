@@ -1,12 +1,12 @@
 <?php
 
-class Superbatch_Form_MaterialUsage extends Horde_Form
+class Production_Form_MaterialUsage extends Horde_Form
 {
     public function __construct($vars)
     {
         parent::__construct($vars, _("Select Material Usage Data"));
 
-        $weeks = $GLOBALS['injector']->getInstance('Superbatch_Factory_Driver')->create()->listMaterialWeeks();
+        $weeks = $GLOBALS['injector']->getInstance('Production_Factory_Driver')->create()->listMaterialWeeks();
         foreach ($weeks as $week) {
             $weeks_enum[$week['week']] = $week['week'];
             $counter++;

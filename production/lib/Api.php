@@ -1,4 +1,4 @@
 <?php
-class Superbatch_Api extends Horde_Registry_Api
+class Production_Api extends Horde_Registry_Api
 {
 }
