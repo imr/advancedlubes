@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+require_once dirname(__FILE__) . '/../lib/Application.php';
+Horde_Registry::appInit('drum', array('authentication' => 'none'));
+
+$pricearray = array();
+$xml = simplexml_load_file("http://www.eia.gov/petroleum/gasdiesel/includes/gas_diesel_rss.xml");
+
+$dieselprices = explode("<br>\n",$xml->channel->item->description);
+$date = substr($xml->channel->item->title, 9);
+$pricearray[0] = '20' . substr($date, 6) . '-' . substr($date,0,2) . '-' . substr($date, 3,2);
+$pricearray[1] = substr($dieselprices[39],2,5);
+$pricearray[2] = substr($dieselprices[40],2,5);
+$pricearray[3] = substr($dieselprices[41],2,5);
+$pricearray[4] = substr($dieselprices[42],2,5);
+$pricearray[5] = substr($dieselprices[43],2,5);
+$pricearray[6] = substr($dieselprices[44],2,5);
+$pricearray[7] = substr($dieselprices[45],2,5);
+$pricearray[8] = substr($dieselprices[46],2,5);
+$pricearray[9] = substr($dieselprices[47],2,5);
+$pricearray[10] = substr($dieselprices[49],2,5);
+$GLOBALS['injector']->getInstance('Drum_Factory_Driver')->create()->insertDiesel($pricearray);
+}

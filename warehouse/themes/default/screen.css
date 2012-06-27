@@ -1,0 +1,1652 @@
+/* Autocomplete styles. */
+.autocomplete {
+    background: #f4f4f4;
+    border: 1px solid #d4d4d4;
+    position: absolute;
+    padding: 2px 2px 2px 2px;
+}
+.autocomplete ul {
+    margin: 1px;
+    padding: 1px;
+    list-style-type: none;
+}
+.autocomplete ul li {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 90%;
+    color: #000;
+}
+.autocomplete ul .selected {
+    background: gray;
+    color: #fff;
+}
+
+/* Calendar styles. */
+.hour {
+    font-size: 90%;
+    font-weight: bold;
+}
+.halfhour {
+    font-size: 60%;
+    font-weight: bold;
+    vertical-align: super;
+}
+.warehouseEventTentative {
+    font-style: italic;
+}
+.warehouseEventCancelled {
+    text-decoration: line-through;
+}
+.event-time, .event-location {
+    font-size: 85%;
+}
+table.monthgrid {
+    width: 100%;
+    border-top: 1px solid #999;
+    border-left: 1px solid #999;
+}
+table.monthgrid th, table.monthgrid td {
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #999;
+}
+.monthgrid .today {
+    border: 2px solid #446;
+    background: #fff;
+}
+.othermonth {
+    background: #e7eeec;
+}
+.weekend {
+    background: #ffc;
+}
+.description {
+    padding: .5em;
+}
+
+#footer {
+    margin-top: 8px;
+}
+
+/* Event form. */
+#eventform textarea {
+    padding: 2px;
+    width: 98%;
+}
+#eventform .toggle {
+    cursor: pointer;
+}
+#eventform .extra {
+    color: #666;
+}
+#eventform .warning, #deleteform .warning {
+    background: #ffc;
+    border: 1px solid #fff760;
+    padding: 8px;
+}
+#eventform #start_img, #eventform #end_img, #eventform #recur_end_img {
+    cursor: pointer;
+}
+
+/* Block-specific styles. */
+.block-monthgrid {
+    background: #fff;
+}
+.block-monthgrid .today {
+    border: 1px solid #446;
+}
+
+/* background-color will always be overridden for the
+ * *-eventbox classes */
+.block-eventbox, table.nopadding td.block-eventbox {
+    padding: 0 4px;
+}
+.month-eventbox {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 2px;
+    margin: 1px;
+}
+.week-eventbox {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    padding: 3px;
+    font-size: 90%;
+}
+.day-eventbox {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    padding: 3px;
+}
+
+.selected-control {
+    background: #bbcbff;
+    border-bottom: 1px solid #999;
+}
+
+.day {
+    display: block;
+    float: left;
+    width: 14px;
+    height: 14px;
+    padding: 1px;
+    background: #ddd;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #999;
+    font-size: 80%;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+.day:hover {
+    text-decoration: none;
+    background: #e9e9e9;
+}
+.week {
+    float: left;
+    font-size: 90%;
+    padding-left: 2px;
+}
+a.newEvent {
+    display: block;
+    float: left;
+    height: 12px;
+    width: 12px;
+    padding: 4px 0 0;
+    font-size: 50%;
+    text-align: center;
+    background: #ddd;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #999;
+}
+a.newEvent:hover {
+    background: #e9e9e9;
+}
+a.newEvent img {
+    vertical-align: top;
+}
+
+.year-event {
+    background: #fff760;
+}
+
+/* Free/busy */
+.warehouseFBLegend {
+    font-size: 90%;
+    padding-right: 10px;
+}
+.warehouseFBBusy {
+    position: relative;
+    background: #f00;
+}
+.warehouseFBUnknown {
+    background: #d4d0c8 url("graphics/unknown-background.png") repeat left top;
+}
+.warehouseFBFree {
+    position: relative;
+    background: #28b22b;
+    color: #fff;
+}
+.warehouseAjax .warehouseFBFree {
+    /*position: static;*/
+    position: relative;
+}
+.warehouseAjax .warehouseFBBusy {
+    /*position: static;*/
+    position: absolute;
+}
+div.fbgrid {
+    background-color: #fff;
+    overflow: auto;
+    padding: 0 1ex 0 1ex;
+}
+.fbgrid table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.fbgrid table td, .fbgrid table th {
+    border: 1px solid #000;
+}
+.fbgrid table .label {
+    border: none;
+    padding-right: 1ex;
+}
+
+#pageLoading {
+    position: absolute;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 10em;
+    background: #fff;
+    color: #666;
+    filter: alpha(opacity=0);
+    -moz-opacity: 0.0;
+    opacity: 0.0;
+}
+
+body.rightPanel #page {
+    margin-right: 13.5em;
+}
+body #pageControlsInner {
+    display: none;
+}
+body #sbarShow, body #sbarHide {
+    padding-left: 18px;
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+body #sbarShow {
+    display: block;
+    background: transparent url("graphics/plus.png") center left no-repeat;
+}
+body #sbarHide {
+    display: none;
+    background: transparent url("graphics/minus.png") center left no-repeat;
+}
+
+body #sbarClose {
+	white-space: nowrap;
+	padding-left: 18px;
+}
+
+body.rightPanel #pageControlsInner {
+    display: block;
+}
+body.rightPanel #sbarShow {
+    display: none;
+}
+body.rightPanel #sbarHide {
+    display: block;
+}
+body.rightPanel ul {
+    list-style-type: none;
+}
+
+#pageControls {
+    position: absolute;
+    top: -8px;
+    right: 0;
+    background: #eee;
+    border: 1px solid #ccc;
+    padding: 4px;
+    -moz-border-radius: 0 0 0 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    border-radius: 0 0 0 10px;
+}
+#pageControls #calendarSearch {
+    background-image: url("graphics/search.png");
+    background-repeat: no-repeat;
+    background-position: 2px center;
+    border: 1px solid #ccc;
+    padding: 2px 0 2px 20px;
+}
+#pageControls h3 {
+    font-size: 100%;
+    margin-top: 1em;
+}
+#pageControls h4 {
+    font-size: 90%;
+    margin-top: .5em;
+}
+
+.QuickFinderNoMatch {
+    display: none;
+}
+
+#externalcalendars .category {
+    margin-top: 2px;
+    margin-left: 1em;
+    font-size: 95%;
+    font-weight: normal;
+    font-style: italic;
+}
+
+/* Tables. */
+table#calendar-list {
+    width: 99%;
+    margin: 0 0 8px 5px;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+table#calendar-list th {
+    padding: 3px;
+    background: #e9e9e9;
+    border-right: 1px solid #ccc;
+    text-align: left;
+}
+table#calendar-list td {
+    padding: 3px;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+#calendar-list-buttons {
+    padding: 1em;
+}
+#calendar-list-buttons form {
+    display: inline;
+}
+.calendar-info {
+    cursor: pointer;
+}
+.calendar-info-url {
+    background-color: #fff;
+    color: #000;
+    overflow: auto;
+    padding: 2px;
+    font-size: 90%;
+    word-wrap: break-word;
+}
+.calendar-list-icon {
+    width: 1%;
+}
+
+
+/*****************
+ * AJAX INTERFACE
+ *****************/
+html, body {
+    height: 100%;
+}
+body.warehouseAjax {
+    overflow: hidden;
+}
+
+#warehouseToday {
+    font-weight: bold;
+}
+
+.warehouseSeparator {
+    padding-left: 2px;
+    padding-right: 2px;
+    color: #808080;
+}
+
+.warehouseDatePicker {
+    cursor: pointer;
+}
+
+/* Logo */
+#warehouseLogo {
+    display: none;
+}
+
+/* Loading spinner */
+.warehouseLoading {
+    position: absolute;
+    left: 0;
+}
+#warehouseLoadingday, #warehouseLoadingmonth {
+    top: 24px;
+}
+#warehouseLoadingweek {
+    top: 2px;
+}
+#warehouseLoadingtasks, #warehouseLoadingagenda {
+    display: inline-block;
+    position: relative;
+    top: -3px;
+    vertical-align: middle;
+    left: 2px;
+}
+#warehouseLoading, #warehouseFBLoading {
+    background: transparent url("graphics/loading.gif") no-repeat center;
+    padding: 2px;
+    width: 16px;
+    height: 16px;
+    border: 1px #999 solid;
+}
+#warehouseFBLoading {
+    position: absolute;
+    top: 65px;
+    border: none;
+}
+
+/* User data and options */
+#warehouseApplications {
+    display: inline;
+    position: relative;
+    z-index: 99;
+    float: left;
+    height: 25px;
+    line-height: 23px;
+    margin-right: 10px;
+    overflow: hidden;
+}
+#warehouseApplications:hover {
+    overflow: visible;
+}
+#warehouseApplications ul {
+    list-style: none;
+}
+#warehouseApplications li {
+    margin-bottom: 1px;
+    text-align: left;
+}
+#warehouseApplications a {
+    display: block;
+    padding: 0 4px;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    border: 1px solid #999;
+    color: #202020;
+    font-weight: bold;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+#warehouseApplications:hover a {
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
+#warehouseApplications:hover li:first-child a {
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-radius: 5px 5px 0 0;
+}
+#warehouseApplications:hover li:last-child a {
+    -moz-border-radius: 0 0 5px 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border-radius: 0 0 5px 5px;
+}
+#warehouseApplications:hover li:first-child:last-child a {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+#warehouseApplications a:hover {
+    text-decoration: none;
+    background-color: #d9d9d9;
+}
+#warehouseApplications li.warehouseApplicationSelected a {
+    background-color: #d9d9d9;
+}
+#warehouseApplications .warehouseSeparator {
+    display: none;
+}
+
+#warehouseServices {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    white-space: nowrap;
+}
+#warehouseServices div {
+    float: left;
+}
+.warehouseNotifications {
+    background-color: #d9d9d9
+}
+#warehouseNotifications {
+    float: left;
+    width: 23px;
+    height: 23px;
+    line-height: 23px;
+    border: 1px solid #999;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: #d9d9d9 url("graphics/alerts/message.png") no-repeat center center;
+}
+#warehouseNotifications.horde-error {
+    background-image: url("graphics/alerts/error.png")
+}
+#warehouseNotifications.horde-success {
+    background-image: url("graphics/alerts/success.png")
+}
+#warehouseNotifications.horde-warning {
+    background-image: url("graphics/alerts/warning.png")
+}
+#warehouseNotifications.warehouseClose {
+    background-image: url("graphics/close.png")
+}
+
+/* Main area */
+#warehouseMain {
+    clear: both;
+    padding-top: 15px;
+    height: 100%;
+}
+
+/* Left menu column */
+#warehouseMenu {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    width: 153px;
+}
+#warehouseMenu .button {
+	padding: 1px 2px;
+	border: 0;
+}
+#warehouseMenuCalendars {
+    position: absolute;
+    top: 245px;
+    bottom: 0;
+    width: 100%;
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#warehouseMenu h3 {
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 2px;
+    font-size: 100%;
+    font-weight: bold;
+    border-bottom: 1px #999 dotted;
+    cursor: default;
+}
+#warehouseSearchForm {
+    position: relative;
+    top: 10px;
+}
+#warehouseSearchButton {
+    background: transparent url('graphics/search.png');
+    border: none;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    text-indent: -10000px;
+    cursor: pointer;
+}
+#warehouseSearchTerm {
+    vertical-align: middle;
+    width: 126px;
+    color: #ccc;
+}
+#warehouseSearchTerm:focus {
+    width: 126px;
+    color: #000;
+}
+#warehouseMenu h3#warehouseCalendarsFirst {
+    margin-top: 0;
+}
+#warehouseMenu div#warehouseHolidayCalendars {
+    margin-bottom: 0;
+}
+#warehouseMenu a.warehouseAdd {
+    position: absolute;
+    right: 0;
+    width: 16px;
+    padding-right: 8px;
+    background: transparent url("graphics/plus.png") no-repeat right center;
+    text-indent: -10000px;
+    cursor: pointer;
+}
+#warehouseMenu div.warehouseCalendars div {
+    min-height: 16px;
+    margin-bottom: 2px;
+    padding: 2px 2px 2px 20px;
+    background: transparent url("graphics/checkbox_off.png") 2px center no-repeat;
+    cursor: pointer;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+#warehouseMenu div.warehouseCalendars div.warehouseCalOn {
+    background-image: url("graphics/checkbox_on.png");
+}
+#warehouseMenu div.warehouseCalendars div.warehouseCalOver {
+    text-decoration: underline;
+}
+#warehouseMenu div.warehouseCalendars .warehouseCalEdit {
+    float: right;
+    display: block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    border: 1px solid #999;
+    background-color: #fff;
+    text-align: center;
+    cursor: pointer;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+#warehouseAddEvents {
+    margin-bottom: 35px;
+    white-space: nowrap;
+}
+#warehouseAddEvents span {
+    /* We need some style here. */
+    float: left;
+    font-weight: bold;
+    cursor: pointer;
+}
+#warehouseAddEvents span.accessKey {
+    float: none;
+}
+span#warehouseNewEvent {
+    background: #f0f0f0;
+    border: 1px solid #999;
+    -moz-border-radius: 5px 0 0 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-radius: 5px 0 0 5px;
+    width: 125px;
+    height: 23px;
+    line-height: 23px;
+    margin-right: 1px;
+    text-align: center;
+}
+span#warehouseQuickEvent {
+    border: 1px solid #999;
+    -moz-border-radius: 0 5px 5px 0;
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border-radius: 0 5px 5px 0;
+    width: 23px;
+    height: 23px;
+    line-height: 23px;
+    background: #d6d6d6 url("graphics/new.png") no-repeat center center;
+    text-indent: -10000px;
+}
+
+/* Quick edit */
+#warehouseQuickinsert {
+    position: absolute;
+    z-index: 110;
+    left: 163px;
+    top: 10px;
+    width: 350px;
+    height: auto;
+    background: transparent url("graphics/back_quick.png") no-repeat left top;
+}
+#warehouseQuickinsert form {
+    padding: 10px;
+    margin-left: 10px;
+    background-color: #999;
+}
+#warehouseQuickinsert label {
+    font-weight: bold;
+}
+
+a.warehouseFormCancel {
+    cursor: pointer;
+    text-decoration: underline;
+}
+.warehouseDialogInfo {
+    background: transparent url('graphics/alerts/message.png') 0 0 no-repeat;
+    padding-left: 20px;
+    font-style: italic;
+}
+#warehouseMenu .warehouseDialogInfo {
+    padding-left: 0;
+    background-image: none;
+}
+.warehouseDialogWarning {
+    background: transparent url('graphics/alerts/warning.png') 0 0 no-repeat;
+    padding-left: 20px;
+}
+.warehouseDialogWarning strong {
+    color: #f00;
+}
+
+/* Navigation bar */
+#warehouseBar {
+    position: absolute;
+    left: 175px;
+    top: 10px;
+}
+#warehouseBar form {
+    float: left;
+    margin: 0;
+}
+#warehouseBar .warehouseDateChoice {
+    float: left;
+    margin-right: 1px;
+    background: #d6d6d6;
+    border: 1px solid #999;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+#warehouseBar .warehouseDateChoice div {
+    padding: 0 10px;
+    height: 23px;
+    line-height: 23px;
+}
+
+#warehouseNav {
+    float: left;
+    margin-left: 5px;
+    height: 23px;
+    line-height: 23px;
+}
+#warehouseNav ul {
+    float: left;
+    list-style: none;
+}
+#warehouseNav li {
+    float: left;
+}
+#warehouseNav a {
+    display: block;
+    float: left;
+    margin: 0 1px 0 0;
+    padding: 0 5px 0 25px;
+    background-color: #f0f0f0;
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    font-weight: bold;
+    text-decoration: none;
+    color: #202020;
+    cursor: pointer;
+    border: 1px solid #999;
+}
+#warehouseNav li:first-child a {
+    -moz-border-radius: 5px 0 0 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-radius: 5px 0 0 5px;
+}
+#warehouseNav li:last-child a {
+    -moz-border-radius: 0 5px 5px 0;
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border-radius: 0 5px 5px 0;
+}
+#warehouseNav a:hover, #warehouseNav a.on {
+    background-color: #d9d9d9;
+}
+#warehouseNavTasks {
+    background-image: url("graphics/tasks.png");
+}
+#warehouseNavAgenda {
+    background-image: url("graphics/agenda.png");
+}
+#warehouseNavDay {
+    background-image: url("graphics/dayview.png");
+}
+#warehouseNavWeek {
+    background-image: url("graphics/weekview.png");
+}
+#warehouseNavMonth {
+    background-image: url("graphics/monthview.png");
+}
+#warehouseNavYear {
+    background-image: url("graphics/yearview.png");
+}
+
+/* Calendar form dialogs */
+.warehouseCPAdvancedMore {
+    max-height: 300px;
+    overflow-y: auto;
+}
+.warehouseCPAdvanced th:first-child {
+    width: 220px;
+}
+
+/* Event/task form dialogs */
+.warehouseDialog {
+    width: 700px;
+    padding: 10px 20px;
+    background: #efefef;
+    border: 1px #999 solid;
+}
+.warehouseDialog div {
+    margin-bottom: 5px;
+}
+.warehouseDialog td {
+    padding-right: 10px;
+    vertical-align: top;
+}
+.warehouseDialog label {
+    font-weight: bold;
+}
+.warehouseLongField {
+    width: 100%;
+}
+div.warehouseFormActions {
+    margin: 5px 0;
+}
+
+#warehouseEventStartDate, #warehouseEventStartTime, #warehouseEventEndDate, #warehouseEventEndTime, #warehouseTaskDueDate, #warehouseTaskDueTime, .warehouseEventValue {
+    text-align: center;
+}
+#warehouseEventLocation {
+    width: 300px;
+}
+.warehouseTopTags {
+    max-height: 75px;
+    overflow: auto;
+    line-height: 20px;
+}
+.warehouseTopTags span {
+    padding: 2px 4px;
+    margin-right: 4px;
+    background-color: #fff;
+    border: 1px #999 solid;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    font-size: 90%;
+}
+.warehouseTopTags span:hover {
+    background-color: #ffc;
+    cursor: pointer;
+}
+
+.warehouseDialog .tabset {
+    float: none;
+    width: auto;
+    background: none;
+    margin: 15px 0;
+}
+.warehouseDialog .tabset ul {
+    float: left;
+    padding-left: 0;
+    margin: 0;
+}
+.warehouseDialog .tabset .warehouseSeparator {
+    float: left;
+}
+.warehouseDialog hr {
+   margin: 5px 0;
+   height: 0;
+   line-height: 0;
+   border-width: 1px 0;
+   border-color: #ccc transparent #fff;
+   border-style: solid none;
+}
+
+.warehouseTabsOption {
+    position: relative;
+    line-height: 150%;
+}
+#warehouseEventTabAttendees table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
+#warehouseEventTabAttendees td, #warehouseEventTabAttendees th {
+    border: 1px solid #999;
+    padding: 1px;
+    width: 22px;
+    font-size: 85%;
+    line-height: 140%;
+}
+#warehouseEventTabAttendees td:first-child, #warehouseEventTabAttendees th:first-child {
+    width: auto;
+    overflow: hidden;
+}
+#warehouseEventTabAttendees th {
+    text-align: center;
+}
+#warehouseEventTabAttendees th:first-child {
+    text-align: left;
+}
+#warehouseEventTabAttendees th.night {
+    background-color: #ccc;
+}
+
+#warehouseEventAttendeesList {
+    max-height: 150px;
+    overflow-y: auto;
+}
+#warehouseEventTabAttendees td div {
+    margin: 0;
+    height: 100%;
+}
+#warehouseEventACBox, #warehouseCalendarinternalACBox, #warehouseAttendeesACBox {
+    line-height: 100%;
+}
+
+#warehouseEventTabAttendees td.warehouseAttendeeNone,
+#warehouseEventTabAttendees td.warehouseAttendeeAccepted,
+#warehouseEventTabAttendees td.warehouseAttendeeDeclined,
+#warehouseEventTabAttendees td.warehouseAttendeeTentative {
+    background-position: 0 center;
+    background-repeat: no-repeat;
+    padding-left: 18px;
+}
+.warehouseAttendeeNone {
+    background-image: url("graphics/attendee-none.png");
+}
+.warehouseAttendeeAccepted {
+    background-image: url("graphics/attendee-accepted.png");
+}
+.warehouseAttendeeDeclined {
+    background-image: url("graphics/attendee-declined.png");
+    text-decoration: line-through;
+}
+.warehouseAttendeeTentative {
+    background-image: url("graphics/attendee-tentative.png");
+}
+
+/* Map */
+#warehouseEventMap {
+    height: 300px;
+    width: 700px;
+}
+#warehouseEventMap_OpenLayers_ViewPort div {
+    margin-bottom: 0;
+}
+.olMapViewPort div {
+    margin-bottom: 0;
+}
+.olControlLayerSwitcher div {
+    line-height: 100%;
+    margin-bottom: 0px;
+}
+
+/* Mini calendar */
+.warehouseMinical {
+    position: relative;
+}
+#warehouseMinical {
+/*    top: 15px;*/
+}
+.warehouseMinical table {
+    width: 100%;
+    border-spacing: 1px;
+}
+.warehouseMinical caption, #warehouseBody .warehouseMinical caption {
+    position: relative;
+    margin: 0 1px 1px 1px;
+    height: 20px;
+    line-height: 20px;
+    font-weight: bold;
+    font-size: 100%;
+    border-bottom: 1px #999 dotted;
+    text-align: left;
+}
+.warehouseMinical caption span {
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+}
+#warehouseMinicalPrev, #warehouseMinicalNext {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 16px;
+    text-indent: -10000px;
+    cursor: pointer;
+    background: transparent url("graphics/right.png") no-repeat right center;
+}
+#warehouseMinicalPrev {
+    background-image: url("graphics/left.png");
+    right: 15px;
+}
+
+.warehouseMinical th, .warehouseMinical td {
+    font-size: 90%;
+}
+.warehouseMinical th, .warehouseMinical td.warehouseMinicalWeek {
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    background-color: #d6d6d6;
+    color: #202020;
+    border: 1px #999 solid !important;
+}
+.warehouseMinical tbody td {
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    border: 1px #999 solid;
+    text-align: center;
+    color: #808080;
+    empty-cells: show;
+    cursor: pointer;
+}
+.warehouseMinical .warehouseMinicalEmpty {
+    background: none;
+    border-color: #e2e2e2;
+    color: silver;
+}
+.warehouseMinical .warehouseSelected {
+    background-color: #ffc;
+}
+
+/* Main views */
+#warehouseBody {
+    position: absolute;
+    top: 43px;
+    left: 175px;
+    right: 10px;
+    bottom: 10px;
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+table.warehouseView {
+    width: 100%;
+    height: 100%;
+    table-layout: fixed;
+    border-spacing: 2px;
+    margin-left: -2px;
+}
+table.warehouseView td {
+    padding: 0;
+    border: 1px #999 solid;
+    vertical-align: top;
+    overflow: hidden;
+}
+table.warehouseView td.warehouseFirstCol {
+    width: 20px;
+}
+.warehouseAllDayContainer {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Main view header row */
+#warehouseViewMonthHead {
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    font-weight: bold;
+}
+#warehouseViewMonthHead span {
+    padding: 0 5px;
+}
+#warehouseViewMonthHead .warehouseFirstCol {
+    border-color: transparent;
+    background-color: transparent;
+}
+.warehouseViewHead thead {
+    height: 20px;
+    line-height: 20px;
+    font-weight: bold;
+}
+.warehouseViewHead thead span {
+    padding: 0 5px;
+}
+.warehouseViewHead thead .warehouseFirstCol {
+    border-color: transparent;
+}
+
+/* Captions. */
+#warehouseBody caption {
+    position: relative;
+    margin: 2px 2px 0 26px;
+    height: 20px;
+    line-height: 20px;
+    border-bottom: 1px dotted #999;
+    text-align: left;
+    font-weight: bold;
+}
+#warehouseBody caption span {
+    padding: 0;
+}
+#warehouseBody caption .warehouseNavigation {
+    position: absolute;
+    right: 4px;
+    cursor: pointer;
+}
+#warehouseBody caption .warehouseNavigation ul {
+    float: left;
+}
+.warehousePrev, .warehouseNext {
+    right: 0;
+    width: 16px;
+    text-indent: -10000px;
+    background: transparent url("graphics/right.png") no-repeat right center;
+}
+.warehousePrev {
+    right: 15px;
+    background-image: url("graphics/left.png");
+}
+.warehouseGotoToday {
+    right: 35px;
+}
+.warehousePrint,
+.warehouseGotoToday,
+.warehousePrev,
+.warehouseNext {
+    position: static;
+    float: left;
+    margin-left: 1px;
+}
+.warehousePrint {
+    margin-left: 5px;
+}
+.warehousePrint span {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-image: url('graphics/print.png');
+    text-indent: -10000px;
+    overflow: hidden;
+}
+
+/* Main view year */
+#warehouseViewYear .warehouseMinical {
+    float: left;
+    margin: 0 6px 0 4px;
+    height: 170px;
+}
+#warehouseViewYear .warehouseMinical caption {
+    margin-left: 22px;
+}
+.warehouseHasEvents {
+    font-weight: bold;
+}
+.warehouseMinical .warehouseIsBusy {
+    background-color: #fff760;
+}
+
+/* Main view week */
+.warehouseWeekDay {
+    cursor: pointer;
+}
+
+/* Main view day */
+#warehouseEventsDay {
+    position: absolute;
+    top: 1px;
+    right: 2px;
+    bottom: 3px;
+    left: 25px;
+}
+#warehouseEventsWeek {
+    position: absolute;
+    top: 1px;
+    right: 3px;
+    bottom: 3px;
+    left: 23px;
+}
+.warehouseEventsWeek {
+    position: relative;
+    float: left;
+    height: 100%;
+    width: 14.285714%;
+}
+.warehouseEventsWeek div.warehouseEvent {
+    margin-left: 2px;
+}
+
+/* Main view week and day */
+.warehouseViewDay td {
+    height: 40px;
+}
+.warehouseViewHead thead td {
+    height: 16px;
+}
+.warehouseAllDay td {
+    height: 80px;
+}
+table.warehouseView td.warehouseFirstCol {
+    vertical-align: bottom;
+}
+.warehouseFirstCol span {
+    display: block;
+    margin-bottom: 5px;
+    margin-left: 2px;
+    white-space: nowrap;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+}
+.warehouseViewBody .warehouseFirstCol span {
+    margin-bottom: 3px;
+    font-weight: normal;
+}
+.warehouseViewHead {
+    position: relative;
+    margin-right: 15px;
+}
+.warehouseViewBody {
+    position: absolute;
+    top: 132px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.warehouseViewBody table.warehouseView {
+    margin-top: -2px;
+}
+.warehouseViewBodyContainer {
+    position: relative;
+}
+#warehouseTimeMarker {
+    width: 100%;
+    height: 1px;
+    background-color: red;
+}
+
+/* Main view month */
+#warehouseViewMonthContainer {
+    position: absolute;
+    top: 46px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+#warehouseViewMonthBody td {
+    padding-bottom: 16px;
+}
+#warehouseViewMonthBody td.warehouseFirstCol {
+    vertical-align: top;
+}
+.warehouseMore {
+    padding: 0 2px;
+    color: #888;
+    font-style: italic;
+    cursor: pointer;
+}
+.warehouseMore:hover {
+    text-decoration: underline;
+}
+#warehouseViewMonth .warehouseMore {
+    position: absolute;
+}
+
+/* Main view agenda. */
+#warehouseViewAgenda td.warehouseFirstCol {
+    width: 80px;
+    padding: 4px;
+    vertical-align: top;
+    text-align: left;
+    cursor: pointer;
+}
+#warehouseViewAgenda div.warehouseEvent {
+    position: static;
+}
+#warehouseViewAgenda div.warehouseEvent .warehouseDate {
+    font-weight: normal;
+    color: #333;
+}
+#warehouseViewAgenda div.warehouseEvent {
+    margin: 2px;
+    padding: 2px 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+#warehouseAgendaNoItems td {
+    padding: 4px;
+}
+
+/* Main view tasks. */
+#warehouseViewTasks ul.warehouseNavigation {
+    display: inline;
+    margin: 2px 0 0 0;
+    padding: 0;
+}
+#warehouseViewTasksBody td {
+    padding: 4px 4px 4px 4px;
+    cursor: pointer;
+}
+#warehouseViewTasksBody #warehouseTasksNoItems td {
+    cursor: default;
+}
+#warehouseViewTasksBody div.warehouseTaskCheckbox {
+    background: url("graphics/checkbox_off.png") no-repeat;
+    margin-right: 5px;
+    float: left;
+    width: 16px;
+    height: 16px
+}
+#warehouseViewTasksBody div.warehouseTaskCheckbox:hover {
+    background: url("graphics/checkbox_on.png") no-repeat;
+}
+#warehouseViewTasksBody td.warehouseTaskCompleted {
+    color: #ccc;
+    text-decoration: line-through;
+}
+#warehouseViewTasksBody td.warehouseTaskCompleted div {
+    background: url("graphics/checkbox_on.png") no-repeat;
+}
+#warehouseViewTasksBody td.warehouseTaskDue {
+    color: #a00;
+    font-weight: bold;
+}
+#warehouseViewTasks .warehouseInfo {
+    color: #ccc;
+}
+#warehouseViewTasks .warehouseAddTask {
+    font-weight: bold;
+}
+.warehouseAddTask .warehouseAddTaskIcon {
+    float: left;
+    margin-right: 7px;
+    margin-left: 2px;
+    width: 16px;
+    height: 16px;
+    background-image: url('graphics/new_task.png');
+}
+
+/* Tab sets */
+#warehouseViewTasks caption, #warehouseViewAgenda caption {
+    margin-left: 0;
+}
+#warehouseViewTasks caption.tabset, #warehouseViewAgenda caption.tabset {
+    float: none;
+    width: auto;
+    background: none;
+}
+#warehouseViewTasks caption.tabset ul, #warehouseViewAgenda caption.tabset ul {
+    margin-top: 2px;
+}
+#warehouseViewTasks caption.tabset li a, #warehouseViewAgenda caption.tabset li a {
+    padding-top: 0;
+    padding-bottom: 0;
+    border-bottom-style: dotted;
+}
+
+/* More main view */
+.warehouseFirstCol {
+    font-weight: bold;
+    text-align: center;
+}
+#warehouseViewMonth .warehouseFirstCol {
+    cursor: pointer;
+}
+.warehouseNight {
+    background-color: #f4f4f4;
+}
+.warehouseCorner {
+    float: left;
+    margin: 0 2px 2px 0;
+    padding: 0;
+    width: auto;
+    height: auto;
+    font-size: 85%;
+    cursor: pointer;
+}
+.warehouseDay {
+    position: relative;
+    float: left;
+    display: inline;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    background-color: #fff;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #999;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+}
+.warehouseAddEvent {
+    display: inline;
+    width: auto;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    padding: 2px;
+    text-align: center;
+    background: transparent url("graphics/new_small_fade.png") no-repeat 3px 5px;
+}
+.warehouseAddEvent:hover {
+    background-image: url("graphics/new_small.png");
+}
+.warehouseOtherMonth {
+    background: #f7f7f7;
+}
+.warehouseOtherMonth .warehouseDay {
+    background: #f7f7f7;
+    border-color: transparent;
+    color: silver;
+}
+.warehouseToday, .warehouseMinical .warehouseToday {
+    background-color: #ebf3fc;
+    border-color: #808080;
+}
+/*
+.warehouseWeekend {
+    background: #ffc;
+}
+.warehouseOtherMonth {
+    background: #e7eeec;
+}
+table.warehouseView td.warehouseToday {
+    border: 2px solid #446;
+    background: #fff;
+}
+*/
+#warehouseViewIframe iframe {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+/* Events */
+div.warehouseEvent {
+    cursor: pointer;
+    overflow: hidden;
+    position: absolute;
+}
+img.warehouseEventIcon {
+    float: left;
+    margin: 0 2px 2px 0;
+}
+#warehouseViewDay div.warehouseEvent, #warehouseViewWeek div.warehouseEvent {
+    position: absolute;
+    opacity: .8;
+    filter: alpha(opacity=80);
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+#warehouseViewMonth div.warehouseEvent,
+#warehouseViewDay .warehouseViewHead div.warehouseEvent,
+#warehouseViewWeek .warehouseViewHead div.warehouseEvent {
+    position: relative;
+    width: auto;
+    line-height: 15px;
+    margin: 1px;
+    padding: 3px 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+#warehouseViewDay .warehouseViewHead div.warehouseEvent,
+#warehouseViewWeek .warehouseViewHead div.warehouseEvent {
+    white-space: nowrap;
+}
+#warehouseViewDay .warehouseViewHead div.warehouseEvent {
+    float: left;
+}
+#warehouseViewWeek .warehouseViewHead div.warehouseEvent {
+    margin-right: 10%;
+}
+div.warehouseEvent .warehouseDragger {
+    position: absolute;
+    visibility: hidden;
+    left: 0;
+    right: 0;
+    height: 11px;
+}
+div.warehouseEvent.warehouseEditable {
+    cursor: move;
+}
+div.warehouseEvent.warehouseEditable .warehouseDragger {
+    background: transparent url("graphics/drag-handle.png") no-repeat center center;
+}
+.warehouseDragger.drag {
+    background: transparent url("graphics/drag-handle.png") no-repeat center center;
+    opacity: .8;
+    filter: alpha(opacity=80);
+ }
+div.warehouseEvent.warehouseEditable:hover .warehouseDragger,
+div.warehouseEvent.warehouseEditable.warehouseSelected .warehouseDragger,
+.warehouseDragger.drag {
+    background-color: #202020 !important;
+}
+div.warehouseEvent .warehouseDragger.warehouseDraggerTop,
+.warehouseDraggerTop.drag {
+    top: 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-radius: 5px 5px 0 0;
+}
+div.warehouseEvent .warehouseDragger.warehouseDraggerBottom,
+.warehouseDraggerBottom.drag {
+    bottom: 0;
+    -moz-border-radius: 0 0 5px 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border-radius: 0 0 5px 5px;
+}
+div.warehouseEvent.warehouseEditable .warehouseDragger.warehouseDraggerTop {
+    cursor: n-resize;
+}
+div.warehouseEvent.warehouseEditable .warehouseDragger.warehouseDraggerBottom {
+    cursor: s-resize;
+}
+div.warehouseEvent .warehouseEventInfo {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    right: 0;
+    left: 0;
+    padding: 3px 5px 4px 5px;
+    overflow: hidden;
+    line-height: 16px;
+}
+div.warehouseEditable.warehouseFirst:hover .warehouseEventInfo,
+div.warehouseEvent.warehouseFirst.warehouseSelected .warehouseEventInfo {
+    top: 7px;
+}
+div.warehouseEditable.warehouseLast:hover .warehouseEventInfo,
+div.warehouseEvent.warehouseLast.warehouseSelected .warehouseEventInfo {
+    bottom: 7px;
+}
+div.warehouseEditable:hover .warehouseDragger,
+div.warehouseEvent.warehouseSelected .warehouseDragger {
+    visibility: inherit;
+}
+
+/* Redbox styles. */
+#RB_window {
+    top: 50px !important;
+}
+
+/* Tags */
+.panel-tags {
+    margin-left: 10px;
+}
+
+.panel-tags ul {
+    margin: 1px;
+    padding: 1px;
+    list-style-type: none;
+}
+
+li.panel-tags {
+    float: left;
+    padding: 2px;
+}
+
+.panel-tags li:hover {
+    text-decoration: underline;
+}
+
+#hordeAlerts div.warehouse-sticky, #hordeAlerts div.warehouse-sticky {
+    background-color: #ebe20c;
+    background-image: url("graphics/warning.png");
+    border-color: #807b00;
+    color: #000;
+}
+
+#color-picker {
+    z-index: 103;
+}
+
+#calendarPrint {
+    display: none;
+}
+
+/* Prefs */
+.fburl {
+    border: 1px solid black;
+    padding: 5px 0 10px 15px;
+}
+.fburl .fixed {
+    padding-top: 3px;
+}
+
+@media print {
+    .rowEven td, .rowOdd td {
+        background: #fff;
+        color: #000;
+        border-bottom: thin solid #000;
+    }
+    .rowEven td td, .rowOdd td td {
+        border: none;
+    }
+    .selected-control {
+        background: #fff;
+        border-bottom: thin solid #000;
+    }
+
+    .iconAlarm, .iconDelete, .iconEdit, .iconRecur, .iconAdd, a.newEvent, .iconNav, #warehouseMenu, #warehouseBar, #warehouseHeader, .tabset {
+        display: none;
+    }
+
+    #warehouseBody {
+        position: static;
+    }
+
+    #pageControls {
+        display: none;
+    }
+
+    #calendarPrint {
+        display: block;
+    }
+
+    .day, .othermonth, .weekend {
+        background-color: #fff;
+        color: #000;
+    }
+    .day {
+        border-right: thin solid #000;
+        border-bottom: thin solid #000;
+    }
+    .year-event {
+        background: #fff;
+    }
+    table.monthgrid {
+        border-top: thin solid #000;
+        border-left: thin solid #000;
+    }
+    table.monthgrid th, table.monthgrid td {
+        border-right: thin solid #000;
+        border-bottom: thin solid #000;
+        padding: 2px;
+    }
+    table.monthgrid td.today {
+        border-top: none;
+        border-left: none;
+        border-right: thin solid #000;
+        border-bottom: thin solid #000;
+    }
+    .month-eventbox {
+        border: none;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+        border-bottom: thin solid #000;
+    }
+    body.rightPanel #page {
+        margin: 0;
+    }
+}
