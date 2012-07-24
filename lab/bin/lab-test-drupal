@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+
+if (file_exists(dirname(__FILE__) . '/../lib/Application.php')) {
+    $baseDir = dirname(__FILE__) . '/../';
+}
+require_once $baseDir . 'lib/Application.php';
+Horde_Registry::appInit('lab', array('authentication' => 'none'));
+
+Lab::testDrupal();
