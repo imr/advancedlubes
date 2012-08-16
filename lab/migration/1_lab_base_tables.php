@@ -39,8 +39,25 @@ class LabBaseTables extends Horde_Db_Migration_Base
         $t->primaryKey(array('product_id', 'code'));
         $t->end();
 
-        $this->addIndex('lab_product_code', array('product_id'));
         $this->addIndex('lab_product_code', array('code'));
+
+        $t = $this->createTable('lab_pib');
+        $t->column('drupal_node', 'integer');
+        $t->column('title', 'string', array('limit' => 256, 'null' => false));
+        $t->column('short_title', 'string', array('limit' => 256));
+        $t->column('description', 'text');
+        $t->column('type', 'string', array('limit' => 50, 'null' => false));
+        $t->column('feature', 'boolean', array('null' => false));
+        $t->column('approval_separate', 'boolean', array('null' => false));
+        $t->end();
+
+        $this->addIndex('lab_pib', array('drupal_node'));
+
+        $t = $this->createTable('lab_pib_product', array('autoincrementKey' => false));
+        $t->column('pib_id', 'integer', array('null' => false));
+        $t->column('product_id', 'integer', array('null' => false));
+        $t->primaryKey(array('pib_id', 'product_id'));
+        $t->end();
 
         $t = $this->createTable('lab_raw_material');
         $t->column('material_id', 'integer', array('null' => false));
@@ -64,7 +81,7 @@ class LabBaseTables extends Horde_Db_Migration_Base
         $t->column('drupal_name', 'string', array('limit' => 255, 'null' => false));
         $t->end();
 
-        $t = $this->createTable('lab_typical', array('autoIncrement' => false));
+        $t = $this->createTable('lab_typical', array('autoincrementKey' => false));
         $t->column('material_id', 'integer', array('null' => false));
         $t->column('property_id', 'integer', array('null' => false));
         $t->column('pib_include', 'boolean', array('null' => false, 'default' => true));
@@ -72,7 +89,7 @@ class LabBaseTables extends Horde_Db_Migration_Base
         $t->primaryKey(array('material_id', 'property_id'));
         $t->end();
 
-        $t = $this->createTable('lab_test_param', array('autoIncrement' => false));
+        $t = $this->createTable('lab_test_param', array('autoincrementKey' => false));
         $t->column('material_id', 'integer', array('null' => false));
         $t->column('property_id', 'integer', array('null' => false));
         $t->column('cofa_include', 'boolean', array('null' => false, 'default' => true));
@@ -97,10 +114,14 @@ class LabBaseTables extends Horde_Db_Migration_Base
         $this->dropTable('lab_material');
         $this->dropTable('lab_product');
         $this->dropTable('lab_product_code');
+        $this->dropTable('lab_pib');
+        $this->dropTable('lab_pib_product');
         $this->dropTable('lab_raw_material');
         $this->dropTable('lab_formula');
         $this->dropTable('lab_component');
         $this->dropTable('lab_property');
-        $this->dropTable('lab_result');
+        $this->dropTable('lab_typical');
+        $this->dropTable('lab_test_param');
+        $this->dropTable('lab_test_result');
     }
 }
