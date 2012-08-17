@@ -15,6 +15,35 @@ class Lab
             //$prodSpecs to $node_data
             foreach($prodSpecs as $prodSpec) {
                 $node_data[$prodSpec['drupal_name']] = $prodSpec['value'];
+            }
+
+            if ($product['drupal_node']) {
+                $node_url = "$request_url/$product[drupal_node]";
+                Lab::_putDrupal($cookie, $node_url, $node_data);
+            } else {
+                Lab::_postDrupal($cookie, $request_url, $node_data);
+            }
+        }
+
+    }
+
+    public function updateDrupalPibs()
+    {
+        $pibs = $GLOBALS['injector']->getInstance('Lab_Driver')->listPibs();
+        $cookie = Lab::_drupalLogin();
+        $request_url = 'http://www.advancedlubes.com/pib/node';
+
+        foreach ($pibs as $pib) {
+            $node_data['title'] = $pib['title'];
+            $node_data['body'] = $pib['description'];
+            $node_data['field_short_title'] = array('und' => array(0 => array('value' => $pib['short_title'])));
+            $node_data['field_featured'] = array('und' => array(0 => array('value' => $pib['feature'])));
+            $node_data['field_approval_separate'] = array('und' => array(0 => array('value' => $pib['approval_separate'])));
+
+            if ($pib['drupal_node']) {
+                $node_url = "$request_url/$pib[drupal_node]";
+                Lab::_putDrupal($cookie, $node_url, $node_data);
+            } else {
                 Lab::_postDrupal($cookie, $request_url, $node_data);
             }
         }
@@ -36,10 +65,12 @@ class Lab
         print_r($response);
     }
 
+    /*
+     * Use for updating existing data
+     */
     protected static function _putDrupal($session, $request_url, $node_data)
     {
         $node_data = http_build_query($node_data);
-echo "NODE DATA $node_data";
 
         // cURL
         $curl = curl_init($request_url);
@@ -61,6 +92,9 @@ echo "NODE DATA $node_data";
         }
     }
 
+    /*
+     * Use for uploading data
+     */
     protected static function _postDrupal($session, $request_url, $node_data)
     {
         $node_data = http_build_query($node_data);
