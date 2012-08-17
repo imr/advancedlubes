@@ -3,7 +3,7 @@
  * Lab_Driver defines an API for implementing storage backends for
  * Lab.
  *
- * Copyright 2007-2012 Ian Roth
+ * Copyright 2012 Ian Roth
  *
  * @author  Ian Roth <iron_hat@hotmail.com>
  * @package Lab
@@ -18,14 +18,6 @@ class Lab_Driver
     protected $_params = array();
 
     /**
-     * Array holding the current foo list. Each array entry is a hash
-     * describing a foo. The array is indexed by the IDs.
-     *
-     * @var array
-     */
-    protected $_foos = array();
-
-    /**
      * Constructor.
      *
      * @param array $params  A hash containing connection parameters.
@@ -35,7 +27,4 @@ class Lab_Driver
         $this->_params = $params;
     }
 
-    abstract function getMaterial($id);
-
-    abstract function listProducts();
-}  
+}

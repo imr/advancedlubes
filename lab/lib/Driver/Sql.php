@@ -17,13 +17,6 @@ class Lab_Driver_Sql extends Lab_Driver
     protected $_db;
 
     /**
-     * Storage variable.
-     *
-     * @var array
-     */
-    protected $_foo = array();
-
-    /**
      * Constructs a new SQL storage object.
      *
      * @param array $params  Class parameters:
@@ -62,6 +55,19 @@ class Lab_Driver_Sql extends Lab_Driver
         $query = 'SELECT * FROM lab_material AS m INNER JOIN lab_product AS p ' .
             'ON m.id = p.material_id';
 
+        try {
+            $result = $this->_db->selectAll($query);
+        } catch (Horde_Db_Exception $e) {
+            throw new Lab_Exception($e->getMessage());
+        }
+
+        return $result;
+    }
+
+    public function listPibs()
+    {
+        $query = 'SELECT * FROM lab_pib';
+ 
         try {
             $result = $this->_db->selectAll($query);
         } catch (Horde_Db_Exception $e) {
