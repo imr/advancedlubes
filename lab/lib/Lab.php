@@ -20,7 +20,7 @@ class Lab
             if ($product['drupal_node']) {
                 $node_url = "$request_url/$product[drupal_node]";
                 Lab::_putDrupal($cookie, $node_url, $node_data);
-            } else {
+            } elseif ($product['drupal_upload']) {
                 Lab::_postDrupal($cookie, $request_url, $node_data);
             }
         }
@@ -43,7 +43,7 @@ class Lab
             if ($pib['drupal_node']) {
                 $node_url = "$request_url/$pib[drupal_node]";
                 Lab::_putDrupal($cookie, $node_url, $node_data);
-            } else {
+            } elseif ($pib['drupal_upload']) {
                 Lab::_postDrupal($cookie, $request_url, $node_data);
             }
         }

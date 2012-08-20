@@ -24,6 +24,7 @@ class LabBaseTables extends Horde_Db_Migration_Base
         $t = $this->createTable('lab_product');
         $t->column('material_id', 'integer', array('null' => false));
         $t->column('drupal_node', 'integer', array('null' => false, 'default' => 0));
+        $t->column('drupal_upload', 'boolean', array('null' => false, 'default' => 0));
         $t->column('name', 'string', array('limit' => 256, 'null' => false));
         $t->column('description', 'string', array('limit' => 256, 'null' => false));
         $t->column('brand', 'string', array('limit' => 100, 'null' => false));
@@ -43,6 +44,7 @@ class LabBaseTables extends Horde_Db_Migration_Base
 
         $t = $this->createTable('lab_pib');
         $t->column('drupal_node', 'integer', array('null' => false, 'default' => 0));
+        $t->column('drupal_upload', 'boolean', array('null' => false, 'default' => false));
         $t->column('title', 'string', array('limit' => 256, 'null' => false));
         $t->column('short_title', 'string', array('limit' => 256));
         $t->column('description', 'text');
