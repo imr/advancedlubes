@@ -21,7 +21,8 @@ class Lab
                 $node_url = "$request_url/$product[drupal_node]";
                 Lab::_putDrupal($cookie, $node_url, $node_data);
             } elseif ($product['drupal_upload']) {
-                Lab::_postDrupal($cookie, $request_url, $node_data);
+                $response = Lab::_postDrupal($cookie, $request_url, $node_data);
+                $GLOBALS['injector']->getInstance('Lab_Driver')->updateProductNode($product['id'], $response['nid']);
             }
         }
 
@@ -44,7 +45,8 @@ class Lab
                 $node_url = "$request_url/$pib[drupal_node]";
                 Lab::_putDrupal($cookie, $node_url, $node_data);
             } elseif ($pib['drupal_upload']) {
-                Lab::_postDrupal($cookie, $request_url, $node_data);
+                $response = Lab::_postDrupal($cookie, $request_url, $node_data);
+                $GLOBALS['injector']->getInstance('Lab_Driver')->updatePibNode($pib['id'], $response['nid']);
             }
         }
 

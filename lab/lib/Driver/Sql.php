@@ -64,6 +64,17 @@ class Lab_Driver_Sql extends Lab_Driver
         return $result;
     }
 
+    public function updateProductNode($id, $node)
+    {
+        $query = 'UPDATE lab_product SET drupal_node = ? WHERE id = ?';
+
+        try {
+            $this->_db->update($query, array($node, $id));
+        } catch (Horde_Db_Exception $e) {
+            throw new Lab_Exception($e->getMessage());
+        }
+    }
+
     public function listPibs()
     {
         $query = 'SELECT * FROM lab_pib';
@@ -75,5 +86,16 @@ class Lab_Driver_Sql extends Lab_Driver
         }
 
         return $result;
+    }
+
+    public function updatePibNode($id, $node)
+    {
+        $query = 'UPDATE lab_pib SET drupal_node = ? WHERE id = ?';
+
+        try {
+            $this->_db->update($query, array($node, $id));
+        } catch (Horde_Db_Exception $e) {
+            throw new Lab_Exception($e->getMessage());
+        }
     }
 }
