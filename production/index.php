@@ -9,8 +9,8 @@ $form = new Production_Form_Chart($vars);
 if ($form->validate($vars)) {
     require 'tankhistory.php';
 } else {
-    require $registry->get('templates', 'horde') . '/common-header.inc';
+    $page_output->header(array('title' => $title));
     echo Horde::menu();
     $form->renderActive();
-    require $registry->get('templates', 'horde') . '/common-footer.inc';
+    $page_output->footer();
 }

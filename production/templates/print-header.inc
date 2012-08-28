@@ -28,14 +28,9 @@ if (!empty($title)) {
 <head>
 <?php
 
-Horde::outputMetaTags();
 $appOb = $GLOBALS['registry']->getApiInstance($GLOBALS['registry']->getApp(), 'application');
 if ((strpos($GLOBALS['session']->get('horde', 'mode'), 'mobile') === false) || empty($appOb->mobileView)) {
-    Horde::includeFavicon();
-    Horde::includeStylesheetFiles();
-    Horde::includeScriptFiles();
     echo implode("\n", Horde_Util::nonInputVar('linkTags', array()));
-    Horde::outputInlineScript();
 }
 
 ?>

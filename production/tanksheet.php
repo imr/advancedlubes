@@ -3,8 +3,6 @@
 require_once dirname(__FILE__) . '/lib/Application.php';
 Horde_Registry::appInit('production');
 
-Horde::addScriptFile('tables.js', 'horde');
-
 $super_driver = $GLOBALS['injector']->getInstance('Production_Factory_Driver')->create();
 $tanks = $super_driver->listTanks();
 $tanknotes = $super_driver->getNote();
@@ -45,9 +43,10 @@ if ($view == 'pdf') {
         echo "<html><body>$html</body></html>";
 } elseif ($view == 'simple') {
         require $registry->get('templates', 'production') . '/print-header.inc';
+        $page_output->header();
         echo "$html</body></html>";
 } else {
-        require $registry->get('templates', 'horde') . '/common-header.inc';
+        $page_output->header();
         echo Horde::menu();
         $notification->notify(array('listeners' => 'status'));     
         echo Horde::link(Horde::url('tanksheet.php?view=simple'), _("Printer Friendly Sheet")) . 'Printer Friendly Sheet</a> | ';
@@ -57,5 +56,5 @@ if ($view == 'pdf') {
         }
         echo Horde::link(Horde::url('inventorylist.php'), _("Inventory List")) . 'Inventory List</a><BR>';
         echo $html;
-        require $registry->get('templates', 'horde') . '/common-footer.inc';
+        $page_output->footer();
 }

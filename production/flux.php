@@ -6,8 +6,7 @@ Horde_Registry::appInit('production');
 $vars = Horde_Variables::getDefaultVariables();
 $form = new Production_Form_Fluctuation($vars);
 
-Horde::addScriptFile('tables.js', 'horde');
-require $registry->get('templates', 'horde') . '/common-header.inc';
+$page_output->header();
 echo Horde::menu();
 if ($form->validate($vars)) {
        
@@ -146,4 +145,4 @@ if ($form->validate($vars)) {
 </br>
 <?php
 $form->renderActive();
-require $registry->get('templates', 'horde') . '/common-footer.inc';
+$page_output->footer();

@@ -16,7 +16,7 @@ if ($form->validate($vars)) {
     }
 }
  
-require $registry->get('templates', 'horde') . '/common-header.inc';
+$page_output->header();
 echo Horde::menu();
 $notification->notify(array('listeners' => 'status'));
 if ($GLOBALS['production_perms']->hasPermission('production:tank sheet', $GLOBALS['registry']->getAuth(), Horde_Perms::EDIT)) {
@@ -24,4 +24,4 @@ if ($GLOBALS['production_perms']->hasPermission('production:tank sheet', $GLOBAL
 } else {
     echo "Not authorized";
 }
-require $registry->get('templates', 'horde') . '/common-footer.inc';
+$page_output->footer();
