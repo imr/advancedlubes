@@ -6,6 +6,7 @@ Horde_Registry::appInit('production');
 $vars = Horde_Variables::getDefaultVariables();
 $form = new Production_Form_Fluctuation($vars);
 
+$page_output->addScriptFile('tables.js', 'horde');
 $page_output->header();
 echo Horde::menu();
 if ($form->validate($vars)) {

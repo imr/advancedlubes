@@ -14,6 +14,7 @@ foreach ($inventories as $inventory) {
              "<td>$inventory[user_id]</td></tr>";
 }
 $html .= '</tbody></table>';
+$page_output->addScriptFile('tables.js', 'horde');
 $page_output->header();
 echo Horde::menu();
 $notification->notify(array('listeners' => 'status'));     
